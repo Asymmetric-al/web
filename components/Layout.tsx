@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight, Github } from 'lucide-react';
 import { NAV_ITEMS } from '../constants';
@@ -33,23 +33,59 @@ const MobileNavOverlay: React.FC<{ isOpen: boolean }> = ({ isOpen }) => {
   );
 };
 
-const DesktopNavLinks: React.FC<{ currentPath: string }> = ({ currentPath }) => (
-  <div className="hidden md:flex items-center bg-black/80 backdrop-blur-md border border-white/10 px-1 py-1 rounded-full">
-    {NAV_ITEMS.map((item) => (
-      <Link
-        key={item.path}
-        to={item.path}
-        className={`px-5 py-2 text-[11px] font-mono uppercase tracking-widest rounded-full transition-all duration-300 ${
-          currentPath === item.path 
-            ? 'bg-white text-black font-bold' 
-            : 'text-muted hover:text-white'
-        }`}
-      >
-        {item.label}
-      </Link>
-    ))}
-  </div>
-);
+const DesktopNavLinks: React.FC<{ currentPath: string }> = ({ currentPath }) => {
+  const [pillStyle, setPillStyle] = useState({ left: 0, width: 0, opacity: 0 });
+  const linksRef = useRef<(HTMLAnchorElement | null)[]>([]);
+
+  useEffect(() => {
+    const activeIndex = NAV_ITEMS.findIndex(item => item.path === currentPath);
+    
+    if (activeIndex !== -1) {
+        const el = linksRef.current[activeIndex];
+        if (el) {
+            setPillStyle({
+                left: el.offsetLeft,
+                width: el.offsetWidth,
+                opacity: 1
+            });
+        }
+    } else {
+        setPillStyle(prev => ({ ...prev, opacity: 0 }));
+    }
+  }, [currentPath]);
+
+  return (
+    <div className="hidden md:flex items-center bg-black/80 backdrop-blur-md border border-white/10 p-1 rounded-full relative">
+       {/* Sliding Pill */}
+       <div 
+         className="absolute top-1 bottom-1 bg-white rounded-full transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)]"
+         style={{
+            left: pillStyle.left,
+            width: pillStyle.width,
+            opacity: pillStyle.opacity
+         }}
+       />
+
+      {NAV_ITEMS.map((item, index) => {
+        const isActive = currentPath === item.path;
+        return (
+          <Link
+            key={item.path}
+            to={item.path}
+            ref={(el) => { linksRef.current[index] = el; }}
+            className={`relative z-10 px-5 py-2 text-[11px] font-mono uppercase tracking-widest rounded-full transition-colors duration-300 ${
+              isActive 
+                ? 'text-black font-bold' 
+                : 'text-muted hover:text-white'
+            }`}
+          >
+            {item.label}
+          </Link>
+        );
+      })}
+    </div>
+  );
+};
 
 // --- Navbar Component ---
 export const Navbar: React.FC = () => {
@@ -119,11 +155,11 @@ const FooterLink: React.FC<{ to?: string; children: React.ReactNode }> = ({ to, 
     return (
         <li>
             {to ? (
-                <Link to={to} className="hover:text-white transition-colors flex items-center gap-2 group">
+                <Link to={to} className="hover:text-white transition-all duration-300 flex items-center gap-2 group">
                     {content}
                 </Link>
             ) : (
-                <span className="cursor-pointer hover:text-white transition-colors flex items-center gap-2 group">
+                <span className="cursor-pointer hover:text-white transition-all duration-300 flex items-center gap-2 group">
                     {content}
                 </span>
             )}
