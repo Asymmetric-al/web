@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { Section, Button, DitherGrid, ScrambleText, Container } from '../components/UI';
+import { Section, Button, DitherGrid, ScrambleText, Container, DitherGlobe } from '../components/UI';
 import { Link } from 'react-router-dom';
 import { AlertTriangle, Home } from 'lucide-react';
 
@@ -8,6 +7,11 @@ const NotFound: React.FC = () => {
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center relative overflow-hidden">
       <DitherGrid />
+      
+      {/* Background Globe Effect for 'Lost in Space' vibe */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-20 pointer-events-none z-0 grayscale scale-150">
+         <DitherGlobe scale={1.5} />
+      </div>
       
       <Container className="relative z-10 text-center">
         <div className="inline-flex items-center gap-2 px-3 py-1 border border-red-500/30 bg-red-900/10 rounded-full text-[10px] font-mono uppercase tracking-widest text-red-400 mb-8 backdrop-blur-md">

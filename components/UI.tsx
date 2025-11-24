@@ -1,7 +1,6 @@
-
 import React, { useEffect, useRef, useState } from 'react';
 import { ButtonVariant } from '../types';
-import { Loader2, Plus, MousePointer2 } from 'lucide-react';
+import { Loader2, Plus } from 'lucide-react';
 
 // --- Logo ---
 export const Logo: React.FC<{ className?: string }> = ({ className = "w-6 h-6" }) => (
@@ -127,16 +126,19 @@ export const TechPanel: React.FC<TechPanelProps> = ({ children, className = '', 
   );
 };
 
-// --- Spotlight Card ---
+// --- Spotlight Card (Performance Optimized) ---
 export const SpotlightCard: React.FC<{ children: React.ReactNode; className?: string }> = ({ children, className = "" }) => {
     const divRef = useRef<HTMLDivElement>(null);
-    const [position, setPosition] = useState({ x: 0, y: 0 });
     const [opacity, setOpacity] = useState(0);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!divRef.current) return;
         const rect = divRef.current.getBoundingClientRect();
-        setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        divRef.current.style.setProperty("--mouse-x", `${x}px`);
+        divRef.current.style.setProperty("--mouse-y", `${y}px`);
     };
 
     const handleMouseEnter = () => setOpacity(1);
@@ -154,7 +156,7 @@ export const SpotlightCard: React.FC<{ children: React.ReactNode; className?: st
                 className="pointer-events-none absolute -inset-px transition duration-300"
                 style={{
                     opacity,
-                    background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(255,255,255,0.06), transparent 40%)`,
+                    background: `radial-gradient(600px circle at var(--mouse-x, 0px) var(--mouse-y, 0px), rgba(255,255,255,0.06), transparent 40%)`,
                 }}
             />
             {children}
@@ -226,6 +228,20 @@ export const Section: React.FC<SectionProps> = ({ children, className = '', id, 
   );
 };
 
+// --- Grid Pattern ---
+export const GridPattern: React.FC<{ className?: string }> = ({ className = "" }) => {
+  return (
+    <div className={`absolute inset-0 pointer-events-none ${className}`}>
+      <div className="absolute inset-0 opacity-5" 
+          style={{ 
+            backgroundImage: 'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)', 
+            backgroundSize: '100px 100px' 
+          }}>
+      </div>
+    </div>
+  );
+};
+
 // --- Dither Grid ---
 export const DitherGrid: React.FC<{ className?: string }> = ({ className = "" }) => {
   return (
@@ -240,7 +256,7 @@ export const DitherGrid: React.FC<{ className?: string }> = ({ className = "" })
   );
 };
 
-// --- Enhanced Dither Globe (RAD EDITION) ---
+// --- Enhanced Dither Globe (ULTRA RAD EDITION) ---
 export const DitherGlobe: React.FC<{ className?: string, scale?: number }> = ({ className = "", scale = 1 }) => {
   return (
     <div 
@@ -252,18 +268,18 @@ export const DitherGlobe: React.FC<{ className?: string, scale?: number }> = ({ 
       <div className="absolute inset-0 rounded-full bg-black overflow-hidden z-10 border border-white/5">
         
         {/* Layer 1: Core (Dense, Slow) */}
-        <div className="absolute inset-[-50%] w-[200%] h-[200%] animate-[spin_120s_linear_infinite] opacity-40">
+        <div className="absolute inset-[-50%] w-[200%] h-[200%] animate-[spin_120s_linear_infinite] opacity-50">
           <div className="absolute inset-0" 
                style={{
-                  backgroundImage: 'radial-gradient(circle at center, white 1px, transparent 1px)',
-                  backgroundSize: '16px 16px',
+                  backgroundImage: 'radial-gradient(circle at center, white 1.5px, transparent 1.5px)',
+                  backgroundSize: '20px 20px',
                   transform: 'rotate(45deg)'
                }}
           ></div>
         </div>
 
         {/* Layer 2: Surface (Sparse, Reverse, Fast) */}
-        <div className="absolute inset-[-50%] w-[200%] h-[200%] animate-[spin-reverse_45s_linear_infinite] opacity-30 mix-blend-overlay">
+        <div className="absolute inset-[-50%] w-[200%] h-[200%] animate-[spin-reverse_45s_linear_infinite] opacity-40 mix-blend-overlay">
            <div className="absolute inset-0" 
                style={{
                   backgroundImage: 'radial-gradient(circle at center, #fff 2px, transparent 2px)',
@@ -273,7 +289,7 @@ export const DitherGlobe: React.FC<{ className?: string, scale?: number }> = ({ 
         </div>
         
         {/* Layer 3: Deep Data (Medium, Offset) */}
-        <div className="absolute inset-[-50%] w-[200%] h-[200%] animate-[spin_90s_linear_infinite] opacity-20 mix-blend-screen">
+        <div className="absolute inset-[-50%] w-[200%] h-[200%] animate-[spin_90s_linear_infinite] opacity-30 mix-blend-screen">
             <div className="absolute inset-0"
                  style={{
                      backgroundImage: 'radial-gradient(circle at center, #fff 1px, transparent 2px)',
@@ -287,18 +303,24 @@ export const DitherGlobe: React.FC<{ className?: string, scale?: number }> = ({ 
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,transparent_10%,black_90%)] z-20"></div>
         
         {/* Scanline Effect */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-[20%] w-full animate-scan z-30 pointer-events-none opacity-30"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/10 to-transparent h-[20%] w-full animate-scan z-30 pointer-events-none opacity-40"></div>
 
         {/* Rim Light */}
-        <div className="absolute inset-0 rounded-full shadow-[inset_-10px_-10px_60px_rgba(255,255,255,0.05)] z-30"></div>
+        <div className="absolute inset-0 rounded-full shadow-[inset_-10px_-10px_60px_rgba(255,255,255,0.1)] z-30"></div>
       </div>
       
       {/* Outer Orbital Ring (Static Tilt) */}
-      <div className="absolute inset-[-10%] rounded-full border border-dashed border-white/10 animate-[spin-slow_180s_linear_infinite] opacity-20 z-0"></div>
-      
-      {/* Dynamic Satellite */}
-      <div className="absolute inset-[-20%] w-[140%] h-[140%] animate-spin-slow z-0 opacity-40">
-         <div className="absolute top-1/2 right-0 w-2 h-2 bg-white rounded-full shadow-[0_0_10px_white]"></div>
+      <div className="absolute inset-[-10%] rounded-full border border-dashed border-white/10 animate-[spin-slow_180s_linear_infinite] opacity-30 z-0"></div>
+      <div className="absolute inset-[-25%] rounded-full border border-dotted border-white/5 animate-[spin-reverse-slower_200s_linear_infinite] opacity-20 z-0"></div>
+
+      {/* Dynamic Satellite 1 (Bot) */}
+      <div className="absolute inset-[-20%] w-[140%] h-[140%] animate-spin-slow z-0 opacity-60">
+         <div className="absolute top-1/2 right-0 w-2 h-2 bg-white rounded-full shadow-[0_0_15px_white]"></div>
+      </div>
+
+      {/* Dynamic Satellite 2 (Bot - Counter Orbit) */}
+       <div className="absolute inset-[-35%] w-[170%] h-[170%] animate-[spin-reverse_60s_linear_infinite] z-0 opacity-40">
+         <div className="absolute top-1/3 left-0 w-1.5 h-1.5 bg-primary rounded-full shadow-[0_0_10px_rgba(99,102,241,0.8)]"></div>
       </div>
 
       {/* Crosshairs & HUD Elements */}
@@ -306,23 +328,6 @@ export const DitherGlobe: React.FC<{ className?: string, scale?: number }> = ({ 
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-12 text-white/20 z-0"><Plus size={16} /></div>
       <div className="absolute left-0 top-1/2 -translate-x-12 -translate-y-1/2 text-white/20 z-0"><Plus size={16} /></div>
       <div className="absolute right-0 top-1/2 translate-x-12 -translate-y-1/2 text-white/20 z-0"><Plus size={16} /></div>
-      
-      {/* Decorative Horizontal Line REMOVED for clarity per user request */}
-      
-    </div>
-  );
-};
-
-// --- Grid Pattern ---
-export const GridPattern: React.FC<{ className?: string }> = ({ className = "" }) => {
-  return (
-    <div className={`absolute inset-0 pointer-events-none ${className}`}>
-      <div className="absolute inset-0 opacity-5" 
-          style={{ 
-            backgroundImage: 'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)', 
-            backgroundSize: '100px 100px' 
-          }}>
-      </div>
     </div>
   );
 };

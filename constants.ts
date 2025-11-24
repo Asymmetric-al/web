@@ -1,4 +1,3 @@
-
 import { NavItem } from './types';
 
 export const NAV_ITEMS: NavItem[] = [
@@ -16,6 +15,8 @@ export const COLORS = {
   muted: '#888888',
   border: '#222222',
   coral: '#d5a790',
+  success: '#10b981', // Emerald-500 for status
+  primary: '#6366f1', // Indigo-500 for tech accents
 };
 
 export const TECH_STACK = [

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Section, Reveal, Button, DitherGlobe, GridPattern, SpotlightCard, TechPanel, ScrambleText, Container } from '../components/UI';
 import { Mail, MapPin, MessageSquare, ArrowRight, Terminal } from 'lucide-react';
@@ -19,7 +18,7 @@ const Contact: React.FC = () => {
         <div className="max-w-4xl mb-20 mt-12">
             <Reveal>
                 <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/10 bg-white/5 rounded-full text-[10px] font-mono uppercase tracking-widest text-muted mb-8 backdrop-blur-md">
-                    <span className="w-1.5 h-1.5 bg-coral rounded-full animate-pulse"></span>
+                    <span className="w-1.5 h-1.5 bg-primary rounded-full animate-pulse"></span>
                     <ScrambleText text="OPEN CHANNEL" delay={200} />
                 </div>
                 
@@ -40,12 +39,12 @@ const Contact: React.FC = () => {
                     <TechPanel title="CHANNELS" className="bg-black/80 backdrop-blur-md">
                         <div className="space-y-8">
                             <div className="group cursor-pointer">
-                                <div className="flex items-center gap-3 text-white mb-2 group-hover:text-coral transition-colors">
+                                <div className="flex items-center gap-3 text-white mb-2 group-hover:text-primary transition-colors">
                                     <Mail size={20} />
                                     <h3 className="font-display font-bold text-lg">General Inquiry</h3>
                                 </div>
                                 <p className="text-sm text-gray-500 font-mono pl-8 mb-2">info@asymmetric.al</p>
-                                <div className="pl-8 text-[10px] text-emerald-600 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div className="pl-8 text-[10px] text-success uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
                                     RESPONSE TIME: ~24HRS
                                 </div>
                             </div>
@@ -53,7 +52,7 @@ const Contact: React.FC = () => {
                             <div className="w-full h-px bg-white/10"></div>
 
                             <div className="group cursor-pointer">
-                                <div className="flex items-center gap-3 text-white mb-2 group-hover:text-coral transition-colors">
+                                <div className="flex items-center gap-3 text-white mb-2 group-hover:text-primary transition-colors">
                                     <MessageSquare size={20} />
                                     <h3 className="font-display font-bold text-lg">Builder Support</h3>
                                 </div>
@@ -93,22 +92,22 @@ const Contact: React.FC = () => {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <label className="font-mono text-[10px] uppercase tracking-widest text-gray-500">Identity // Name</label>
-                                        <input type="text" className="w-full bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-coral focus:bg-white/10 outline-none transition-all placeholder:text-white/20" placeholder="J. DOE" />
+                                        <input type="text" className="w-full bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-primary focus:bg-white/10 outline-none transition-all placeholder:text-white/20" placeholder="J. DOE" />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="font-mono text-[10px] uppercase tracking-widest text-gray-500">Identity // Email</label>
-                                        <input type="email" className="w-full bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-coral focus:bg-white/10 outline-none transition-all placeholder:text-white/20" placeholder="CONTACT@ORG.COM" />
+                                        <input type="email" className="w-full bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-primary focus:bg-white/10 outline-none transition-all placeholder:text-white/20" placeholder="CONTACT@ORG.COM" />
                                     </div>
                                 </div>
 
                                 <div className="space-y-2">
                                     <label className="font-mono text-[10px] uppercase tracking-widest text-gray-500">Context // Organization</label>
-                                    <input type="text" className="w-full bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-coral focus:bg-white/10 outline-none transition-all placeholder:text-white/20" placeholder="GLOBAL MISSIONS INC." />
+                                    <input type="text" className="w-full bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-primary focus:bg-white/10 outline-none transition-all placeholder:text-white/20" placeholder="GLOBAL MISSIONS INC." />
                                 </div>
 
                                 <div className="space-y-2">
                                     <label className="font-mono text-[10px] uppercase tracking-widest text-gray-500">Payload // Message</label>
-                                    <textarea className="w-full h-32 bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-coral focus:bg-white/10 outline-none transition-all placeholder:text-white/20 resize-none" placeholder="BRIEFING DETAILS..."></textarea>
+                                    <textarea className="w-full h-32 bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-primary focus:bg-white/10 outline-none transition-all placeholder:text-white/20 resize-none" placeholder="BRIEFING DETAILS..."></textarea>
                                 </div>
 
                                 <Button className="w-full py-6 mt-4" icon={<ArrowRight size={16} />}>

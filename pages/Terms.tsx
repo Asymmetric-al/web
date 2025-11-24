@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Section, Container, DitherGrid } from '../components/UI';
 

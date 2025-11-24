@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Section, Reveal, SpotlightCard, DitherGrid, ScrambleText } from '../components/UI';
+import { Section, Reveal, SpotlightCard, DitherGrid, ScrambleText, DitherGlobe } from '../components/UI';
 import { 
     Terminal, 
     Database, 
@@ -121,19 +121,24 @@ const RELEASE_GATES = [
 
 const Specs: React.FC = () => {
   return (
-    <div className="pt-24 min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans">
+    <div className="pt-24 min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans overflow-x-hidden">
       <DitherGrid />
       
+      {/* Background Globe for Specs (Wireframe feel) */}
+      <div className="absolute top-0 right-0 -translate-y-1/4 translate-x-1/4 opacity-20 pointer-events-none fixed z-0">
+          <DitherGlobe scale={1.8} />
+      </div>
+
       {/* Header Section */}
       <Section className="relative z-10 pb-0">
         <Reveal>
             <div className="flex flex-col gap-8 max-w-5xl">
                 {/* Status Bar */}
                 <div className="inline-flex items-center gap-4 px-4 py-2 border border-white/10 bg-white/5 rounded-sm text-[10px] font-mono uppercase tracking-widest text-muted backdrop-blur-md w-fit">
-                    <span className="flex items-center gap-2 text-coral">
+                    <span className="flex items-center gap-2 text-success">
                         <span className="relative flex h-2 w-2">
-                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-coral opacity-75"></span>
-                          <span className="relative inline-flex rounded-full h-2 w-2 bg-coral"></span>
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
+                          <span className="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
                         </span>
                         System Nominal
                     </span>
@@ -154,8 +159,8 @@ const Specs: React.FC = () => {
       </Section>
 
       {/* The Stack Grid */}
-      <Section grid className="bg-white/[0.02] border-y border-white/5 mt-20">
-         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10 border border-white/10 relative z-10 shadow-2xl">
+      <Section grid className="bg-white/[0.02] border-y border-white/5 mt-20 relative z-10">
+         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/10 border border-white/10 shadow-2xl">
             {STACK_DATA.map((category, i) => (
                 <Reveal key={category.id} delay={i * 50} className="h-full will-change-transform">
                     <SpotlightCard className="h-full p-8 bg-black hover:bg-offblack transition-colors duration-500 group">
@@ -167,7 +172,7 @@ const Specs: React.FC = () => {
                         </div>
 
                         <div className="mb-8">
-                            <h3 className="font-display font-bold text-xl text-white tracking-tight mb-1 group-hover:text-coral transition-colors">{category.label}</h3>
+                            <h3 className="font-display font-bold text-xl text-white tracking-tight mb-1 group-hover:text-primary transition-colors">{category.label}</h3>
                             <p className="text-[10px] text-muted font-mono uppercase tracking-widest">{category.description}</p>
                         </div>
                         
@@ -216,7 +221,7 @@ const Specs: React.FC = () => {
                      <ul className="space-y-5">
                         {RELEASE_GATES.map((gate, i) => (
                             <li key={i} className="flex gap-4 items-start text-sm text-gray-400 group">
-                                <CheckCircle2 size={16} className="text-coral/50 group-hover:text-coral transition-colors mt-0.5 flex-shrink-0" />
+                                <CheckCircle2 size={16} className="text-success/50 group-hover:text-success transition-colors mt-0.5 flex-shrink-0" />
                                 <span className="group-hover:text-gray-300 transition-colors">{gate}</span>
                             </li>
                         ))}

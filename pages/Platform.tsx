@@ -2,7 +2,100 @@
 import React from 'react';
 import { Section, TechPanel, Reveal, Button, DitherGrid, SpotlightCard, DitherGlobe, ScrambleText } from '../components/UI';
 import { Link } from 'react-router-dom';
-import { Database, Globe, Zap, Mail, FileText, PenTool, BarChart, Layout, Heart, Calendar, PlusCircle, ArrowRight, AlertTriangle, XCircle, CheckCircle, Layers, Split, Lock, Clock } from 'lucide-react';
+import { ButtonVariant } from '../types';
+import { Database, Globe, Zap, Mail, FileText, PenTool, BarChart, Layout, Heart, Calendar, PlusCircle, ArrowRight, AlertTriangle, XCircle, CheckCircle, Clock, Split, Lock } from 'lucide-react';
+
+// Static Data extracted for performance
+const DIAGNOSTIC_ITEMS = [
+    { label: "Data Silos", icon: Split }, 
+    { label: "Vendor Lock", icon: Lock }, 
+    { label: "Legacy Debt", icon: Clock }, 
+    { label: "Sync Error", icon: AlertTriangle }
+];
+
+const MISSION_CONTROL_TILES = [
+    { 
+        title: "Partners CRM", 
+        desc: "The single source of truth. People, churches, and pledges in one living record.",
+        icon: Database,
+        meta: "// CORE RECORD"
+    },
+    { 
+        title: "Contributions Hub", 
+        desc: "Live transaction feed. Automate reconciliation and eliminate manual entry.",
+        icon: Zap,
+        meta: "// FINANCE"
+    },
+    { 
+        title: "Web Studio", 
+        desc: "Manage headless sites and missionary pages without code. Connected directly to CRM.",
+        icon: Globe,
+        meta: "// CMS"
+    },
+    { 
+        title: "Email Studio", 
+        desc: "Send branded, authenticated campaigns. No more exporting lists to Mailchimp.",
+        icon: Mail,
+        meta: "// COMMS"
+    },
+    { 
+        title: "Statements Studio", 
+        desc: "Generate receipt packs and year-end tax documents automatically.",
+        icon: FileText,
+        meta: "// COMPLIANCE"
+    },
+    { 
+        title: "Sign Studio", 
+        desc: "Integrated e-signature. Build packets and track routing for agreements.",
+        icon: PenTool,
+        meta: "// LEGAL"
+    },
+    { 
+        title: "Mobilize", 
+        desc: "Accelerate deployment. Move candidates from interest to field with clear steps.",
+        icon: ArrowRight,
+        meta: "// HR FLOW"
+    },
+    { 
+        title: "Report Studio", 
+        desc: "Real-time visibility. Schedule reports for leadership without SQL knowledge.",
+        icon: BarChart,
+        meta: "// INTELLIGENCE"
+    },
+    { 
+        title: "Automations", 
+        desc: "Embedded workflow engine. Trigger actions based on donations or applications.",
+        icon: Layout,
+        meta: "// LOGIC"
+    },
+    {
+        title: "Member Care",
+        desc: "Track health and milestones. Sustain your workers with intentional care.",
+        icon: Heart,
+        meta: "// RETENTION"
+    },
+    {
+        title: "Events & Gatherings",
+        desc: "Centralized registration and logistics. Connect attendees to your CRM instantly.",
+        icon: Calendar,
+        meta: "// LOGISTICS"
+    },
+    {
+        title: "Roadmap Active",
+        desc: "The OS is alive. We are continuously deploying new modules to serve the field.",
+        icon: PlusCircle,
+        meta: "// FUTURE",
+        highlight: true
+    }
+];
+
+function ActivityIcon() {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+        </svg>
+    );
+}
 
 const Platform: React.FC = () => {
   return (
@@ -12,14 +105,14 @@ const Platform: React.FC = () => {
       <Section className="border-b border-white/5 relative">
         <DitherGrid />
         
-        {/* Offset Globe in background */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/3 opacity-30 pointer-events-none hidden lg:block grayscale">
-            <DitherGlobe scale={1.5} />
+        {/* Layer 0: Main Background Globe (Right aligned) */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 opacity-40 pointer-events-none hidden lg:block mix-blend-screen">
+            <DitherGlobe scale={1.6} />
         </div>
 
         <Reveal>
             <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/10 bg-white/5 rounded-full text-[10px] font-mono uppercase tracking-widest text-muted mb-8 backdrop-blur-md">
-                <span className="w-1.5 h-1.5 bg-coral rounded-full animate-pulse"></span>
+                <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse"></span>
                 <ScrambleText text="MISSION OPERATING SYSTEM" delay={200} />
             </div>
 
@@ -34,14 +127,19 @@ const Platform: React.FC = () => {
             </p>
             <div className="flex flex-wrap gap-6">
                 <Link to="/specs"><Button>System Architecture</Button></Link>
-                <Link to="/missions"><Button variant="secondary">Role Views</Button></Link>
+                <Link to="/missions"><Button variant={ButtonVariant.SECONDARY}>Role Views</Button></Link>
             </div>
         </Reveal>
       </Section>
 
       {/* The Problem: Audit View */}
-      <Section className="bg-red-900/[0.02]">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+      <Section className="bg-red-900/[0.02] relative">
+        {/* Secondary Globe Element (Faint, behind audit) */}
+        <div className="absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/2 opacity-10 pointer-events-none grayscale">
+            <DitherGlobe scale={1.2} />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center relative z-10">
             <Reveal>
                 <div className="flex items-center gap-2 text-red-500 mb-4">
                     <ActivityIcon />
@@ -71,12 +169,7 @@ const Platform: React.FC = () => {
             <Reveal delay={200} className="h-full">
                 <TechPanel title="DIAGNOSTIC: CRITICAL SYSTEM ALERTS" className="h-full bg-black border-red-500/20">
                     <div className="grid grid-cols-2 gap-px bg-red-900/20 border border-red-900/20 opacity-60">
-                         {[
-                            { label: "Data Silos", icon: Split }, 
-                            { label: "Vendor Lock", icon: Lock }, 
-                            { label: "Legacy Debt", icon: Clock }, 
-                            { label: "Sync Error", icon: AlertTriangle }
-                         ].map((item, i) => (
+                         {DIAGNOSTIC_ITEMS.map((item, i) => (
                              <div key={i} className="aspect-square flex flex-col items-center justify-center p-4 bg-black/80 hover:bg-red-900/10 transition-colors group">
                                  <item.icon className="text-red-700 mb-2 group-hover:text-red-500 transition-colors" size={24} strokeWidth={1.5} />
                                  <span className="text-[10px] font-mono text-red-700 uppercase text-center group-hover:text-red-400 transition-colors">{item.label}</span>
@@ -89,102 +182,33 @@ const Platform: React.FC = () => {
       </Section>
 
       {/* Mission Control Grid */}
-      <Section grid className="bg-black relative">
+      <Section grid className="bg-black relative overflow-hidden">
+        {/* Decorative Grid Globe at bottom right */}
+        <div className="absolute right-0 bottom-0 translate-x-1/2 translate-y-1/2 opacity-[0.05] pointer-events-none rotate-180">
+            <DitherGlobe scale={2} />
+        </div>
+
         <Reveal>
-            <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-white/10 pb-8">
+            <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-white/10 pb-8 relative z-10">
                 <div>
                     <h2 className="text-5xl font-display font-bold text-white mb-4 tracking-tighter">Mission Control</h2>
                     <p className="text-gray-400 max-w-md text-balance">
                         Replace the clutter with cohesion. Every operational function under one login, sharing one database.
                     </p>
                 </div>
-                <div className="hidden md:flex items-center gap-2 text-coral font-mono text-xs uppercase tracking-widest mt-4 md:mt-0">
+                <div className="hidden md:flex items-center gap-2 text-success font-mono text-xs uppercase tracking-widest mt-4 md:mt-0">
                     <CheckCircle size={14} /> Unified Kernel
                 </div>
             </div>
         </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-             {[
-                { 
-                    title: "Partners CRM", 
-                    desc: "The single source of truth. People, churches, and pledges in one living record.",
-                    icon: Database,
-                    meta: "// CORE RECORD"
-                },
-                { 
-                    title: "Contributions Hub", 
-                    desc: "Live transaction feed. Automate reconciliation and eliminate manual entry.",
-                    icon: Zap,
-                    meta: "// FINANCE"
-                },
-                { 
-                    title: "Web Studio", 
-                    desc: "Manage headless sites and missionary pages without code. Connected directly to CRM.",
-                    icon: Globe,
-                    meta: "// CMS"
-                },
-                { 
-                    title: "Email Studio", 
-                    desc: "Send branded, authenticated campaigns. No more exporting lists to Mailchimp.",
-                    icon: Mail,
-                    meta: "// COMMS"
-                },
-                { 
-                    title: "Statements Studio", 
-                    desc: "Generate receipt packs and year-end tax documents automatically.",
-                    icon: FileText,
-                    meta: "// COMPLIANCE"
-                },
-                { 
-                    title: "Sign Studio", 
-                    desc: "Integrated e-signature. Build packets and track routing for agreements.",
-                    icon: PenTool,
-                    meta: "// LEGAL"
-                },
-                { 
-                    title: "Mobilize", 
-                    desc: "Accelerate deployment. Move candidates from interest to field with clear steps.",
-                    icon: ArrowRight,
-                    meta: "// HR FLOW"
-                },
-                { 
-                    title: "Report Studio", 
-                    desc: "Real-time visibility. Schedule reports for leadership without SQL knowledge.",
-                    icon: BarChart,
-                    meta: "// INTELLIGENCE"
-                },
-                { 
-                    title: "Automations", 
-                    desc: "Embedded workflow engine. Trigger actions based on donations or applications.",
-                    icon: Layout,
-                    meta: "// LOGIC"
-                },
-                {
-                    title: "Member Care",
-                    desc: "Track health and milestones. Sustain your workers with intentional care.",
-                    icon: Heart,
-                    meta: "// RETENTION"
-                },
-                {
-                    title: "Events & Gatherings",
-                    desc: "Centralized registration and logistics. Connect attendees to your CRM instantly.",
-                    icon: Calendar,
-                    meta: "// LOGISTICS"
-                },
-                {
-                    title: "Roadmap Active",
-                    desc: "The OS is alive. We are continuously deploying new modules to serve the field.",
-                    icon: PlusCircle,
-                    meta: "// FUTURE",
-                    highlight: true
-                }
-             ].map((tile, i) => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
+             {MISSION_CONTROL_TILES.map((tile, i) => (
                  <Reveal key={i} delay={i * 50} className="h-full">
                     <SpotlightCard className={`p-8 h-full flex flex-col justify-between group ${tile.highlight ? 'border-dashed border-white/20' : ''}`}>
                         <div>
                             <div className="flex justify-between items-start mb-8">
-                                <tile.icon className={`${tile.highlight ? 'text-white' : 'text-gray-500'} group-hover:text-white transition-colors`} size={28} strokeWidth={1} />
+                                <tile.icon className={`${tile.highlight ? 'text-white' : 'text-gray-500'} group-hover:text-primary transition-colors`} size={28} strokeWidth={1} />
                                 <span className="font-mono text-[9px] text-gray-600 uppercase tracking-widest">{tile.meta}</span>
                             </div>
                             <h3 className="text-xl font-display font-bold text-white mb-3 tracking-tight">{tile.title}</h3>
@@ -203,13 +227,5 @@ const Platform: React.FC = () => {
     </div>
   );
 };
-
-function ActivityIcon() {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-        </svg>
-    );
-}
 
 export default Platform;

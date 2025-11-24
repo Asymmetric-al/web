@@ -1,7 +1,7 @@
-
 import React from 'react';
 import { Section, Button, GridPattern } from '../components/UI';
 import { Link } from 'react-router-dom';
+import { ButtonVariant } from '../types';
 
 const About: React.FC = () => {
   return (
@@ -53,7 +53,7 @@ const About: React.FC = () => {
                 If you want your craft to serve the Church, reach out. We work with Next.js, TypeScript, TanStack, and Headless WordPress.
             </p>
             <a href="mailto:info@asymmetric.al">
-                <Button variant="secondary">Apply to build with us</Button>
+                <Button variant={ButtonVariant.SECONDARY}>Apply to build with us</Button>
             </a>
         </div>
       </Section>

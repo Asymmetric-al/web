@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Section, Button, TechPanel, Reveal, DitherGrid, ScrambleText, SpotlightCard } from '../components/UI';
+import { Section, Button, TechPanel, Reveal, DitherGrid, ScrambleText, SpotlightCard, DitherGlobe } from '../components/UI';
 import { ShieldCheck, ArrowRight, Lock, HeartHandshake, HelpCircle } from 'lucide-react';
 
 // --- Static Data ---
@@ -30,6 +30,11 @@ const Give: React.FC = () => {
     <div className="pt-32 min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans overflow-x-hidden">
       <DitherGrid className="opacity-20 fixed inset-0 z-0" />
 
+      {/* Background Globe for Give */}
+      <div className="absolute top-32 right-0 -translate-y-1/3 translate-x-1/3 opacity-20 pointer-events-none z-0">
+          <DitherGlobe scale={1.4} />
+      </div>
+
       <Section className="relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
             
@@ -37,7 +42,7 @@ const Give: React.FC = () => {
             <div className="lg:col-span-7 pt-8">
                 <Reveal>
                     <div className="inline-flex items-center gap-3 px-3 py-1 border border-white/10 bg-white/5 rounded-full text-[10px] font-mono uppercase tracking-widest text-muted mb-8 backdrop-blur-md">
-                        <span className="w-1.5 h-1.5 bg-coral rounded-full animate-pulse"></span>
+                        <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse"></span>
                         <ScrambleText text="NONPROFIT 501(c)(3)" delay={200} />
                     </div>
 
@@ -56,7 +61,7 @@ const Give: React.FC = () => {
                     {PITCH_POINTS.map((item, i) => (
                         <Reveal key={i} delay={300 + (i * 100)}>
                             <div className="group">
-                                <h3 className="text-white font-display font-bold text-lg mb-2 group-hover:text-coral transition-colors">{item.title}</h3>
+                                <h3 className="text-white font-display font-bold text-lg mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
                                 <p className="text-sm text-gray-500 leading-relaxed text-balance">{item.desc}</p>
                             </div>
                         </Reveal>
@@ -72,10 +77,10 @@ const Give: React.FC = () => {
                             {/* Header */}
                             <div className="flex justify-between items-center border-b border-white/10 pb-6">
                                 <div className="flex items-center gap-2 text-white">
-                                    <HeartHandshake size={16} className="text-coral" />
+                                    <HeartHandshake size={16} className="text-success" />
                                     <span className="font-mono text-sm uppercase tracking-wider font-bold">Secure Donation</span>
                                 </div>
-                                <div className="flex items-center gap-1 text-[10px] font-mono text-coral/80 uppercase tracking-widest">
+                                <div className="flex items-center gap-1 text-[10px] font-mono text-success/80 uppercase tracking-widest">
                                     <Lock size={10} />
                                     Encrypted
                                 </div>
@@ -128,12 +133,12 @@ const Give: React.FC = () => {
                                 </span>
                             </div>
 
-                            <Button className="w-full py-6 text-base bg-white hover:bg-coral hover:text-black border-none" icon={<ArrowRight size={16} />}>
+                            <Button className="w-full py-6 text-base bg-white hover:bg-primary hover:text-white border-none" icon={<ArrowRight size={16} />}>
                                 Process Donation
                             </Button>
 
                             <div className="flex items-center justify-center gap-2 text-[10px] font-mono text-gray-600 uppercase tracking-widest">
-                                <ShieldCheck size={12} className="text-coral" />
+                                <ShieldCheck size={12} className="text-success" />
                                 <span>256-bit SSL Encrypted</span>
                             </div>
                         </div>
@@ -153,8 +158,8 @@ const Give: React.FC = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {FAQ_ITEMS.map((item, i) => (
-                    <TechPanel key={i} noBorder className="bg-transparent pl-6 border-l border-white/10 hover:border-coral/50 transition-colors group">
-                        <h4 className="text-white font-bold font-display text-lg mb-3 group-hover:text-coral transition-colors">{item.q}</h4>
+                    <TechPanel key={i} noBorder className="bg-transparent pl-6 border-l border-white/10 hover:border-primary/50 transition-colors group">
+                        <h4 className="text-white font-bold font-display text-lg mb-3 group-hover:text-primary transition-colors">{item.q}</h4>
                         <p className="text-sm text-gray-500 leading-relaxed text-balance">{item.a}</p>
                     </TechPanel>
                 ))}
