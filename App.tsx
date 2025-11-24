@@ -12,6 +12,7 @@ import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Join from './pages/Join';
+import Disclosure from './pages/Disclosure';
 import NotFound from './pages/NotFound';
 
 // Scroll to top helper
@@ -41,6 +42,7 @@ const App: React.FC = () => {
             <Route path="/join" element={<Join />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
+            <Route path="/disclosure" element={<Disclosure />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main>

@@ -181,7 +181,7 @@ export const Footer: React.FC = () => {
                 <ul className="space-y-4 text-sm font-mono text-muted">
                     <FooterLink to="/privacy">Privacy Policy</FooterLink>
                     <FooterLink to="/terms">Terms of Service</FooterLink>
-                    <FooterLink>501(c)(3) Disclosure</FooterLink>
+                    <FooterLink to="/disclosure">501(c)(3) Disclosure</FooterLink>
                 </ul>
             </div>
 
