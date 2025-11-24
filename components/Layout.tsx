@@ -1,6 +1,7 @@
+
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, ArrowRight } from 'lucide-react';
+import { Menu, X, ArrowRight, Github } from 'lucide-react';
 import { NAV_ITEMS } from '../constants';
 import { Logo, Container } from './UI';
 
@@ -99,7 +100,7 @@ const FooterHeader: React.FC<{ children: React.ReactNode }> = ({ children }) => 
 const FooterLink: React.FC<{ to?: string; children: React.ReactNode }> = ({ to, children }) => {
     const content = (
         <>
-            <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity -ml-5 group-hover:ml-0 text-primary" />
+            <ArrowRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity -ml-5 group-hover:ml-0 text-white" />
             {children}
         </>
     );
@@ -170,6 +171,7 @@ export const Footer: React.FC = () => {
                 <ul className="space-y-4 text-sm font-mono text-muted">
                     <FooterLink to="/missions">For Missions</FooterLink>
                     <FooterLink to="/give">Give to Build</FooterLink>
+                    <FooterLink to="/join">Join the Team</FooterLink>
                     <FooterLink to="/contact">Contact Us</FooterLink>
                 </ul>
             </div>
@@ -200,8 +202,14 @@ export const Footer: React.FC = () => {
             <div className="text-[10px] font-mono text-muted uppercase tracking-widest">
                 Asymmetric.al © {new Date().getFullYear()}
             </div>
-            <div className="text-[10px] font-mono text-white uppercase tracking-widest">
-                Soli Deo Gloria
+            
+            <div className="flex items-center gap-6">
+                <a href="https://github.com/Asymmetric-al" target="_blank" rel="noreferrer" className="text-muted hover:text-white transition-colors" aria-label="GitHub">
+                    <Github size={16} />
+                </a>
+                <div className="text-[10px] font-mono text-white uppercase tracking-widest">
+                    Soli Deo Gloria
+                </div>
             </div>
         </div>
       </Container>

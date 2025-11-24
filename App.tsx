@@ -1,3 +1,4 @@
+
 import React, { useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Navbar, Footer } from './components/Layout';
@@ -10,6 +11,7 @@ import Manifesto from './pages/Manifesto';
 import Contact from './pages/Contact';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import Join from './pages/Join';
 import NotFound from './pages/NotFound';
 
 // Scroll to top helper
@@ -36,6 +38,7 @@ const App: React.FC = () => {
             <Route path="/manifesto" element={<Manifesto />} />
             <Route path="/give" element={<Give />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/join" element={<Join />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="*" element={<NotFound />} />

@@ -18,7 +18,7 @@ const FAQ_ITEMS = [
     { q: "Do you charge a margin?", a: "No. Ministries keep their own Stripe accounts. We charge only at-cost for hosting and licensing. Our aim is global impact, not profit." },
     { q: "Will you stay open source?", a: "Yes. We build on and contribute to open-source. We will keep publishing our forks and patches to ensure no vendor lock-in." },
     { q: "What does my gift fund?", a: "Core engineering, security reviews, data residency work, and early onboarding for pilot organizations." },
-    { q: "Can I give via Check or DAF?", a: "Yes. Please contact info@asymmetric.al for wire instructions or mailing addresses for Donor Advised Funds." },
+    { q: "Can I give via Check or DAF?", a: "Yes. Checks payable to 'Global Fellowship Inc' (Memo: Asymmetric.al) can be mailed to: PO Box 1, Meadow Vista, CA 95722. Contact us at info@asymmetric.al for wire instructions." },
     { q: "Who controls the funds?", a: "Asymmetric.al operates as a project under the governance of the Global Fellowship board, ensuring financial accountability." }
 ];
 

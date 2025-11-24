@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Section, Reveal, Button, DitherGlobe, GridPattern, SpotlightCard, TechPanel, ScrambleText, Container } from '../components/UI';
 import { Mail, MapPin, MessageSquare, ArrowRight, Terminal } from 'lucide-react';
@@ -69,8 +70,8 @@ const Contact: React.FC = () => {
                                 <p className="text-sm text-gray-500 font-mono pl-8 leading-relaxed">
                                     Global Fellowship Inc.<br/>
                                     Attn: Asymmetric.al Project<br/>
-                                    [Mailing Address Redacted for Web]<br/>
-                                    United States
+                                    PO Box 1<br/>
+                                    Meadow Vista, CA 95722
                                 </p>
                             </div>
                         </div>
@@ -92,7 +93,7 @@ const Contact: React.FC = () => {
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <label className="font-mono text-[10px] uppercase tracking-widest text-gray-500">Identity // Name</label>
-                                        <input type="text" className="w-full bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-primary focus:bg-white/10 outline-none transition-all placeholder:text-white/20" placeholder="J. DOE" />
+                                        <input type="text" className="w-full bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-primary focus:bg-white/10 outline-none transition-all placeholder:text-white/20" placeholder="H. TAYLOR" />
                                     </div>
                                     <div className="space-y-2">
                                         <label className="font-mono text-[10px] uppercase tracking-widest text-gray-500">Identity // Email</label>

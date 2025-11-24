@@ -2,10 +2,10 @@ import React from 'react';
 import { Section, Button, Reveal, DitherGrid, DitherGlobe, SpotlightCard, Container, ScrambleText } from '../components/UI';
 import { ButtonVariant } from '../types';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Terminal, Activity, Lock, Scale, Clock, Globe } from 'lucide-react';
+import { ArrowRight, Terminal, Activity, Lock, Scale, Clock, Globe, Code } from 'lucide-react';
 
 // --- Static Data (Extracted for Performance) ---
-const TICKER_TEXT = Array(8).fill("Unified Operating System // Accelerating the Great Commission // Open Source Core // Soli Deo Gloria // Zero Admin Drag // ");
+const TICKER_TEXT = Array(8).fill("Unified Operating System // Accelerating the Great Commission // Open Source Core // Hiring Builders // Soli Deo Gloria // Zero Admin Drag // ");
 
 const PHILOSOPHY_CARDS = [
     { 
@@ -182,6 +182,37 @@ const Home: React.FC = () => {
                 </Reveal>
             ))}
          </div>
+      </Section>
+
+      {/* Recruitment CTA - "The Builders" */}
+      <Section className="relative z-10 border-t border-white/5 bg-offblack/30">
+        <Reveal>
+            <div className="flex flex-col md:flex-row items-center justify-between gap-12">
+                <div className="max-w-3xl">
+                    <div className="flex items-center gap-2 mb-6">
+                        <Code size={14} className="text-success" />
+                        <span className="font-mono text-xs text-success uppercase tracking-widest">Hiring Builders</span>
+                    </div>
+                    <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6 tracking-tight">
+                        Write code for the<br />Great Commission.
+                    </h2>
+                    <p className="text-muted text-lg leading-relaxed text-balance">
+                        We are looking for high-agency senior engineers, designers, and problem solvers who want to use their craft for a higher purpose. 
+                        Join the core team or contribute to the open source ecosystem.
+                    </p>
+                </div>
+                <div className="flex-shrink-0">
+                    <Link to="/join">
+                        <Button 
+                            variant={ButtonVariant.SECONDARY} 
+                            className="border-white text-white hover:bg-white hover:!text-black transition-all duration-300"
+                        >
+                            Join the Team <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                    </Link>
+                </div>
+            </div>
+        </Reveal>
       </Section>
 
     </div>
