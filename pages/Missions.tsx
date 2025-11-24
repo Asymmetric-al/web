@@ -86,7 +86,7 @@ const Missions: React.FC = () => {
                                 <span className="w-1 h-1 bg-red-500"></span> DATA SILOS
                             </li>
                             <li className="text-xs font-mono text-red-400 flex items-center gap-2">
-                                <span className="w-1 h-1 bg-red-500"></span> BROKEN ZAPIER LINKS
+                                <span className="w-1 h-1 bg-red-500"></span> BROKEN AUTOMATION LINKS
                             </li>
                             <li className="text-xs font-mono text-red-400 flex items-center gap-2">
                                 <span className="w-1 h-1 bg-red-500"></span> HIGH SUBSCRIPTION FEES
