@@ -174,23 +174,41 @@ const PhilosophySection = memo(() => (
             {/* Left Column: The Concept (Sticky on Desktop) */}
             <div className="lg:col-span-5 relative lg:sticky lg:top-32 self-start">
                 <Reveal>
-                    <h2 className="text-4xl md:text-5xl font-display font-medium mb-8 text-white text-balance tracking-tight">Why the name?</h2>
-                    <p className="text-muted leading-relaxed mb-10 text-lg font-light text-balance">
+                    <h2 className="text-5xl md:text-7xl font-display font-bold mb-8 text-white text-balance tracking-tighter leading-[0.9]">Why the name?</h2>
+                    <p className="text-gray-400 leading-relaxed mb-12 text-lg font-light text-balance border-l border-white/20 pl-6">
                         Good tools let simple actions create larger outcomes. We believe God multiplies faithfulness. 
                         If God is in it, little becomes much.
                     </p>
                     
-                    {/* 1 -> Infinity Graphic */}
-                    <div className="p-12 border border-white/10 bg-offblack/50 backdrop-blur-sm rounded-sm">
-                        <div className="flex justify-between items-center mb-8 px-2 md:px-6">
-                            <span className="text-7xl md:text-8xl font-display font-bold text-white leading-none">1</span>
-                            <div className="h-px bg-gradient-to-r from-transparent via-white/40 to-transparent flex-1 mx-4 md:mx-8 relative">
-                                <ArrowRight className="text-white absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2" size={20} />
+                    {/* The Multiplier Visualization */}
+                    <div className="relative aspect-square md:aspect-[4/3] flex flex-col items-center justify-center p-8 md:p-12 border border-white/10 bg-gradient-to-b from-white/[0.05] to-black rounded-sm overflow-hidden group shadow-2xl">
+                        
+                        {/* Background Texture */}
+                        <div className="absolute inset-0 opacity-[0.1]" 
+                             style={{ backgroundImage: 'radial-gradient(circle at center, white 1px, transparent 1px)', backgroundSize: '24px 24px' }}
+                             aria-hidden="true"
+                        />
+                        
+                        {/* The Equation */}
+                        <div className="flex justify-between items-center w-full relative z-10 px-2 md:px-4">
+                            {/* "1" */}
+                            <span className="text-[8rem] md:text-[10rem] font-display font-bold text-white leading-none tracking-tighter">1</span>
+                            
+                            {/* Connector Line - Precise and Thin */}
+                            <div className="flex-1 mx-4 md:mx-6 relative h-px bg-white/20">
+                                <div className="absolute inset-0 bg-white w-full h-full origin-left animate-[scan_3s_ease-in-out_infinite] opacity-50" />
+                                <ArrowRight className="text-white absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2" size={32} strokeWidth={1} />
                             </div>
-                            <span className="text-7xl md:text-8xl font-display font-bold text-white leading-none">∞</span>
+                            
+                            {/* "∞" - Scaled larger for balance */}
+                            <span className="text-[10rem] md:text-[14rem] font-display font-bold text-white leading-none tracking-tighter translate-y-3 md:translate-y-4">∞</span>
                         </div>
-                        <div className="text-xs font-mono uppercase tracking-widest text-white/80 text-center border-t border-white/10 pt-6">
-                            Simple Faithfulness → Exponential Impact
+                        
+                        {/* Label */}
+                        <div className="mt-12 md:mt-16 pt-8 border-t border-white/10 w-full text-center">
+                            <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-white/60 block">
+                                Simple Faithfulness → Exponential Impact
+                            </span>
                         </div>
                     </div>
                 </Reveal>
@@ -200,12 +218,17 @@ const PhilosophySection = memo(() => (
             <div className="lg:col-span-7 space-y-6 pt-8 lg:pt-0">
                 {PHILOSOPHY_CARDS.map((item, i) => (
                     <Reveal key={i} delay={i * 100}>
-                        <SpotlightCard className="p-10 group bg-offblack/40 border-white/5">
-                            <div className="grid grid-cols-1 gap-4">
-                                <h3 className="text-2xl font-display font-bold text-white group-hover:text-primary transition-colors duration-300 tracking-tight">
+                        <SpotlightCard className="p-10 group bg-white/[0.02] border-white/10 hover:border-white/30 transition-all relative overflow-hidden h-full">
+                             {/* Watermark Number */}
+                             <div className="absolute right-4 top-0 text-[8rem] font-display font-bold text-white/[0.03] pointer-events-none select-none z-0 leading-none">
+                                {(i + 1).toString().padStart(2, '0')}
+                            </div>
+                            
+                            <div className="relative z-10 grid grid-cols-1 gap-4">
+                                <h3 className="text-3xl font-display font-bold text-white group-hover:text-white transition-colors duration-300 tracking-tight">
                                     {item.title}
                                 </h3>
-                                <p className="text-muted font-light text-lg leading-relaxed border-l border-white/10 pl-6 text-balance">
+                                <p className="text-gray-400 font-light text-lg leading-relaxed text-balance">
                                     {item.desc}
                                 </p>
                             </div>
