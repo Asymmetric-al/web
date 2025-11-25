@@ -1,6 +1,6 @@
 
 import React, { FormEvent } from 'react';
-import { Section, TechPanel, Reveal, Button, DitherGlobe, SpotlightCard, ScrambleText } from '../components/UI';
+import { Section, Reveal, Button, DitherGlobe, SpotlightCard, ScrambleText } from '../components/UI';
 import { Target, Layers, AlertTriangle, ArrowRight, Heart, ShieldAlert, Globe, LucideIcon } from 'lucide-react';
 
 // --- Types ---
@@ -46,7 +46,7 @@ const PROBLEM_OPTIONS: readonly ProblemOption[] = [
         title: "OPTION A: THE DIY TRAP",
         icon: Layers,
         subtitle: "The Generic Stack",
-        desc: "Stitching together Salesforce, Mailchimp, QuickBooks, spreadsheets, standalone website builders, and third-party missionary dashboards.",
+        desc: "Stitching together Salesforce, Mailchimp, QuickBooks, spreadsheets, and standalone website builders.",
         points: ["DATA SILOS", "BROKEN AUTOMATION LINKS", "HIGH SUBSCRIPTION FEES"]
     },
     {
@@ -54,31 +54,84 @@ const PROBLEM_OPTIONS: readonly ProblemOption[] = [
         title: "OPTION B: THE LEGACY MONOLITH",
         icon: Globe,
         subtitle: "The Outdated Vendor",
-        desc: "Proprietary software built in the early 2000s. Safe, but stagnant.",
+        desc: "Proprietary software built in the early 2000s. Safe, but stagnant and difficult to modernize.",
         points: ["VENDOR LOCK-IN", "CLUNKY UX", "SLOW ROADMAPS"]
     }
 ];
 
 // --- Sub-Components ---
 
-const FalseChoicePanel: React.FC<{ option: ProblemOption }> = ({ option }) => (
-    <TechPanel title={option.title} className="bg-black h-full">
-        <div className="mb-4 text-gray-400">
-            <option.icon size={24} className="mb-4 text-gray-600" />
-            <h3 className="text-white font-bold text-lg mb-2">{option.subtitle}</h3>
-            <p className="text-sm leading-relaxed">
-                {option.desc}
-            </p>
+const FalseChoicePanel: React.FC<{ option: ProblemOption }> = ({ option }) => {
+    const isDIY = option.id === 'diy';
+    const [label, ...headlineParts] = option.title.split(':');
+    const headline = headlineParts.join(':').trim();
+
+    // Inline implementation of TechPanel styles to ensure perfect flex height behavior
+    return (
+        <div className="bg-black/80 h-full border border-white/10 hover:border-white/20 transition-all duration-500 group relative overflow-hidden flex flex-col">
+            
+            {/* TechPanel Corner Markers */}
+            <div className="pointer-events-none absolute inset-0 opacity-50">
+                <div className="absolute top-0 left-0 w-px h-2 bg-white/30" />
+                <div className="absolute top-0 left-0 w-2 h-px bg-white/30" />
+                <div className="absolute top-0 right-0 w-px h-2 bg-white/30" />
+                <div className="absolute top-0 right-0 w-2 h-px bg-white/30" />
+                <div className="absolute bottom-0 left-0 w-px h-2 bg-white/30" />
+                <div className="absolute bottom-0 left-0 w-2 h-px bg-white/30" />
+                <div className="absolute bottom-0 right-0 w-px h-2 bg-white/30" />
+                <div className="absolute bottom-0 right-0 w-2 h-px bg-white/30" />
+            </div>
+
+            {/* Ambient Glow */}
+            <div className={`absolute -top-20 -right-20 w-64 h-64 ${isDIY ? 'bg-orange-500/10' : 'bg-blue-500/10'} blur-[60px] rounded-full pointer-events-none opacity-20 group-hover:opacity-50 transition-opacity duration-500`} />
+
+            <div className="relative z-10 flex flex-col h-full p-6 md:p-8">
+                
+                {/* Header Section */}
+                <div className="flex justify-between items-start mb-6">
+                    <div className={`p-3 rounded-sm border backdrop-blur-md ${
+                        isDIY 
+                        ? 'bg-orange-900/10 border-orange-500/20 text-orange-500' 
+                        : 'bg-blue-900/10 border-blue-500/20 text-blue-500'
+                    } group-hover:scale-105 transition-transform duration-500 shadow-lg`}>
+                        <option.icon size={24} strokeWidth={1.5} />
+                    </div>
+                    <span className="font-mono text-[9px] text-white/40 uppercase tracking-widest bg-white/5 px-2 py-1 rounded border border-white/5">
+                        {label}
+                    </span>
+                </div>
+
+                {/* Typography Block */}
+                <div className="mb-4">
+                    <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-3 tracking-tight leading-[1.1] group-hover:text-white/90 transition-colors">
+                        {headline}
+                    </h3>
+                    <div className={`flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest ${isDIY ? 'text-orange-400' : 'text-blue-400'}`}>
+                        <div className={`h-px w-4 ${isDIY ? 'bg-orange-500/50' : 'bg-blue-500/50'}`} />
+                        {option.subtitle}
+                    </div>
+                </div>
+
+                <p className="text-gray-400 text-sm leading-relaxed mb-8 border-l border-white/10 pl-4 font-light flex-grow">
+                    {option.desc}
+                </p>
+
+                {/* Bottom List */}
+                <div className="mt-auto pt-5 border-t border-white/5 -mx-6 -mb-6 md:-mx-8 md:-mb-8 p-6 md:p-8 bg-white/[0.02]">
+                     <div className="text-[9px] font-mono text-white/30 uppercase tracking-widest mb-3">Critical Failures</div>
+                     <ul className="space-y-2">
+                        {option.points.map((point, i) => (
+                            <li key={i} className="text-[11px] font-mono text-white/70 flex items-start gap-2.5 group/list">
+                                <AlertTriangle size={12} className="text-red-500 shrink-0 mt-0.5 group-hover/list:text-red-400 transition-colors" />
+                                <span className="group-hover/list:text-white transition-colors">{point}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
         </div>
-        <ul className="space-y-3 pt-4 border-t border-white/10">
-            {option.points.map((point, i) => (
-                <li key={i} className="text-xs font-mono text-red-400 flex items-center gap-2">
-                    <span className="w-1 h-1 bg-red-500 rounded-full"></span> {point}
-                </li>
-            ))}
-        </ul>
-    </TechPanel>
-);
+    );
+};
 
 const FocusCard: React.FC<{ item: FocusPoint }> = ({ item }) => (
     <SpotlightCard className="h-full p-10 bg-black/80 flex flex-col justify-between group">
@@ -166,8 +219,8 @@ const Missions: React.FC = () => {
       {/* The Problem: The False Choice */}
       <Section className="bg-offblack/30 relative">
           <Reveal>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                <div className="lg:col-span-5">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch">
+                <div className="lg:col-span-5 flex flex-col justify-center">
                     <h2 className="text-4xl font-display font-bold text-white mb-6 tracking-tight">The "False Choice" facing agencies today.</h2>
                     <p className="text-muted leading-relaxed text-lg mb-8 text-balance">
                         For decades, mission leaders have been forced to choose between two failing options. This compromise drains resources and slows deployment.
