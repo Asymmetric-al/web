@@ -36,7 +36,7 @@ const WHY_FOCUS_DATA: readonly FocusPoint[] = [
     {
         title: "Sovereignty Matters",
         icon: ShieldAlert,
-        desc: "In an increasingly complex geopolitical landscape, relying on Big Tech for sensitive missionary data is a risk. We build tenant-sovereign architecture where you hold the keys."
+        desc: "True ownership means you aren't beholden to a vendor's roadmap or pricing. We build architecture where you own the data, the keys, and the code, ensuring you are never locked into a system you can't control."
     }
 ];
 
@@ -46,7 +46,7 @@ const PROBLEM_OPTIONS: readonly ProblemOption[] = [
         title: "OPTION A: THE DIY TRAP",
         icon: Layers,
         subtitle: "The Generic Stack",
-        desc: "Stitching together Salesforce, Mailchimp, QuickBooks, and spreadsheets.",
+        desc: "Stitching together Salesforce, Mailchimp, QuickBooks, spreadsheets, standalone website builders, and third-party missionary dashboards.",
         points: ["DATA SILOS", "BROKEN AUTOMATION LINKS", "HIGH SUBSCRIPTION FEES"]
     },
     {
@@ -178,7 +178,7 @@ const Missions: React.FC = () => {
                             System Warning
                         </div>
                         <p className="text-red-200/80 text-sm leading-relaxed">
-                            "We are spending more time managing our tools than we are managing our missionaries." — Common Agency Feedback
+                            "Our ops, mobilization, and finance teams are spending more time managing our tools than we are supporting our missionaries." — Common Agency Feedback
                         </p>
                     </div>
                 </div>

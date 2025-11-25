@@ -88,7 +88,8 @@ const STACK_DATA: readonly StackCategory[] = [
             { label: "Redis", url: "https://github.com/redis/redis/" },
             { label: "TanStack DB", url: "https://github.com/TanStack/db" },
             { label: "pgvector", url: "https://github.com/pgvector/pgvector" },
-            { label: "TanStack Query", url: "https://tanstack.com/query/latest" }
+            { label: "TanStack Query", url: "https://tanstack.com/query/latest" },
+            { label: "TanStack Table", url: "https://tanstack.com/table/latest" }
         ]
     },
     {
