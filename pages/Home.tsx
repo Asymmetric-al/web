@@ -1,7 +1,7 @@
 
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Terminal, Code } from 'lucide-react';
+import { ArrowRight, Terminal, Code, ChevronRight } from 'lucide-react';
 import { 
   Section, 
   Button, 
@@ -169,7 +169,7 @@ TickerSection.displayName = 'TickerSection';
 
 const PhilosophySection = memo(() => (
     <Section className="bg-black relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
             
             {/* Left Column: The Concept (Sticky on Desktop) */}
             <div className="lg:col-span-5 relative lg:sticky lg:top-32 self-start">
@@ -180,33 +180,52 @@ const PhilosophySection = memo(() => (
                         If God is in it, little becomes much.
                     </p>
                     
-                    {/* The Multiplier Visualization */}
-                    <div className="relative aspect-square md:aspect-[4/3] flex flex-col items-center justify-center p-8 md:p-12 border border-white/10 bg-gradient-to-b from-white/[0.05] to-black rounded-sm overflow-hidden group shadow-2xl">
+                    {/* The Multiplier Visualization - Engineered for Alignment */}
+                    <div className="relative aspect-[4/3] flex flex-col items-center justify-center p-4 md:p-10 border border-white/10 bg-gradient-to-b from-white/[0.03] to-black rounded-sm overflow-hidden shadow-2xl group">
                         
                         {/* Background Texture */}
-                        <div className="absolute inset-0 opacity-[0.1]" 
+                        <div className="absolute inset-0 opacity-[0.03]" 
                              style={{ backgroundImage: 'radial-gradient(circle at center, white 1px, transparent 1px)', backgroundSize: '24px 24px' }}
                              aria-hidden="true"
                         />
                         
                         {/* The Equation */}
-                        <div className="flex justify-between items-center w-full relative z-10 px-2 md:px-4">
+                        <div className="flex justify-between items-center w-full relative z-10 px-2 md:px-4 h-full">
                             {/* "1" */}
-                            <span className="text-[8rem] md:text-[10rem] font-display font-bold text-white leading-none tracking-tighter">1</span>
+                            <span className="text-[6rem] sm:text-[8rem] md:text-[12rem] font-display font-bold text-white leading-none tracking-tighter select-none drop-shadow-2xl flex-shrink-0 relative top-[-0.05em]">
+                                1
+                            </span>
                             
-                            {/* Connector Line - Precise and Thin */}
-                            <div className="flex-1 mx-4 md:mx-6 relative h-px bg-white/20">
-                                <div className="absolute inset-0 bg-white w-full h-full origin-left animate-[scan_3s_ease-in-out_infinite] opacity-50" />
-                                <ArrowRight className="text-white absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/2" size={32} strokeWidth={1} />
+                            {/* Connector */}
+                            <div className="flex-1 mx-6 sm:mx-12 md:mx-16 relative flex items-center justify-center translate-y-0 md:-translate-y-2">
+                                {/* The Track */}
+                                <div className="w-full h-[6px] md:h-[10px] bg-white/10 relative overflow-hidden rounded-sm">
+                                     {/* The Quantum Pulse */}
+                                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent w-1/2 animate-[shimmer_1.5s_infinite_linear] opacity-90" />
+                                </div>
+                                {/* The Head - Solid Triangle pointing right */}
+                                <div className="absolute -right-1 flex items-center justify-center translate-x-1/2">
+                                    <svg 
+                                        width="40" 
+                                        height="40" 
+                                        viewBox="0 0 24 24" 
+                                        fill="currentColor" 
+                                        className="text-white w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"
+                                    >
+                                        <path d="M3 22V2L21 12L3 22Z" /> 
+                                    </svg>
+                                </div>
                             </div>
                             
-                            {/* "∞" - Scaled larger for balance */}
-                            <span className="text-[10rem] md:text-[14rem] font-display font-bold text-white leading-none tracking-tighter translate-y-3 md:translate-y-4">∞</span>
+                            {/* "∞" - Adjusted to align optical center with the arrow */}
+                            <span className="text-[8rem] sm:text-[10rem] md:text-[16rem] font-display font-bold text-white leading-none tracking-tighter select-none drop-shadow-2xl flex-shrink-0 relative top-[0.02em]">
+                                ∞
+                            </span>
                         </div>
                         
-                        {/* Label */}
-                        <div className="mt-12 md:mt-16 pt-8 border-t border-white/10 w-full text-center">
-                            <span className="font-mono text-[10px] md:text-xs uppercase tracking-[0.3em] text-white/60 block">
+                        {/* Label - Pinned to bottom */}
+                        <div className="mt-auto pt-8 md:pt-12 border-t border-white/10 w-full text-center relative z-20">
+                            <span className="font-mono text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-tight sm:tracking-widest md:tracking-[0.2em] text-white/50 block whitespace-nowrap overflow-hidden text-ellipsis px-2">
                                 Simple Faithfulness → Exponential Impact
                             </span>
                         </div>
@@ -218,17 +237,17 @@ const PhilosophySection = memo(() => (
             <div className="lg:col-span-7 space-y-6 pt-8 lg:pt-0">
                 {PHILOSOPHY_CARDS.map((item, i) => (
                     <Reveal key={i} delay={i * 100}>
-                        <SpotlightCard className="p-10 group bg-white/[0.02] border-white/10 hover:border-white/30 transition-all relative overflow-hidden h-full">
-                             {/* Watermark Number */}
-                             <div className="absolute right-4 top-0 text-[8rem] font-display font-bold text-white/[0.03] pointer-events-none select-none z-0 leading-none">
+                        <SpotlightCard className="p-8 md:p-12 group bg-white/[0.02] border-white/10 hover:border-white/30 transition-all relative overflow-hidden flex flex-col justify-center min-h-[240px]">
+                             {/* Watermark Number - Absolute positioning */}
+                             <div className="absolute right-6 top-2 text-[5rem] md:text-[8rem] font-display font-bold text-white/[0.03] pointer-events-none select-none z-0 leading-none">
                                 {(i + 1).toString().padStart(2, '0')}
                             </div>
                             
-                            <div className="relative z-10 grid grid-cols-1 gap-4">
-                                <h3 className="text-3xl font-display font-bold text-white group-hover:text-white transition-colors duration-300 tracking-tight">
+                            <div className="relative z-10 max-w-lg flex flex-col justify-center">
+                                <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4 tracking-tight bg-black/50 w-fit backdrop-blur-sm px-1">
                                     {item.title}
                                 </h3>
-                                <p className="text-gray-400 font-light text-lg leading-relaxed text-balance">
+                                <p className="text-gray-400 group-hover:text-gray-300 transition-colors font-light text-lg leading-relaxed text-balance">
                                     {item.desc}
                                 </p>
                             </div>
