@@ -246,7 +246,7 @@ const InfrastructureBento: React.FC = () => {
           title="High-Fidelity Communications"
           pillText="Unlayer / PDF Generation"
           icon={Mail}
-          description="Every touchpoint is a reflection of your stewardship. From a simple password reset to a complex End-of-Year Tax Statement, we utilize best-in-class tooling (Unlayer) to ensure pixel-perfect branding. No more ugly, generated receipts. Deliver modern, responsive, and beautiful documents that build trust with your partners."
+          description="Every touchpoint is a reflection of your stewardship. From a simple password reset email to a complex End-of-Year Tax Statement printable PDF, we utilize best-in-class tooling (Unlayer) to ensure pixel-perfect branding. No more ugly, generated receipts. Deliver modern, responsive emails and beautiful PDF documents that build trust with your partners and missionaries."
           delay={0.8}
           className="md:col-span-2 lg:col-span-2 md:order-last lg:order-none"
           backgroundElement={<DitherGrid className="opacity-10" />}

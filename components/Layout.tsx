@@ -161,10 +161,10 @@ export const Navbar: React.FC = memo(() => {
       <Container>
         <div className="flex items-center justify-between py-6">
             {/* Logo */}
-            <Link to="/" className="flex items-center gap-3 z-50 group relative" aria-label="Asymmetric.al Home">
+            <Link to="/" className="flex items-center gap-4 z-50 group relative" aria-label="Asymmetric.al Home">
                 <div className="absolute inset-0 bg-black/50 blur-lg rounded-full md:hidden" aria-hidden="true"></div>
-                <Logo className="text-white w-6 h-6 relative z-10" />
-                <span className="font-display font-bold tracking-tight text-white text-lg hidden md:block relative z-10">
+                <Logo className="text-white w-8 h-8 relative z-10" />
+                <span className="font-display font-bold tracking-tight text-white text-2xl hidden md:block relative z-10">
                     Asymmetric.al
                 </span>
             </Link>
