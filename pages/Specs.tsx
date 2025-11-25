@@ -1,14 +1,6 @@
 
 import React, { memo } from 'react';
 import { 
-    Section, 
-    Reveal, 
-    SpotlightCard, 
-    DitherGrid, 
-    ScrambleText, 
-    DitherGlobe 
-} from '../components/UI';
-import { 
     Terminal, 
     Database, 
     Box, 
@@ -16,12 +8,20 @@ import {
     Cloud, 
     Shield, 
     Zap, 
-    PenTool,
-    Cpu,
-    CheckCircle2,
-    Activity,
-    LucideIcon
+    PenTool, 
+    Cpu, 
+    CheckCircle2, 
+    Activity, 
+    type LucideIcon 
 } from 'lucide-react';
+import { 
+    Section, 
+    Reveal, 
+    SpotlightCard, 
+    DitherGrid, 
+    ScrambleText, 
+    DitherGlobe 
+} from '../components/UI';
 
 // --- Types ---
 

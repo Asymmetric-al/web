@@ -1,20 +1,30 @@
 
-import React, { FormEvent } from 'react';
+import React, { FormEvent, memo, useCallback } from 'react';
 import { Reveal, Button, DitherGlobe, GridPattern, SpotlightCard, TechPanel, ScrambleText, Container } from '../components/UI';
-import { Mail, MapPin, MessageSquare, ArrowRight, Terminal, LucideIcon } from 'lucide-react';
+import { Mail, MapPin, MessageSquare, ArrowRight, Terminal, type LucideIcon } from 'lucide-react';
 
 // --- Types ---
+
 interface ContactChannel {
-  id: string;
-  icon: LucideIcon;
-  title: string;
-  content: React.ReactNode;
-  meta?: string;
-  href?: string;
+  readonly id: string;
+  readonly icon: LucideIcon;
+  readonly title: string;
+  readonly content: React.ReactNode;
+  readonly meta?: string;
+  readonly href?: string;
+}
+
+interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+    readonly label: string;
+}
+
+interface FormTextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+    readonly label: string;
 }
 
 // --- Constants ---
-const CONTACT_CHANNELS: ContactChannel[] = [
+
+const CONTACT_CHANNELS: readonly ContactChannel[] = [
   {
     id: 'general',
     icon: Mail,
@@ -43,29 +53,18 @@ const CONTACT_CHANNELS: ContactChannel[] = [
       </>
     )
   }
-];
+] as const;
 
 // --- Sub-Components ---
 
-const ChannelItem: React.FC<{ channel: ContactChannel }> = ({ channel }) => {
-  const Wrapper = channel.href ? 'a' : 'div';
-  const wrapperProps = channel.href ? { 
-    href: channel.href, 
-    className: "group block cursor-pointer",
-    target: channel.href.startsWith('http') ? "_blank" : undefined,
-    rel: channel.href.startsWith('http') ? "noopener noreferrer" : undefined
-  } : { 
-    className: "group" 
-  };
-
-  return (
-    // @ts-ignore - Dynamic component typings can be complex with specific HTML attributes, keeping implementation simple
-    <Wrapper {...wrapperProps}>
+const ChannelItem = memo(({ channel }: { readonly channel: ContactChannel }) => {
+  const InnerContent = (
+    <>
         <div className="flex items-center gap-3 text-white mb-2 group-hover:text-primary transition-colors">
-            <channel.icon size={20} />
-            <h3 className="font-display font-bold text-lg">{channel.title}</h3>
+            <channel.icon size={20} strokeWidth={1.5} />
+            <h3 className="font-display font-bold text-lg tracking-tight">{channel.title}</h3>
         </div>
-        <div className="text-sm text-gray-500 font-mono pl-8 mb-2 leading-relaxed">
+        <div className="text-sm text-gray-500 font-mono pl-8 mb-2 leading-relaxed group-hover:text-gray-300 transition-colors">
             {channel.content}
         </div>
         {channel.meta && (
@@ -73,51 +72,76 @@ const ChannelItem: React.FC<{ channel: ContactChannel }> = ({ channel }) => {
                 {channel.meta}
             </div>
         )}
-    </Wrapper>
+    </>
   );
-};
 
-interface FormFieldProps extends React.InputHTMLAttributes<HTMLInputElement> {
-    label: string;
-}
+  if (channel.href) {
+    return (
+      <a 
+        href={channel.href}
+        className="group block cursor-pointer"
+        target={channel.href.startsWith('http') ? "_blank" : undefined}
+        rel={channel.href.startsWith('http') ? "noopener noreferrer" : undefined}
+        aria-label={`Contact via ${channel.title}`}
+      >
+        {InnerContent}
+      </a>
+    );
+  }
 
-const FormInput: React.FC<FormFieldProps> = ({ label, className = "", ...props }) => (
+  return (
+    <div className="group">
+      {InnerContent}
+    </div>
+  );
+});
+
+ChannelItem.displayName = 'ChannelItem';
+
+const FormInput = memo(({ label, className = "", ...props }: FormInputProps) => (
     <div className="space-y-2">
-        <label className="font-mono text-[10px] uppercase tracking-widest text-gray-500">{label}</label>
+        <label className="font-mono text-[10px] uppercase tracking-widest text-gray-500" htmlFor={props.name}>
+            {label}
+        </label>
         <input 
-            className={`w-full bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-primary focus:bg-white/10 outline-none transition-all placeholder:text-white/20 ${className}`}
+            id={props.name}
+            className={`w-full bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-primary focus:bg-white/10 outline-none transition-all placeholder:text-white/20 rounded-sm ${className}`}
             {...props} 
         />
     </div>
-);
+));
 
-interface FormTextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-    label: string;
-}
+FormInput.displayName = 'FormInput';
 
-const FormTextArea: React.FC<FormTextAreaProps> = ({ label, className = "", ...props }) => (
+const FormTextArea = memo(({ label, className = "", ...props }: FormTextAreaProps) => (
     <div className="space-y-2">
-        <label className="font-mono text-[10px] uppercase tracking-widest text-gray-500">{label}</label>
+        <label className="font-mono text-[10px] uppercase tracking-widest text-gray-500" htmlFor={props.name}>
+            {label}
+        </label>
         <textarea 
-            className={`w-full bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-primary focus:bg-white/10 outline-none transition-all placeholder:text-white/20 resize-none ${className}`}
+            id={props.name}
+            className={`w-full bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-primary focus:bg-white/10 outline-none transition-all placeholder:text-white/20 resize-none rounded-sm ${className}`}
             {...props} 
         />
     </div>
-);
+));
+
+FormTextArea.displayName = 'FormTextArea';
 
 // --- Main Component ---
+
 const Contact: React.FC = () => {
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = useCallback((e: FormEvent) => {
     e.preventDefault();
     // Handle form submission logic here
-  };
+  }, []);
 
   return (
     <div className="pt-24 min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans overflow-x-hidden">
       <GridPattern className="opacity-20 fixed inset-0 z-0" />
       
       {/* Background Globe */}
-      <div className="fixed right-0 bottom-0 translate-x-1/3 translate-y-1/3 opacity-30 pointer-events-none z-0">
+      <div className="fixed right-0 bottom-0 translate-x-1/3 translate-y-1/3 opacity-30 pointer-events-none z-0 mix-blend-screen">
          <DitherGlobe scale={1.5} />
       </div>
 
@@ -178,6 +202,7 @@ const Contact: React.FC = () => {
                                         placeholder="H. TAYLOR" 
                                         name="name"
                                         autoComplete="name"
+                                        required
                                     />
                                     <FormInput 
                                         label="Identity // Email" 
@@ -185,6 +210,7 @@ const Contact: React.FC = () => {
                                         placeholder="CONTACT@ORG.COM" 
                                         name="email"
                                         autoComplete="email"
+                                        required
                                     />
                                 </div>
 
@@ -201,6 +227,7 @@ const Contact: React.FC = () => {
                                     className="h-32" 
                                     placeholder="BRIEFING DETAILS..." 
                                     name="message"
+                                    required
                                 />
 
                                 <Button className="w-full py-6 mt-4" icon={<ArrowRight size={16} />} type="submit">

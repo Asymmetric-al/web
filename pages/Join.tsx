@@ -1,35 +1,68 @@
 
-import React, { useCallback } from 'react';
+import React, { useCallback, memo } from 'react';
 import { Link } from 'react-router-dom';
-import { Section, Reveal, SpotlightCard, TechPanel, ScrambleText, Button, DitherGrid, DitherGlobe } from '../components/UI';
-import { Code, Globe, ArrowRight, Zap, Terminal, Users, GitPullRequest, BookOpen, Heart, LucideIcon } from 'lucide-react';
+import { 
+    Code, 
+    Globe, 
+    ArrowRight, 
+    Zap, 
+    Terminal, 
+    Users, 
+    GitPullRequest, 
+    BookOpen, 
+    Heart, 
+    type LucideIcon 
+} from 'lucide-react';
+import { 
+    Section, 
+    Reveal, 
+    SpotlightCard, 
+    TechPanel, 
+    ScrambleText, 
+    Button, 
+    DitherGrid, 
+    DitherGlobe 
+} from '../components/UI';
 import { ButtonVariant } from '../types';
 
 // --- Types ---
 
 interface Pathway {
-    title: string;
-    icon: LucideIcon;
-    subtitle: string;
-    desc: string;
-    action: string;
-    link: string;
-    internal: boolean;
+    readonly title: string;
+    readonly icon: LucideIcon;
+    readonly subtitle: string;
+    readonly desc: string;
+    readonly action: string;
+    readonly link: string;
+    readonly internal: boolean;
 }
 
 interface ValueItem {
-    title: string;
-    icon: LucideIcon;
-    desc: string;
+    readonly title: string;
+    readonly icon: LucideIcon;
+    readonly desc: string;
 }
 
 interface RoleItem {
-    id: string;
-    title: string;
-    type: string;
-    location: string;
-    stack: string;
-    desc: string;
+    readonly id: string;
+    readonly title: string;
+    readonly type: string;
+    readonly location: string;
+    readonly stack: string;
+    readonly desc: string;
+}
+
+interface PathwayCardProps {
+    readonly pathway: Pathway;
+    readonly onScroll: (e: React.MouseEvent) => void;
+}
+
+interface ValueCardProps {
+    readonly value: ValueItem;
+}
+
+interface RoleCardProps {
+    readonly role: RoleItem;
 }
 
 // --- Static Data ---
@@ -135,7 +168,7 @@ const OPEN_ROLES: readonly RoleItem[] = [
 
 // --- Sub-Components ---
 
-const PathwayCard: React.FC<{ pathway: Pathway; onScroll: (e: React.MouseEvent) => void }> = ({ pathway, onScroll }) => (
+const PathwayCard = memo(({ pathway, onScroll }: PathwayCardProps) => (
     <SpotlightCard className="bg-black/50 border-white/10 h-full flex flex-col justify-between p-8 group">
         <div>
             <div className="flex justify-between items-start mb-6">
@@ -167,26 +200,28 @@ const PathwayCard: React.FC<{ pathway: Pathway; onScroll: (e: React.MouseEvent) 
             )}
         </div>
     </SpotlightCard>
-);
+));
+PathwayCard.displayName = 'PathwayCard';
 
-const ValueCard: React.FC<{ value: ValueItem }> = ({ value }) => (
+const ValueCard = memo(({ value }: ValueCardProps) => (
     <div className="p-8 border-l border-white/10 hover:bg-white/[0.02] transition-colors">
         <value.icon size={24} strokeWidth={1.5} className="text-gray-500 mb-6" />
         <h3 className="text-lg font-display font-bold text-white mb-3 tracking-tight">{value.title}</h3>
         <p className="text-sm text-muted leading-relaxed text-balance">{value.desc}</p>
     </div>
-);
+));
+ValueCard.displayName = 'ValueCard';
 
-const RoleCard: React.FC<{ role: RoleItem }> = ({ role }) => {
+const RoleCard = memo(({ role }: RoleCardProps) => {
     // Determine badge styling based on role type
     const isSupportRaised = role.type.includes('Support');
     const badgeStyle = isSupportRaised 
-        ? 'bg-emerald-900/20 text-emerald-300 border border-emerald-800/30' // Updated to match primary/green
+        ? 'bg-emerald-900/20 text-emerald-300 border border-emerald-800/30'
         : 'bg-white/10 text-white/80';
 
     return (
         <TechPanel noBorder className="border border-white/10 bg-black hover:border-white/30 transition-all group relative overflow-hidden">
-             <div className="absolute inset-0 bg-white/[0.01] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+             <div className="absolute inset-0 bg-white/[0.01] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" aria-hidden="true" />
              
              <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
                  <div className="flex-1">
@@ -221,7 +256,8 @@ const RoleCard: React.FC<{ role: RoleItem }> = ({ role }) => {
              </div>
         </TechPanel>
     );
-};
+});
+RoleCard.displayName = 'RoleCard';
 
 // --- Main Component ---
 
@@ -239,7 +275,7 @@ const Join: React.FC = () => {
       <DitherGrid className="opacity-10 fixed inset-0 z-0" />
       
       {/* Background Globe */}
-      <div className="absolute top-0 left-0 -translate-x-1/3 -translate-y-1/4 opacity-20 pointer-events-none z-0 mix-blend-screen">
+      <div className="absolute top-0 left-0 -translate-x-1/3 -translate-y-1/4 opacity-20 pointer-events-none z-0 mix-blend-screen" aria-hidden="true">
          <DitherGlobe scale={1.6} />
       </div>
 
