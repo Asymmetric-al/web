@@ -1,4 +1,3 @@
-
 import React, { memo } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, Terminal, Code } from 'lucide-react';
@@ -69,13 +68,13 @@ const PHILOSOPHY_CARDS: readonly PhilosophyItem[] = [
 // --- Sub-Components ---
 
 const HeroSection = memo(() => (
-    // Explicit padding optimized for visual balance (pt-32 pb-20) to remove "useless space"
-    <div className="relative pt-32 pb-20 md:pt-52 md:pb-32 flex items-center justify-center isolate overflow-hidden">
+    // Standardized padding: min-h-screen minus nav height, strictly centered.
+    <div className="relative flex items-center justify-center isolate overflow-hidden min-h-[95vh] pt-20">
         <DitherGrid />
         
         {/* Layer 0: Background Globe - CSS Containment for Perf */}
         <div 
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-70 scale-50 md:scale-100 pointer-events-none will-change-transform"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-50 scale-75 md:scale-110 pointer-events-none will-change-transform mix-blend-screen"
             aria-hidden="true"
         >
             <DitherGlobe scale={1.2} />
@@ -83,19 +82,19 @@ const HeroSection = memo(() => (
 
         {/* Layer 1: Content - LCP Critical Path */}
         <div className="relative z-10 w-full">
-            <Container className="text-center">
+            <Container className="text-center flex flex-col items-center">
                 
                 {/* Badge - CSS Animation (Immediate) */}
-                <div className="flex justify-center mb-12 opacity-0 animate-[slideUp_0.8s_cubic-bezier(0.16,1,0.3,1)_forwards]">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 border border-white/10 bg-black/60 text-[10px] font-mono uppercase tracking-widest text-muted backdrop-blur-md rounded-full shadow-2xl">
-                        <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse"></span>
+                <div className="flex justify-center mb-10 opacity-0 animate-[slideUp_0.8s_cubic-bezier(0.16,1,0.3,1)_forwards]">
+                    <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-white/10 bg-black/60 text-[10px] font-mono uppercase tracking-widest text-muted backdrop-blur-md rounded-full shadow-2xl">
+                        <span className="w-1.5 h-1.5 rounded-full bg-success animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
                         <ScrambleText text="Mission Operating System" delay={200} />
                     </div>
                 </div>
                 
                 {/* H1 - LCP Element - CSS Animation (Immediate + 100ms delay) */}
-                <div className="opacity-0 animate-[slideUp_0.8s_cubic-bezier(0.16,1,0.3,1)_100ms_forwards]">
-                    <h1 className="text-6xl md:text-9xl font-display font-semibold tracking-tighter mb-8 text-white leading-[0.9] drop-shadow-2xl">
+                <div className="opacity-0 animate-[slideUp_0.8s_cubic-bezier(0.16,1,0.3,1)_100ms_forwards] max-w-5xl">
+                    <h1 className="text-6xl sm:text-7xl md:text-9xl font-display font-semibold tracking-tighter mb-8 text-white leading-[0.9] drop-shadow-2xl text-balance">
                         Run the Work<br/>
                         In One Place
                     </h1>
@@ -104,15 +103,15 @@ const HeroSection = memo(() => (
                 {/* Subtext - CSS Animation (Immediate + 200ms delay) */}
                 <div className="relative inline-block opacity-0 animate-[slideUp_0.8s_cubic-bezier(0.16,1,0.3,1)_200ms_forwards]">
                     {/* Subtle backdrop to ensure text readability over globe */}
-                    <div className="absolute inset-0 bg-black/40 blur-2xl -z-10 rounded-full" aria-hidden="true"></div>
-                    <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto font-light leading-relaxed text-balance">
+                    <div className="absolute inset-0 bg-black/60 blur-3xl -z-10 rounded-full" aria-hidden="true"></div>
+                    <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto font-light leading-relaxed text-balance">
                         Less admin. More ministry.
                         The unified platform for the modern missions agency.
                     </p>
                 </div>
                 
                 {/* Buttons - CSS Animation (Immediate + 300ms delay) */}
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-6 opacity-0 animate-[slideUp_0.8s_cubic-bezier(0.16,1,0.3,1)_300ms_forwards]">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 opacity-0 animate-[slideUp_0.8s_cubic-bezier(0.16,1,0.3,1)_300ms_forwards]">
                     <Link to="/missions">
                         <Button variant={ButtonVariant.PRIMARY} icon={<Terminal size={14}/>}>
                             Request a Call
@@ -140,7 +139,6 @@ const TickerSection = memo(() => {
             {/* 
                 Seamless Loop Strategy:
                 Two identical flex containers animate side-by-side. 
-                As the first one moves fully out of view (-100%), the second one has perfectly replaced it.
             */}
             {[0, 1].map((i) => (
                 <div 
@@ -148,19 +146,19 @@ const TickerSection = memo(() => {
                     className="flex min-w-full shrink-0 animate-marquee items-center justify-around group-hover:[animation-play-state:paused] will-change-transform"
                 >
                     {TICKER_ITEMS.map((text, j) => (
-                        <div key={`${i}-${j}`} className="flex items-center mx-3 group/item cursor-default">
+                        <div key={`${i}-${j}`} className="flex items-center mx-4 group/item cursor-default">
                             <span className="text-[10px] md:text-xs font-mono uppercase tracking-[0.2em] text-muted group-hover/item:text-white transition-colors duration-300 whitespace-nowrap">
                                 {text}
                             </span>
-                            <span className="ml-6 text-[10px] md:text-xs text-white/10 font-normal font-mono select-none">//</span>
+                            <span className="ml-8 text-[10px] md:text-xs text-white/10 font-normal font-mono select-none">//</span>
                         </div>
                     ))}
                 </div>
             ))}
             
             {/* Gradient masks for smooth fade-in/out on edges */}
-            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
-            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none"></div>
+            <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none"></div>
         </div>
     );
 });
@@ -169,19 +167,19 @@ TickerSection.displayName = 'TickerSection';
 
 const PhilosophySection = memo(() => (
     <Section className="bg-black relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
             
             {/* Left Column: The Concept (Sticky on Desktop) */}
             <div className="lg:col-span-5 relative lg:sticky lg:top-32 self-start">
                 <Reveal>
-                    <h2 className="text-5xl md:text-7xl font-display font-bold mb-8 text-white text-balance tracking-tighter leading-[0.9]">Why the name?</h2>
+                    <h2 className="text-4xl md:text-5xl lg:text-7xl font-display font-bold mb-8 text-white text-balance tracking-tighter leading-[0.9]">Why the name?</h2>
                     <p className="text-gray-400 leading-relaxed mb-12 text-lg font-light text-balance border-l border-white/20 pl-6">
                         Good tools let simple actions create larger outcomes. We believe God multiplies faithfulness. 
                         If God is in it, little becomes much.
                     </p>
                     
                     {/* The Multiplier Visualization - Engineered for Alignment */}
-                    <div className="relative aspect-[4/3] flex flex-col items-center justify-center p-4 md:p-10 border border-white/10 bg-gradient-to-b from-white/[0.03] to-black rounded-sm overflow-hidden shadow-2xl group">
+                    <div className="relative aspect-[4/3] flex flex-col items-center justify-center p-6 md:p-10 border border-white/10 bg-gradient-to-b from-white/[0.03] to-black rounded-sm overflow-hidden shadow-2xl group">
                         
                         {/* Background Texture */}
                         <div className="absolute inset-0 opacity-[0.03]" 
@@ -190,42 +188,36 @@ const PhilosophySection = memo(() => (
                         />
                         
                         {/* The Equation */}
-                        <div className="flex justify-between items-center w-full relative z-10 px-2 md:px-4 h-full">
+                        <div className="flex justify-between items-center w-full relative z-10 px-4 h-full">
                             {/* "1" */}
-                            <span className="text-[6rem] sm:text-[8rem] md:text-[12rem] font-display font-bold text-white leading-none tracking-tighter select-none drop-shadow-2xl flex-shrink-0 relative top-[-0.05em]">
+                            <span className="text-[5rem] sm:text-[7rem] md:text-[9rem] lg:text-[10rem] font-display font-bold text-white leading-none tracking-tighter select-none drop-shadow-2xl flex-shrink-0 relative top-[-0.05em]">
                                 1
                             </span>
                             
                             {/* Connector */}
-                            <div className="flex-1 mx-8 sm:mx-12 md:mx-20 relative flex items-center justify-center translate-y-0 md:-translate-y-2">
+                            <div className="flex-1 mx-6 sm:mx-10 md:mx-16 relative flex items-center justify-center translate-y-0 md:-translate-y-2">
                                 {/* The Track */}
-                                <div className="w-full h-[6px] md:h-[10px] bg-white/10 relative overflow-hidden rounded-sm">
+                                <div className="w-full h-[2px] bg-white/10 relative overflow-hidden rounded-full">
                                      {/* The Quantum Pulse */}
-                                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent w-1/2 animate-[shimmer_1.5s_infinite_linear] opacity-90" />
+                                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent w-1/3 animate-[shimmer_2s_infinite_linear] opacity-100" />
                                 </div>
-                                {/* The Head - Solid Triangle pointing right */}
-                                <div className="absolute -right-1 flex items-center justify-center translate-x-1/2">
-                                    <svg 
-                                        width="40" 
-                                        height="40" 
-                                        viewBox="0 0 24 24" 
-                                        fill="currentColor" 
-                                        className="text-white w-6 h-6 sm:w-8 sm:h-8 md:w-12 md:h-12 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]"
-                                    >
-                                        <path d="M3 22V2L21 12L3 22Z" /> 
+                                {/* The Arrowhead */}
+                                <div className="absolute right-0 translate-x-1/2">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="text-white">
+                                        <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                                     </svg>
                                 </div>
                             </div>
                             
-                            {/* "∞" - Adjusted to align optical center with the arrow */}
-                            <span className="text-[8rem] sm:text-[10rem] md:text-[16rem] font-display font-bold text-white leading-none tracking-tighter select-none drop-shadow-2xl flex-shrink-0 relative top-[0.02em]">
+                            {/* "∞" */}
+                            <span className="text-[6rem] sm:text-[9rem] md:text-[11rem] lg:text-[13rem] font-display font-bold text-white leading-none tracking-tighter select-none drop-shadow-2xl flex-shrink-0 relative top-[0.05em]">
                                 ∞
                             </span>
                         </div>
                         
                         {/* Label - Pinned to bottom */}
-                        <div className="mt-auto pt-8 md:pt-12 border-t border-white/10 w-full text-center relative z-20">
-                            <span className="font-mono text-[9px] sm:text-[10px] md:text-[11px] uppercase tracking-tight sm:tracking-widest md:tracking-[0.2em] text-white/50 block whitespace-nowrap overflow-hidden text-ellipsis px-2">
+                        <div className="mt-auto pt-8 border-t border-white/10 w-full text-center relative z-20">
+                            <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-widest text-white/40 block">
                                 Simple Faithfulness → Exponential Impact
                             </span>
                         </div>
@@ -237,16 +229,18 @@ const PhilosophySection = memo(() => (
             <div className="lg:col-span-7 space-y-6 pt-8 lg:pt-0">
                 {PHILOSOPHY_CARDS.map((item, i) => (
                     <Reveal key={i} delay={i * 100}>
-                        <SpotlightCard className="p-8 md:p-12 group bg-white/[0.02] border-white/10 hover:border-white/30 transition-all relative overflow-hidden flex flex-col justify-center min-h-[240px]">
+                        <SpotlightCard className="p-8 md:p-12 group bg-white/[0.02] border-white/10 hover:border-white/30 transition-all relative overflow-hidden flex flex-col justify-center min-h-[280px]">
                              {/* Watermark Number - Absolute positioning */}
-                             <div className="absolute right-6 top-2 text-[5rem] md:text-[8rem] font-display font-bold text-white/[0.03] pointer-events-none select-none z-0 leading-none">
+                             <div className="absolute right-8 top-0 text-[6rem] md:text-[8rem] font-display font-bold text-white/[0.03] pointer-events-none select-none z-0 leading-none">
                                 {(i + 1).toString().padStart(2, '0')}
                             </div>
                             
-                            <div className="relative z-10 max-w-lg flex flex-col justify-center">
-                                <h3 className="text-2xl md:text-3xl font-display font-bold text-white mb-4 tracking-tight bg-black/50 w-fit backdrop-blur-sm px-1">
-                                    {item.title}
-                                </h3>
+                            <div className="relative z-10 max-w-xl flex flex-col justify-center">
+                                <div className="bg-black/80 backdrop-blur-md w-fit px-3 py-1 mb-4 border border-white/5 rounded-sm">
+                                    <h3 className="text-2xl md:text-3xl font-display font-bold text-white tracking-tight">
+                                        {item.title}
+                                    </h3>
+                                </div>
                                 <p className="text-gray-400 group-hover:text-gray-300 transition-colors font-light text-lg leading-relaxed text-balance">
                                     {item.desc}
                                 </p>
@@ -262,18 +256,20 @@ const PhilosophySection = memo(() => (
 PhilosophySection.displayName = 'PhilosophySection';
 
 const RecruitmentSection = memo(() => (
-    <Section className="relative z-10 border-t border-white/5 bg-offblack/30">
+    <Section className="relative z-10 border-t border-white/5 bg-white/[0.02]">
         <Reveal>
-            <div className="flex flex-col md:flex-row items-center justify-between gap-12">
-                <div className="max-w-3xl">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-12 p-8 md:p-12 border border-white/5 bg-black/50 backdrop-blur-sm rounded-sm">
+                <div className="max-w-2xl">
                     <div className="flex items-center gap-2 mb-6">
-                        <Code size={14} className="text-success" />
+                        <div className="p-1.5 bg-success/10 rounded-sm">
+                            <Code size={16} className="text-success" />
+                        </div>
                         <span className="font-mono text-xs text-success uppercase tracking-widest">Hiring Builders</span>
                     </div>
-                    <h2 className="text-4xl md:text-5xl font-display font-bold text-white mb-6 tracking-tight">
+                    <h2 className="text-3xl md:text-5xl font-display font-bold text-white mb-6 tracking-tight">
                         Write code for the<br />Great Commission.
                     </h2>
-                    <p className="text-muted text-lg leading-relaxed text-balance">
+                    <p className="text-gray-400 text-lg leading-relaxed text-balance">
                         We are looking for high-agency senior engineers, designers, and problem solvers who want to use their craft for a higher purpose. 
                         Join the core team or contribute to the open source ecosystem.
                     </p>
@@ -282,7 +278,7 @@ const RecruitmentSection = memo(() => (
                     <Link to="/join">
                         <Button 
                             variant={ButtonVariant.SECONDARY} 
-                            className="border-white text-white hover:bg-white hover:!text-black transition-all duration-300 group"
+                            className="h-16 px-10 border-white/20 text-white hover:bg-white hover:!text-black transition-all duration-300 group"
                         >
                             Join the Team <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />
                         </Button>
@@ -299,7 +295,7 @@ RecruitmentSection.displayName = 'RecruitmentSection';
 
 const Home: React.FC = () => {
   return (
-    <div className="min-h-screen bg-black selection:bg-white selection:text-black overflow-x-hidden">
+    <div className="min-h-screen bg-black selection:bg-white selection:text-black overflow-x-hidden font-sans">
       <HeroSection />
       <TickerSection />
       <PhilosophySection />

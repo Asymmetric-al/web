@@ -3,6 +3,8 @@ import React, {
   useRef, 
   useState, 
   ButtonHTMLAttributes, 
+  InputHTMLAttributes,
+  TextareaHTMLAttributes,
   ReactNode, 
   CSSProperties, 
   forwardRef, 
@@ -11,16 +13,18 @@ import React, {
 } from 'react';
 import { Loader2, Plus } from 'lucide-react';
 import { ButtonVariant } from '../types';
+import { cn } from '../lib/utils';
 
 // --- Constants ---
 const SCRAMBLE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_#@$";
 
-const BUTTON_BASE_STYLES = "inline-flex items-center justify-center px-8 py-4 text-sm transition-all duration-300 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed tracking-widest font-mono uppercase border group relative overflow-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-black";
+// Strict spacing: h-12 (48px) for touch targets. rounded-sm (2px) for technical feel.
+const BUTTON_BASE_STYLES = "inline-flex items-center justify-center h-12 px-8 text-[11px] transition-all duration-300 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed tracking-[0.2em] font-mono uppercase border group relative overflow-hidden focus-visible:ring-1 focus-visible:ring-primary rounded-sm";
 
 const BUTTON_VARIANTS: Record<ButtonVariant, string> = {
   [ButtonVariant.PRIMARY]: "bg-white text-black border-white hover:bg-transparent hover:text-white",
-  [ButtonVariant.SECONDARY]: "bg-transparent border-border text-muted hover:border-white hover:text-white",
-  [ButtonVariant.TERTIARY]: "bg-transparent border-transparent text-muted hover:text-white px-0 py-1 underline-offset-4 hover:underline",
+  [ButtonVariant.SECONDARY]: "bg-transparent border-white/20 text-muted hover:border-white hover:text-white",
+  [ButtonVariant.TERTIARY]: "bg-transparent border-transparent text-muted hover:text-white px-0 h-auto py-2 underline-offset-4 hover:underline",
 };
 
 // --- Logo ---
@@ -87,13 +91,14 @@ export const ScrambleText = memo(({ text, className = "", delay = 0 }: ScrambleT
 ScrambleText.displayName = 'ScrambleText';
 
 // --- Container ---
+// Max width set to 1280px (7xl) for consistency. Padding follows 6/12 scale.
 interface ContainerProps {
   readonly children?: ReactNode;
   readonly className?: string;
 }
 
 export const Container = ({ children, className = "" }: ContainerProps) => (
-  <div className={`max-w-[1280px] mx-auto px-6 md:px-12 ${className}`}>
+  <div className={cn("max-w-7xl mx-auto px-6 md:px-8 lg:px-12 w-full", className)}>
     {children}
   </div>
 );
@@ -135,7 +140,11 @@ export const Reveal = ({
   return (
     <div 
       ref={ref} 
-      className={`transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'} ${className}`}
+      className={cn(
+        "transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)]",
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8',
+        className
+      )}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
@@ -153,7 +162,11 @@ interface TechPanelProps {
 
 export const TechPanel = ({ children, className = '', title, noBorder = false }: TechPanelProps) => {
   return (
-    <div className={`relative bg-offblack/40 ${!noBorder ? 'border border-white/5' : ''} ${className} group overflow-hidden`}>
+    <div className={cn(
+      "relative bg-white/[0.02] group overflow-hidden rounded-sm",
+      !noBorder && "border border-white/10",
+      className
+    )}>
       {/* Subtle corner markers */}
       {!noBorder && (
         <div className="pointer-events-none" aria-hidden="true">
@@ -174,10 +187,7 @@ export const TechPanel = ({ children, className = '', title, noBorder = false }:
         </div>
       )}
 
-      {/* 
-          Fix: Explicitly separate padding when title exists to ensure pt-16 (4rem) is not overridden 
-          by responsive all-side padding (e.g., md:p-8 would set top padding to 2rem).
-      */}
+      {/* Consistent padding: 24px (p-6) or 32px (p-8) on desktop */}
       <div className={title ? 'pt-16 px-6 pb-6 md:px-8 md:pb-8' : 'p-6 md:p-8'}>
         {children}
       </div>
@@ -215,7 +225,10 @@ export const SpotlightCard = ({ children, className = "" }: SpotlightCardProps) 
             onMouseMove={handleMouseMove}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
-            className={`relative overflow-hidden border border-white/10 bg-black ${className}`}
+            className={cn(
+              "relative overflow-hidden border border-white/10 bg-black rounded-sm",
+              className
+            )}
         >
             <div
                 className="pointer-events-none absolute -inset-px transition duration-300 z-0"
@@ -225,7 +238,7 @@ export const SpotlightCard = ({ children, className = "" }: SpotlightCardProps) 
                 }}
                 aria-hidden="true"
             />
-            <div className="relative z-10">
+            <div className="relative z-10 h-full">
                 {children}
             </div>
         </div>
@@ -251,13 +264,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   return (
     <button 
       ref={ref}
-      className={`${BUTTON_BASE_STYLES} ${BUTTON_VARIANTS[variant]} ${className}`}
+      className={cn(BUTTON_BASE_STYLES, BUTTON_VARIANTS[variant], className)}
       disabled={disabled || isLoading}
       {...props}
     >
       <span className="relative z-10 flex items-center">
         {isLoading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-        {!isLoading && icon && <span className="mr-2 group-hover:translate-x-0.5 transition-transform">{icon}</span>}
+        {!isLoading && icon && <span className="mr-3 group-hover:translate-x-0.5 transition-transform">{icon}</span>}
         {children}
       </span>
     </button>
@@ -265,6 +278,66 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
 });
 
 Button.displayName = 'Button';
+
+// --- Input (Standardized) ---
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  label?: string;
+  error?: string;
+}
+
+export const Input = forwardRef<HTMLInputElement, InputProps>(({ className = "", label, error, ...props }, ref) => {
+  return (
+    <div className="w-full space-y-2">
+      {label && (
+        <label className="font-mono text-[10px] uppercase tracking-widest text-muted block ml-1">
+          {label}
+        </label>
+      )}
+      <input
+        ref={ref}
+        className={cn(
+          "flex h-12 w-full rounded-sm border border-white/10 bg-white/5 px-4 py-2 text-sm text-white placeholder:text-white/20 font-mono focus:outline-none focus:border-primary/50 focus:bg-white/10 focus:ring-1 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50 transition-all duration-200",
+          error && 'border-destructive focus:border-destructive',
+          className
+        )}
+        {...props}
+      />
+      {error && <span className="text-destructive text-xs ml-1">{error}</span>}
+    </div>
+  );
+});
+
+Input.displayName = 'Input';
+
+// --- TextArea (Standardized) ---
+interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  label?: string;
+  error?: string;
+}
+
+export const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(({ className = "", label, error, ...props }, ref) => {
+  return (
+    <div className="w-full space-y-2">
+      {label && (
+        <label className="font-mono text-[10px] uppercase tracking-widest text-muted block ml-1">
+          {label}
+        </label>
+      )}
+      <textarea
+        ref={ref}
+        className={cn(
+          "flex min-h-[120px] w-full rounded-sm border border-white/10 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-white/20 font-mono focus:outline-none focus:border-primary/50 focus:bg-white/10 focus:ring-1 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50 resize-y transition-all duration-200",
+          error && 'border-destructive focus:border-destructive',
+          className
+        )}
+        {...props}
+      />
+      {error && <span className="text-destructive text-xs ml-1">{error}</span>}
+    </div>
+  );
+});
+
+TextArea.displayName = 'TextArea';
 
 // --- Section ---
 interface SectionProps {
@@ -274,9 +347,10 @@ interface SectionProps {
   readonly grid?: boolean;
 }
 
+// Consistent padding rhythm: py-24 (96px) and md:py-32 (128px)
 export const Section = ({ children, className = '', id, grid = false }: SectionProps) => {
   return (
-    <section id={id} className={`relative py-24 md:py-32 overflow-hidden ${className}`}>
+    <section id={id} className={cn("relative py-24 md:py-32 overflow-hidden", className)}>
        {grid && (
          <div className="absolute inset-0 opacity-[0.02] pointer-events-none" 
               style={{ 
@@ -300,7 +374,7 @@ interface GridPatternProps {
 
 export const GridPattern = ({ className = "" }: GridPatternProps) => {
   return (
-    <div className={`absolute inset-0 pointer-events-none ${className}`} aria-hidden="true">
+    <div className={cn("absolute inset-0 pointer-events-none", className)} aria-hidden="true">
       <div className="absolute inset-0 opacity-5" 
           style={{ 
             backgroundImage: 'linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px)', 
@@ -318,7 +392,7 @@ interface DitherGridProps {
 
 export const DitherGrid = ({ className = "" }: DitherGridProps) => {
   return (
-    <div className={`absolute inset-0 z-0 overflow-hidden pointer-events-none ${className}`} aria-hidden="true">
+    <div className={cn("absolute inset-0 z-0 overflow-hidden pointer-events-none", className)} aria-hidden="true">
       <div className="absolute inset-0 opacity-[0.05]"
            style={{
              backgroundImage: `radial-gradient(circle at 1px 1px, white 1px, transparent 0)`,
@@ -340,7 +414,7 @@ export const DitherGlobe = memo(({ className = "", scale = 1 }: DitherGlobeProps
 
   return (
     <div 
-        className={`relative flex items-center justify-center select-none pointer-events-none ${className}`}
+        className={cn("relative flex items-center justify-center select-none pointer-events-none", className)}
         style={sizeStyle}
         aria-hidden="true"
     >

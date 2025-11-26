@@ -1,18 +1,18 @@
 
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { Section, Button, TechPanel, Reveal, DitherGrid, ScrambleText, SpotlightCard, DitherGlobe } from '../components/UI';
-import { ShieldCheck, ArrowRight, Lock, HeartHandshake, HelpCircle } from 'lucide-react';
+import { ShieldCheck, ArrowRight, Lock, HeartHandshake, HelpCircle, type LucideIcon, Check } from 'lucide-react';
 
 // --- Types ---
 
 interface PitchPoint {
-  title: string;
-  desc: string;
+  readonly title: string;
+  readonly desc: string;
 }
 
 interface FaqItem {
-  q: string;
-  a: string;
+  readonly q: string;
+  readonly a: string;
 }
 
 // --- Static Data ---
@@ -38,96 +38,163 @@ const FAQ_ITEMS: readonly FaqItem[] = [
 // --- Sub-Components ---
 
 const PitchItem: React.FC<{ item: PitchPoint; index: number }> = ({ item, index }) => (
-    <Reveal delay={300 + (index * 100)}>
-        <div className="group">
-            <h3 className="text-white font-display font-bold text-lg mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
-            <p className="text-sm text-gray-500 leading-relaxed text-balance">{item.desc}</p>
-        </div>
-    </Reveal>
+    <div className="group border-l border-white/10 pl-6 hover:border-white/30 transition-colors duration-300">
+        <h3 className="text-white font-display font-bold text-xl mb-3 tracking-tight group-hover:text-primary transition-colors">
+            {item.title}
+        </h3>
+        <p className="text-sm text-gray-500 leading-relaxed text-balance font-light">
+            {item.desc}
+        </p>
+    </div>
 );
 
 const FaqItemPanel: React.FC<{ item: FaqItem }> = ({ item }) => (
-    <TechPanel noBorder className="bg-transparent pl-6 border-l border-white/10 hover:border-primary/50 transition-colors group">
-        <h4 className="text-white font-bold font-display text-lg mb-3 group-hover:text-primary transition-colors">{item.q}</h4>
-        <p className="text-sm text-gray-500 leading-relaxed text-balance">{item.a}</p>
+    <TechPanel className="h-full bg-black hover:border-white/30 transition-colors group">
+        <h4 className="text-white font-bold font-display text-lg mb-4 group-hover:text-primary transition-colors tracking-tight">
+            {item.q}
+        </h4>
+        <p className="text-sm text-gray-400 leading-relaxed text-balance font-light">
+            {item.a}
+        </p>
     </TechPanel>
 );
 
 const DonationCard: React.FC = () => {
     const [amount, setAmount] = useState<number>(100);
     const [frequency, setFrequency] = useState<'monthly' | 'onetime'>('monthly');
+    const [customAmount, setCustomAmount] = useState<string>('');
+
+    const handleAmountSelect = (val: number) => {
+        setAmount(val);
+        setCustomAmount('');
+    };
+
+    const handleCustomChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCustomAmount(e.target.value);
+        if (Number(e.target.value)) {
+            setAmount(Number(e.target.value));
+        }
+    };
 
     return (
-        <SpotlightCard className="bg-black/80 backdrop-blur-xl border-white/10 p-1">
-            <div className="p-6 md:p-8 flex flex-col gap-8 relative overflow-hidden">
+        <SpotlightCard className="bg-white/[0.02] border-white/10 group rounded-sm">
+            <div className="bg-black p-8 md:p-10 flex flex-col gap-8 relative overflow-hidden rounded-sm h-full">
+                
                 {/* Header */}
-                <div className="flex justify-between items-center border-b border-white/10 pb-6">
-                    <div className="flex items-center gap-2 text-white">
-                        <HeartHandshake size={16} className="text-success" />
-                        <span className="font-mono text-sm uppercase tracking-wider font-bold">Secure Donation</span>
+                <div className="flex justify-between items-start border-b border-white/10 pb-6">
+                    <div>
+                        <div className="flex items-center gap-2 text-white mb-1">
+                            <HeartHandshake size={18} className="text-success" />
+                            <span className="font-display font-bold text-lg tracking-tight">Secure Donation</span>
+                        </div>
+                        <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">
+                            Power the infrastructure
+                        </span>
                     </div>
-                    <div className="flex items-center gap-1 text-[10px] font-mono text-success/80 uppercase tracking-widest">
+                    <div className="flex items-center gap-1.5 px-2 py-1 bg-white/5 rounded-sm border border-white/5 text-[10px] font-mono text-success uppercase tracking-widest">
                         <Lock size={10} />
                         Encrypted
                     </div>
                 </div>
 
-                {/* Frequency Toggle */}
-                <div className="grid grid-cols-2 p-1 bg-white/5 rounded-sm">
+                {/* Frequency Segmented Control */}
+                <div className="flex p-1 bg-white/5 rounded-sm border border-white/10">
                     <button 
                         type="button"
                         onClick={() => setFrequency('monthly')}
-                        className={`py-3 text-xs font-mono uppercase tracking-widest transition-all ${frequency === 'monthly' ? 'bg-white text-black font-bold shadow-lg' : 'text-gray-500 hover:text-white'}`}
+                        className={`flex-1 py-2.5 text-[10px] font-mono uppercase tracking-widest rounded-sm transition-all duration-300 ${
+                            frequency === 'monthly' 
+                            ? 'bg-white text-black font-bold shadow-sm' 
+                            : 'text-gray-500 hover:text-white'
+                        }`}
                     >
                         Monthly
                     </button>
                     <button 
                         type="button"
                         onClick={() => setFrequency('onetime')}
-                        className={`py-3 text-xs font-mono uppercase tracking-widest transition-all ${frequency === 'onetime' ? 'bg-white text-black font-bold shadow-lg' : 'text-gray-500 hover:text-white'}`}
+                        className={`flex-1 py-2.5 text-[10px] font-mono uppercase tracking-widest rounded-sm transition-all duration-300 ${
+                            frequency === 'onetime' 
+                            ? 'bg-white text-black font-bold shadow-sm' 
+                            : 'text-gray-500 hover:text-white'
+                        }`}
                     >
                         One-Time
                     </button>
                 </div>
 
                 {/* Amount Grid */}
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-3">
                     {AMOUNTS.map(val => (
                         <button 
                             key={val}
                             type="button"
-                            onClick={() => setAmount(val)}
-                            className={`py-4 font-mono text-sm border transition-all duration-200 ${amount === val ? 'border-white text-white bg-white/5' : 'border-white/5 text-gray-500 hover:border-white/20 hover:text-white'}`}
+                            onClick={() => handleAmountSelect(val)}
+                            className={`
+                                relative h-14 font-mono text-sm border rounded-sm transition-all duration-200 overflow-hidden group/btn
+                                ${amount === val && !customAmount
+                                    ? 'bg-white border-white text-black font-bold' 
+                                    : 'bg-black border-white/10 text-gray-400 hover:border-white/30 hover:text-white'}
+                            `}
                         >
                             ${val}
+                            {amount === val && !customAmount && (
+                                <div className="absolute top-1 right-1 text-black">
+                                    <Check size={10} />
+                                </div>
+                            )}
                         </button>
                     ))}
-                    <div className="relative col-span-1">
-                        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
+                    
+                    {/* Custom Amount Input */}
+                    <div className={`
+                        relative col-span-1 h-14 border rounded-sm transition-all duration-200
+                        ${customAmount 
+                            ? 'border-white bg-white/5' 
+                            : 'border-white/10 bg-black hover:border-white/30'}
+                    `}>
+                        <span className={`
+                            absolute left-3 top-1/2 -translate-y-1/2 text-sm font-mono transition-colors
+                            ${customAmount ? 'text-white' : 'text-gray-500'}
+                        `}>$</span>
                         <input 
                             type="number" 
                             placeholder="Custom"
                             min="1"
-                            onChange={(e) => setAmount(Number(e.target.value))}
-                            className="w-full h-full bg-transparent border border-white/5 text-white font-mono text-sm pl-6 focus:outline-none focus:border-white transition-colors"
+                            value={customAmount}
+                            onChange={handleCustomChange}
+                            className={`
+                                w-full h-full bg-transparent text-white font-mono text-sm pl-7 pr-2 
+                                focus:outline-none placeholder:text-gray-600 transition-colors
+                                ${customAmount ? 'font-bold' : 'font-normal'}
+                            `}
                         />
                     </div>
                 </div>
 
                 {/* Total Display */}
-                <div className="py-8 text-center border-y border-white/10 bg-white/[0.02]">
-                    <span className="block text-xs font-mono text-gray-500 uppercase tracking-widest mb-2">Total Contribution</span>
-                    <span className="text-5xl font-display font-bold text-white tracking-tight">${amount}</span>
-                    <span className="text-sm text-gray-500 block mt-2">
-                        {frequency === 'monthly' ? '/ month' : ' single gift'}
+                <div className="py-6 px-6 text-center border border-white/10 bg-white/[0.02] rounded-sm">
+                    <span className="block text-[10px] font-mono text-gray-500 uppercase tracking-widest mb-2">
+                        Total Contribution
+                    </span>
+                    <div className="flex items-baseline justify-center gap-1">
+                        <span className="text-4xl md:text-5xl font-display font-bold text-white tracking-tighter">
+                            ${amount}
+                        </span>
+                        <span className="text-sm text-gray-500 font-mono uppercase tracking-wider">
+                           USD
+                        </span>
+                    </div>
+                    <span className="text-xs text-gray-500 block mt-2 font-light">
+                        {frequency === 'monthly' ? 'Billed monthly' : 'Single transaction'}
                     </span>
                 </div>
 
-                <Button className="w-full py-6 text-base bg-white hover:bg-primary hover:text-white border-none" icon={<ArrowRight size={16} />}>
+                <Button className="w-full h-14 bg-white hover:bg-primary hover:text-white border-none text-black font-bold tracking-wide" icon={<ArrowRight size={16} />}>
                     Process Donation
                 </Button>
 
-                <div className="flex items-center justify-center gap-2 text-[10px] font-mono text-gray-600 uppercase tracking-widest">
+                <div className="flex items-center justify-center gap-2 text-[10px] font-mono text-gray-600 uppercase tracking-widest pt-2">
                     <ShieldCheck size={12} className="text-success" />
                     <span>256-bit SSL Encrypted</span>
                 </div>
@@ -140,21 +207,21 @@ const DonationCard: React.FC = () => {
 
 const Give: React.FC = () => {
   return (
-    <div className="pt-32 min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans overflow-x-hidden">
-      <DitherGrid className="opacity-20 fixed inset-0 z-0" />
+    <div className="pt-24 min-h-screen bg-black text-white selection:bg-white selection:text-black font-sans overflow-x-hidden">
+      <DitherGrid className="opacity-10 fixed inset-0 z-0" />
 
-      {/* Background Globe for Give */}
-      <div className="absolute top-32 right-0 -translate-y-1/3 translate-x-1/3 opacity-20 pointer-events-none z-0">
-          <DitherGlobe scale={1.4} />
+      {/* Background Globe */}
+      <div className="fixed top-1/2 right-0 -translate-y-1/2 translate-x-1/3 opacity-20 pointer-events-none z-0 mix-blend-screen hidden lg:block">
+          <DitherGlobe scale={1.8} />
       </div>
 
-      <Section className="relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-start">
+      <Section className="relative z-10 border-b border-white/5">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-start">
             
             {/* Left Column: The Pitch */}
             <div className="lg:col-span-7 pt-8">
                 <Reveal>
-                    <div className="inline-flex items-center gap-3 px-3 py-1 border border-white/10 bg-white/5 rounded-full text-[10px] font-mono uppercase tracking-widest text-muted mb-8 backdrop-blur-md">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/10 bg-white/5 rounded-full text-[10px] font-mono uppercase tracking-widest text-muted mb-8 backdrop-blur-md">
                         <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse"></span>
                         <ScrambleText text="NONPROFIT 501(c)(3)" delay={200} />
                     </div>
@@ -164,15 +231,19 @@ const Give: React.FC = () => {
                         serves the servants.
                     </h1>
                     
-                    <p className="text-xl text-gray-400 font-light leading-relaxed mb-12 max-w-xl text-balance border-l border-white/10 pl-6">
-                        Your capital builds the digital rails for the next generation of missions. 
-                        We operate with zero profit margin to maximize mission velocity.
-                    </p>
+                    <div className="border-l-2 border-white/10 pl-8 mb-16">
+                        <p className="text-xl text-gray-300 font-light leading-relaxed max-w-xl text-balance">
+                            Your capital builds the digital rails for the next generation of missions. 
+                            We operate with zero profit margin to maximize mission velocity.
+                        </p>
+                    </div>
                 </Reveal>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-12">
                     {PITCH_POINTS.map((item, i) => (
-                        <PitchItem key={i} item={item} index={i} />
+                        <Reveal key={i} delay={300 + (i * 100)}>
+                            <PitchItem item={item} index={i} />
+                        </Reveal>
                     ))}
                 </div>
             </div>
@@ -187,7 +258,7 @@ const Give: React.FC = () => {
       </Section>
 
       {/* FAQ / Technical Details */}
-      <Section className="border-t border-white/5 bg-white/[0.02]">
+      <Section className="bg-white/[0.02]">
         <Reveal>
             <div className="flex items-center gap-2 mb-12">
                 <HelpCircle size={16} className="text-white/40" />
@@ -196,12 +267,13 @@ const Give: React.FC = () => {
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {FAQ_ITEMS.map((item, i) => (
-                    <FaqItemPanel key={i} item={item} />
+                    <Reveal key={i} delay={i * 50} className="h-full">
+                        <FaqItemPanel item={item} />
+                    </Reveal>
                 ))}
             </div>
         </Reveal>
       </Section>
-
     </div>
   );
 };

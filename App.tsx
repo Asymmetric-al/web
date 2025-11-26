@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useEffect, type ErrorInfo, type ReactNode } from 'react';
+import React, { Component, Suspense, lazy, useEffect, useLayoutEffect, type ErrorInfo, type ReactNode } from 'react';
 import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Loader2, AlertTriangle, RefreshCcw } from 'lucide-react';
 import { Navbar, Footer } from './components/Layout';
@@ -32,33 +32,48 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 /**
  * ScrollToTop
  * Handles scroll positioning on route transitions.
- * Supports instant scroll to top on page change, and smooth scroll to hash anchors.
+ * Ensures page resets to top on navigation, but respects hash anchors if present.
  */
 const ScrollToTop: React.FC = () => {
   const { pathname, hash } = useLocation();
 
-  useEffect(() => {
-    if (!hash) {
-      // If no hash, scroll to top instantly to simulate new page load
-      document.documentElement.style.scrollBehavior = 'auto';
-      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
-      
-      // Re-enable smooth scrolling after a small tick
-      const timeout = setTimeout(() => {
-        document.documentElement.style.scrollBehavior = '';
-      }, 100);
-      return () => clearTimeout(timeout);
-    } else {
-      // If hash exists, attempt to scroll to element
-      // We give a small delay to allow lazy loaded content to potentially render
+  useLayoutEffect(() => {
+    // Disable smooth scrolling temporarily to prevent fighting between 
+    // the restore logic and the CSS scroll-behavior: smooth
+    document.documentElement.style.scrollBehavior = 'auto';
+
+    // Always reset to top first when route changes to avoid being stuck at bottom of new page
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+
+    if (hash) {
+      // If there is a hash, wait a tick for layout (and potentially Suspense) to settle
       const timeout = setTimeout(() => {
         const id = hash.replace('#', '');
         const element = document.getElementById(id);
         if (element) {
           element.scrollIntoView({ behavior: 'smooth' });
         }
-      }, 300);
-      return () => clearTimeout(timeout);
+      }, 300); // 300ms delay to allow lazy content to hydrate/render
+      
+      // Re-enable global smooth scroll after animation
+      const cleanup = setTimeout(() => {
+          document.documentElement.style.scrollBehavior = '';
+      }, 1000);
+
+      return () => {
+        clearTimeout(timeout);
+        clearTimeout(cleanup);
+        document.documentElement.style.scrollBehavior = '';
+      };
+    } else {
+      // If no hash, just re-enable smooth scroll after a short delay
+      const cleanup = setTimeout(() => {
+          document.documentElement.style.scrollBehavior = '';
+      }, 100);
+      return () => {
+        clearTimeout(cleanup);
+        document.documentElement.style.scrollBehavior = '';
+      };
     }
   }, [pathname, hash]);
 
@@ -93,8 +108,11 @@ interface ErrorBoundaryState {
   error: Error | null;
 }
 
-class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  state: ErrorBoundaryState = { hasError: false, error: null };
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     return { hasError: true, error };

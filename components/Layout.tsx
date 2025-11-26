@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect, useMemo, useRef, memo } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ArrowRight, Github } from 'lucide-react';
@@ -125,7 +124,7 @@ const DesktopNavLinks: React.FC<{ readonly currentPath: string }> = memo(({ curr
             to={item.path}
             ref={(el) => { linksRef.current[index] = el; }}
             aria-current={isActive ? 'page' : undefined}
-            className={`relative z-10 px-5 py-2 text-[11px] font-mono uppercase tracking-widest rounded-full transition-colors duration-300 ${
+            className={`relative z-10 px-6 py-2.5 text-[11px] font-mono uppercase tracking-widest rounded-full transition-colors duration-300 ${
               isActive 
                 ? 'text-black font-bold' 
                 : 'text-muted hover:text-white'
@@ -157,14 +156,15 @@ export const Navbar: React.FC = memo(() => {
   }, [isOpen]);
 
   return (
-    <nav className="fixed top-0 w-full z-50" aria-label="Main Navigation">
-      <Container>
-        <div className="flex items-center justify-between py-6">
+    <nav className="fixed top-0 w-full z-50 transition-all duration-300" aria-label="Main Navigation">
+      <div className="absolute inset-0 bg-black/80 backdrop-blur-xl border-b border-white/5" aria-hidden="true" />
+      
+      <Container className="relative">
+        <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-4 z-50 group relative" aria-label="Asymmetric.al Home">
-                <div className="absolute inset-0 bg-black/50 blur-lg rounded-full md:hidden" aria-hidden="true"></div>
                 <Logo className="text-white w-8 h-8 relative z-10" />
-                <span className="font-display font-bold tracking-tight text-white text-2xl hidden md:block relative z-10">
+                <span className="font-display font-bold tracking-tight text-white text-xl hidden md:block relative z-10">
                     Asymmetric.al
                 </span>
             </Link>
@@ -179,7 +179,6 @@ export const Navbar: React.FC = memo(() => {
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
             >
-                <div className="absolute inset-0 bg-black/50 blur-md rounded-full"></div>
                 <span className="relative z-10">
                     {isOpen ? <X size={24} /> : <Menu size={24} />}
                 </span>
@@ -197,7 +196,7 @@ Navbar.displayName = 'Navbar';
 // --- Footer Sub-components ---
 
 const FooterHeader: React.FC<{ readonly children: React.ReactNode }> = memo(({ children }) => (
-    <h4 className="font-mono text-[10px] uppercase tracking-widest text-white mb-8 border-b border-white/10 pb-2 inline-block">
+    <h4 className="font-mono text-[10px] uppercase tracking-widest text-white mb-6 pb-2 inline-block border-b border-white/10">
         {children}
     </h4>
 ));
@@ -220,11 +219,11 @@ const FooterLink: React.FC<FooterLinkProps> = memo(({ to, children }) => {
     return (
         <li>
             {to ? (
-                <Link to={to} className="hover:text-white transition-all duration-300 flex items-center gap-2 group">
+                <Link to={to} className="hover:text-white transition-all duration-300 flex items-center gap-2 group text-sm font-mono text-muted leading-relaxed">
                     {content}
                 </Link>
             ) : (
-                <span className="cursor-pointer hover:text-white transition-all duration-300 flex items-center gap-2 group">
+                <span className="cursor-pointer hover:text-white transition-all duration-300 flex items-center gap-2 group text-sm font-mono text-muted leading-relaxed">
                     {content}
                 </span>
             )}
@@ -235,23 +234,23 @@ const FooterLink: React.FC<FooterLinkProps> = memo(({ to, children }) => {
 FooterLink.displayName = 'FooterLink';
 
 const FooterManifesto: React.FC = memo(() => (
-    <div className="mb-16">
-        <h2 className="font-mono text-xs text-muted uppercase tracking-widest mb-8">
+    <div className="mb-20">
+        <h2 className="font-mono text-[10px] text-muted uppercase tracking-widest mb-8">
             The Manifesto
         </h2>
         
-        <div className="border-t border-white/20 py-16">
-            <div className="flex flex-col gap-4">
-                <span className="font-display font-bold text-4xl md:text-7xl text-white leading-none tracking-tight">
+        <div className="border-t border-white/10 py-16">
+            <div className="flex flex-col gap-2">
+                <span className="font-display font-bold text-4xl md:text-6xl lg:text-7xl text-white leading-[0.9] tracking-tight">
                     WE BUILD FOR THE <span className="text-muted">GLOBAL CHURCH.</span>
                 </span>
-                <span className="font-display font-bold text-4xl md:text-7xl text-white leading-none tracking-tight">
+                <span className="font-display font-bold text-4xl md:text-6xl lg:text-7xl text-white leading-[0.9] tracking-tight">
                     WE MEASURE SUCCESS IN
                 </span>
-                <span className="font-display font-bold text-[14vw] leading-[0.8] text-white tracking-tighter mt-4 md:mt-8 block">
+                <span className="font-display font-bold text-[14vw] leading-[0.8] text-white tracking-tighter mt-4 md:mt-8 block select-none">
                     IMPACT,
                 </span>
-                <span className="font-display font-bold text-4xl md:text-7xl text-muted leading-none tracking-tight md:text-right mt-4">
+                <span className="font-display font-bold text-4xl md:text-6xl lg:text-7xl text-muted leading-[0.9] tracking-tight md:text-right mt-4">
                     NOT PROFIT.
                 </span>
             </div>
@@ -319,12 +318,12 @@ export const Footer: React.FC = memo(() => {
       <Container className="relative z-10">
         <FooterManifesto />
 
-        {/* Sitemap Grid - Brutalist Layout */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 border-t border-white/10 pt-16 mb-24">
+        {/* Sitemap Grid - Standardized spacing */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 lg:gap-16 border-t border-white/10 pt-16 mb-24">
             {FOOTER_SECTIONS.map((section, idx) => (
                 <div key={idx}>
                     <FooterHeader>{section.title}</FooterHeader>
-                    <ul className="space-y-4 text-sm font-mono text-muted">
+                    <ul className="space-y-3">
                         {section.links.map((link, linkIdx) => (
                             <FooterLink key={linkIdx} to={link.to}>{link.label}</FooterLink>
                         ))}

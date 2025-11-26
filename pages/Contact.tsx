@@ -1,6 +1,5 @@
-
 import React, { FormEvent, memo, useCallback } from 'react';
-import { Reveal, Button, DitherGlobe, GridPattern, SpotlightCard, TechPanel, ScrambleText, Container } from '../components/UI';
+import { Reveal, Button, DitherGlobe, GridPattern, SpotlightCard, TechPanel, ScrambleText, Container, Input, TextArea } from '../components/UI';
 import { Mail, MapPin, MessageSquare, ArrowRight, Terminal, type LucideIcon } from 'lucide-react';
 
 // --- Types ---
@@ -12,18 +11,6 @@ interface ContactChannel {
   readonly content: React.ReactNode;
   readonly meta?: string;
   readonly href?: string;
-}
-
-interface FormInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-    readonly label: string;
-    readonly className?: string;
-    readonly name?: string;
-}
-
-interface FormTextAreaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
-    readonly label: string;
-    readonly className?: string;
-    readonly name?: string;
 }
 
 // --- Constants ---
@@ -102,44 +89,6 @@ const ChannelItem = memo(({ channel }: { readonly channel: ContactChannel }) => 
 
 ChannelItem.displayName = 'ChannelItem';
 
-const FormInput = memo((props: FormInputProps) => {
-    const { label, className = "", name, ...rest } = props;
-    return (
-        <div className="space-y-2">
-            <label className="font-mono text-[10px] uppercase tracking-widest text-gray-500" htmlFor={name}>
-                {label}
-            </label>
-            <input 
-                id={name}
-                name={name}
-                className={`w-full bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-primary focus:bg-white/10 outline-none transition-all placeholder:text-white/20 rounded-sm ${className}`}
-                {...rest} 
-            />
-        </div>
-    );
-});
-
-FormInput.displayName = 'FormInput';
-
-const FormTextArea = memo((props: FormTextAreaProps) => {
-    const { label, className = "", name, ...rest } = props;
-    return (
-        <div className="space-y-2">
-            <label className="font-mono text-[10px] uppercase tracking-widest text-gray-500" htmlFor={name}>
-                {label}
-            </label>
-            <textarea 
-                id={name}
-                name={name}
-                className={`w-full bg-white/5 border border-white/10 p-4 text-white font-mono text-sm focus:border-primary focus:bg-white/10 outline-none transition-all placeholder:text-white/20 resize-none rounded-sm ${className}`}
-                {...rest} 
-            />
-        </div>
-    );
-});
-
-FormTextArea.displayName = 'FormTextArea';
-
 // --- Main Component ---
 
 const Contact: React.FC = () => {
@@ -199,7 +148,7 @@ const Contact: React.FC = () => {
             {/* Interactive Form Terminal */}
             <div className="lg:col-span-7">
                 <Reveal delay={400}>
-                    <SpotlightCard className="bg-offblack/50 border-white/10 p-1">
+                    <SpotlightCard className="bg-white/[0.02] border-white/10 p-1">
                         <div className="bg-black p-8 md:p-10 relative overflow-hidden">
                             <div className="flex items-center gap-2 text-muted mb-8 pb-4 border-b border-white/10">
                                 <Terminal size={16} />
@@ -208,7 +157,7 @@ const Contact: React.FC = () => {
 
                             <form className="space-y-6" onSubmit={handleSubmit}>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <FormInput 
+                                    <Input 
                                         label="Identity // Name" 
                                         type="text" 
                                         placeholder="H. TAYLOR" 
@@ -216,7 +165,7 @@ const Contact: React.FC = () => {
                                         autoComplete="name"
                                         required
                                     />
-                                    <FormInput 
+                                    <Input 
                                         label="Identity // Email" 
                                         type="email" 
                                         placeholder="CONTACT@ORG.COM" 
@@ -226,7 +175,7 @@ const Contact: React.FC = () => {
                                     />
                                 </div>
 
-                                <FormInput 
+                                <Input 
                                     label="Context // Organization" 
                                     type="text" 
                                     placeholder="GLOBAL MISSIONS INC." 
@@ -234,7 +183,7 @@ const Contact: React.FC = () => {
                                     autoComplete="organization"
                                 />
 
-                                <FormTextArea 
+                                <TextArea 
                                     label="Payload // Message" 
                                     className="h-32" 
                                     placeholder="BRIEFING DETAILS..." 

@@ -169,45 +169,61 @@ const OPEN_ROLES: readonly RoleItem[] = [
 // --- Sub-Components ---
 
 const PathwayCard = memo(({ pathway, onScroll }: PathwayCardProps) => (
-    <SpotlightCard className="bg-black/50 border-white/10 h-full flex flex-col justify-between p-8 group">
-        <div>
-            <div className="flex justify-between items-start mb-6">
-                <div className="p-3 bg-white/5 rounded-sm border border-white/10 group-hover:border-white/30 group-hover:text-white text-gray-400 transition-all">
-                    <pathway.icon size={24} strokeWidth={1.5} />
+    <SpotlightCard className="h-full bg-black border-white/10 group rounded-sm hover:border-white/20 transition-all duration-500">
+        <div className="flex flex-col justify-between h-full p-8 md:p-10">
+            <div>
+                <div className="flex justify-between items-start mb-8">
+                    <div className="p-3 bg-white/5 rounded-sm border border-white/10 group-hover:border-primary/50 group-hover:text-primary transition-colors text-gray-400">
+                        <pathway.icon size={24} strokeWidth={1.5} />
+                    </div>
                 </div>
-                <span className="text-[10px] font-mono uppercase tracking-widest text-muted">{pathway.subtitle}</span>
+                
+                <div className="font-mono text-[10px] uppercase tracking-widest text-muted mb-4 border-l border-white/10 pl-3">
+                    {pathway.subtitle}
+                </div>
+
+                <h3 className="text-2xl font-display font-bold text-white mb-4 tracking-tight group-hover:text-white/90 transition-colors">
+                    {pathway.title}
+                </h3>
+                
+                <p className="text-sm text-gray-400 leading-relaxed mb-8 text-balance font-light">
+                    {pathway.desc}
+                </p>
             </div>
-            <h3 className="text-xl font-display font-bold text-white mb-4">{pathway.title}</h3>
-            <p className="text-sm text-gray-400 leading-relaxed mb-8">{pathway.desc}</p>
-        </div>
-        <div className="pt-6 border-t border-white/5">
-            {pathway.internal ? (
-                <button 
-                    onClick={onScroll}
-                    className="text-xs font-mono text-white group-hover:text-primary transition-colors flex items-center gap-2 uppercase tracking-widest cursor-pointer w-fit focus:outline-none"
-                >
-                    {pathway.action} <ArrowRight size={12} />
-                </button>
-            ) : (
-                <a 
-                    href={pathway.link}
-                    target={pathway.link.startsWith('http') ? "_blank" : undefined}
-                    rel={pathway.link.startsWith('http') ? "noopener noreferrer" : undefined}
-                    className="text-xs font-mono text-white group-hover:text-primary transition-colors flex items-center gap-2 uppercase tracking-widest cursor-pointer w-fit"
-                >
-                    {pathway.action} <ArrowRight size={12} />
-                </a>
-            )}
+
+            <div className="pt-6 border-t border-white/5">
+                {pathway.internal ? (
+                    <button 
+                        onClick={onScroll}
+                        className="text-xs font-mono text-white group-hover:text-primary transition-colors flex items-center gap-2 uppercase tracking-widest cursor-pointer w-fit focus:outline-none"
+                    >
+                        {pathway.action} <ArrowRight size={12} />
+                    </button>
+                ) : (
+                    <a 
+                        href={pathway.link}
+                        target={pathway.link.startsWith('http') ? "_blank" : undefined}
+                        rel={pathway.link.startsWith('http') ? "noopener noreferrer" : undefined}
+                        className="text-xs font-mono text-white group-hover:text-primary transition-colors flex items-center gap-2 uppercase tracking-widest cursor-pointer w-fit"
+                    >
+                        {pathway.action} <ArrowRight size={12} />
+                    </a>
+                )}
+            </div>
         </div>
     </SpotlightCard>
 ));
 PathwayCard.displayName = 'PathwayCard';
 
 const ValueCard = memo(({ value }: ValueCardProps) => (
-    <div className="p-8 border-l border-white/10 hover:bg-white/[0.02] transition-colors">
-        <value.icon size={24} strokeWidth={1.5} className="text-gray-500 mb-6" />
-        <h3 className="text-lg font-display font-bold text-white mb-3 tracking-tight">{value.title}</h3>
-        <p className="text-sm text-muted leading-relaxed text-balance">{value.desc}</p>
+    <div className="group h-full p-8 border border-white/10 bg-white/[0.02] hover:bg-white/[0.04] transition-colors rounded-sm flex flex-col">
+        <div className="mb-6 text-gray-500 group-hover:text-primary transition-colors">
+            <value.icon size={24} strokeWidth={1.5} />
+        </div>
+        <h3 className="text-xl font-display font-bold text-white mb-3 tracking-tight">{value.title}</h3>
+        <p className="text-sm text-gray-400 leading-relaxed text-balance font-light mt-auto">
+            {value.desc}
+        </p>
     </div>
 ));
 ValueCard.displayName = 'ValueCard';
@@ -216,38 +232,39 @@ const RoleCard = memo(({ role }: RoleCardProps) => {
     // Determine badge styling based on role type
     const isSupportRaised = role.type.includes('Support');
     const badgeStyle = isSupportRaised 
-        ? 'bg-emerald-900/20 text-emerald-300 border border-emerald-800/30'
-        : 'bg-white/10 text-white/80';
+        ? 'bg-success/10 text-success border-success/20'
+        : 'bg-white/10 text-white/80 border-white/10';
 
     return (
-        <TechPanel noBorder className="border border-white/10 bg-black hover:border-white/30 transition-all group relative overflow-hidden">
+        <TechPanel noBorder className="border border-white/10 bg-black hover:border-white/30 transition-all duration-300 group relative overflow-hidden">
              <div className="absolute inset-0 bg-white/[0.01] opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" aria-hidden="true" />
              
-             <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
-                 <div className="flex-1">
-                     <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-4 mb-3">
-                         <h3 className="text-xl font-bold text-white font-display">{role.title}</h3>
-                         <span className={`px-2 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider w-fit ${badgeStyle}`}>
+             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
+                 <div className="flex-1 space-y-3">
+                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                         <h3 className="text-xl font-bold text-white font-display tracking-tight">{role.title}</h3>
+                         <span className={`px-2 py-0.5 rounded-sm text-[10px] font-mono uppercase tracking-widest w-fit border ${badgeStyle}`}>
                             {role.type}
                          </span>
                      </div>
-                     <p className="text-gray-400 text-sm max-w-2xl mb-4 leading-relaxed">{role.desc}</p>
-                     <div className="flex flex-wrap gap-2">
-                         <div className="flex items-center gap-1 text-[10px] font-mono text-primary uppercase tracking-widest">
+                     
+                     <p className="text-gray-400 text-sm max-w-2xl leading-relaxed font-light text-balance">{role.desc}</p>
+                     
+                     <div className="flex flex-wrap items-center gap-3 pt-2">
+                         <div className="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 uppercase tracking-widest bg-white/5 px-2 py-1 rounded-sm border border-white/5">
                              <Code size={10} /> {role.stack}
                          </div>
-                         <span className="text-white/10 text-[10px]">|</span>
-                         <div className="flex items-center gap-1 text-[10px] font-mono text-muted uppercase tracking-widest">
+                         <div className="flex items-center gap-1.5 text-[10px] font-mono text-gray-500 uppercase tracking-widest bg-white/5 px-2 py-1 rounded-sm border border-white/5">
                              <Globe size={10} /> {role.location}
                          </div>
                      </div>
                  </div>
                  
-                 <div className="flex items-center justify-end">
-                     <Link to="/contact">
+                 <div className="flex items-center justify-end w-full md:w-auto pt-4 md:pt-0 border-t border-white/5 md:border-0">
+                     <Link to="/contact" className="w-full md:w-auto">
                          <Button 
                             variant={ButtonVariant.SECONDARY} 
-                            className="border-white/20 text-white hover:bg-white hover:!text-black hover:border-white transition-all duration-300"
+                            className="w-full md:w-auto border-white/20 text-white hover:bg-white hover:!text-black hover:border-white transition-all duration-300"
                          >
                              Initiate <ArrowRight size={14} className="ml-2 group-hover:translate-x-1 transition-transform" />
                          </Button>
@@ -305,11 +322,11 @@ const Join: React.FC = () => {
       <Section className="relative z-10 !pt-0">
           <Reveal>
              <div className="mb-12">
-                <h2 className="text-3xl font-display font-bold text-white mb-4">How to Engage</h2>
-                <p className="text-gray-400 max-w-xl">There are three ways to join the mission, depending on your capacity and calling.</p>
+                <h2 className="text-3xl font-display font-bold text-white mb-4 tracking-tight">How to Engage</h2>
+                <p className="text-gray-400 max-w-xl font-light leading-relaxed">There are three ways to join the mission, depending on your capacity and calling.</p>
              </div>
 
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
                 {PATHWAYS.map((path, i) => (
                     <PathwayCard key={i} pathway={path} onScroll={scrollToRoles} />
                 ))}
@@ -325,7 +342,7 @@ const Join: React.FC = () => {
                 <h2 className="font-mono text-xs text-white uppercase tracking-widest">Engineering Values</h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
                 {VALUES.map((item, i) => (
                     <ValueCard key={i} value={item} />
                 ))}
@@ -343,18 +360,18 @@ const Join: React.FC = () => {
                  </div>
              </div>
 
-             <div className="grid grid-cols-1 gap-4">
+             <div className="grid grid-cols-1 gap-6">
                  {OPEN_ROLES.map((role) => (
                      <RoleCard key={role.id} role={role} />
                  ))}
              </div>
 
              {/* General CTA */}
-             <div className="mt-16 mb-24 p-8 md:p-12 border border-dashed border-white/10 rounded bg-white/[0.02] text-center relative overflow-hidden">
+             <div className="mt-20 mb-24 p-12 border border-dashed border-white/10 rounded-sm bg-white/[0.02] text-center relative overflow-hidden">
                  <DitherGrid className="opacity-50" />
                  <div className="relative z-10">
-                    <h4 className="text-2xl font-display font-bold text-white mb-4">Don't see your specific role?</h4>
-                    <p className="text-muted text-sm mb-8 max-w-lg mx-auto leading-relaxed">
+                    <h4 className="text-2xl font-display font-bold text-white mb-4 tracking-tight">Don't see your specific role?</h4>
+                    <p className="text-muted text-sm mb-8 max-w-lg mx-auto leading-relaxed font-light">
                         We are always interested in conversations with high-agency builders. 
                         Whether you are a Security Specialist, Data Scientist, or just want to help—let's talk.
                     </p>
