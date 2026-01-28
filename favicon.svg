@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <style>
+    /* Default to black for light mode */
+    :root {
+      --icon-color: #0A0A0A;
+    }
+    /* Switch to white for dark mode */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --icon-color: #F2F2F2;
+      }
+    }
+    .brand-stroke { stroke: var(--icon-color); }
+    .brand-fill { fill: var(--icon-color); }
+  </style>
+  <path d="M4 4H20V20H4V4Z" stroke-width="1.5" class="brand-stroke"/>
+  <path d="M14 4V20" stroke-width="1.5" class="brand-stroke"/>
+  <circle cx="17" cy="7" r="1.5" class="brand-fill"/>
+</svg>

@@ -1,82 +1,128 @@
-
-import React from 'react';
-import { Section, TechPanel, Reveal, Button, DitherGrid, SpotlightCard, DitherGlobe, ScrambleText } from '../components/UI';
+import React, { FormEvent, memo, useCallback, useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { 
+    Database, Globe, Zap, Mail, FileText, PenTool, BarChart, Layout, Heart, 
+    Calendar, PlusCircle, ArrowRight, AlertTriangle, 
+    Layers, ShieldAlert, type LucideIcon, Server,
+    MessageCircle, Target, DollarSign
+} from 'lucide-react';
+import { 
+    Section, Reveal, Button, DitherGrid, SpotlightCard, 
+    DitherGlobe, ScrambleText, Input, TextArea
+} from '../components/UI';
 import { ButtonVariant } from '../types';
-import { Database, Globe, Zap, Mail, FileText, PenTool, BarChart, Layout, Heart, Calendar, PlusCircle, ArrowRight, AlertTriangle, XCircle, CheckCircle, Clock, Split, Lock } from 'lucide-react';
+import { cn } from '../lib/utils';
 
-// Static Data extracted for performance
-const DIAGNOSTIC_ITEMS = [
-    { label: "Data Silos", icon: Split }, 
-    { label: "Vendor Lock", icon: Lock }, 
-    { label: "Legacy Debt", icon: Clock }, 
-    { label: "Sync Error", icon: AlertTriangle }
-];
+// --- Types ---
 
-const MISSION_CONTROL_TILES = [
+interface MissionTile {
+    readonly title: string;
+    readonly desc: React.ReactNode;
+    readonly icon: LucideIcon;
+    readonly meta: string;
+    readonly highlight?: boolean;
+    readonly className?: string;
+}
+
+interface FocusPoint {
+    readonly title: string;
+    readonly icon: LucideIcon;
+    readonly desc: string;
+}
+
+interface ProblemOption {
+    readonly id: string;
+    readonly title: string;
+    readonly icon: LucideIcon;
+    readonly subtitle: string;
+    readonly desc: string;
+    readonly points: readonly string[];
+}
+
+interface MissionCardProps {
+    readonly tile: MissionTile;
+}
+
+interface FalseChoicePanelProps {
+    readonly option: ProblemOption;
+}
+
+interface FocusCardProps {
+    readonly item: FocusPoint;
+}
+
+// --- Static Data ---
+
+const MISSION_CONTROL_TILES: readonly MissionTile[] = [
     { 
         title: "Partners CRM", 
-        desc: "The single source of truth. People, churches, and pledges in one living record.",
+        desc: <>Powered by a custom Missions Built <a href="https://github.com/twentyhq/twenty" target="_blank" rel="noreferrer" className="text-foreground hover:text-primary underline decoration-border transition-colors">Twenty CRM</a>, the open-source standard with 40k GitHub Stars. The definitive source of truth for people, churches, and pledges. A living record that updates in real-time, managed with a modern interface designed for speed. A CRM your Advancement team will actually enjoy using.</>,
         icon: Database,
         meta: "// CORE RECORD"
     },
     { 
         title: "Contributions Hub", 
-        desc: "Live transaction feed. Automate reconciliation and eliminate manual entry.",
-        icon: Zap,
+        desc: "Live transaction feed. Automate reconciliation and eliminate manual entry. Reversals and management in one place all perfectly integrated with Stripe for the best in class payment processing experience.",
+        icon: DollarSign,
         meta: "// FINANCE"
     },
     { 
         title: "Web Studio", 
-        desc: "Manage headless sites and missionary pages without code. Connected directly to CRM.",
+        desc: <>The power of <a href="https://nextjs.org/" target="_blank" rel="noreferrer" className="text-foreground hover:text-primary underline decoration-border transition-colors">Next.js</a> with the ease of a visual CMS (A headless WordPress). Whether you have a frontend team or just need to update the blog, you are in control. No more change orders for simple button tweaks. Build on open standards, not proprietary cages.</>,
         icon: Globe,
         meta: "// CMS"
     },
     { 
         title: "Email Studio", 
-        desc: "Send branded, authenticated campaigns. No more exporting lists to Mailchimp.",
+        desc: "Every email that comes from your organization needs to represent the work you're doing. No more compromises on what comes from your organization whether it be an appeal campaign, emailed donation receipt, or a simple password-reset email. It all needs to be perfect and fully branded and owned by you.",
         icon: Mail,
         meta: "// COMMS"
     },
+    {
+        title: "Donor Support Hub",
+        desc: <>Integrated <a href="https://github.com/chatwoot/chatwoot" target="_blank" rel="noreferrer" className="text-foreground hover:text-primary underline decoration-border transition-colors">Chatwoot CE</a> to handle all donor issues with easy tracking to make sure no donor question gets dropped or missed. Donor care is vital to any missions organization. All integrated into your Mission Control Panel.</>,
+        icon: MessageCircle,
+        meta: "// SUPPORT"
+    },
     { 
         title: "Statements Studio", 
-        desc: "Generate receipt packs and year-end tax documents automatically.",
+        desc: "Generate receipt packs and year-end tax documents automatically. The easy way to create and manage templates for your printable statements or reports. You can make it exactly how you want it with no compromises or hours of endless coding just to get the header or footer right.",
         icon: FileText,
         meta: "// COMPLIANCE"
     },
     { 
         title: "Sign Studio", 
-        desc: "Integrated e-signature. Build packets and track routing for agreements.",
+        desc: <>No need for DocuSign anymore. Powered by <a href="https://github.com/documenso/documenso" target="_blank" rel="noreferrer" className="text-foreground hover:text-primary underline decoration-border transition-colors">Documenso CE</a>, fully integrated in your mobilization and onboarding workflow. One integrated place to handle agreements, waivers, and packets.</>,
         icon: PenTool,
         meta: "// LEGAL"
     },
     { 
         title: "Mobilize", 
-        desc: "Accelerate deployment. Move candidates from interest to field with clear steps.",
+        desc: "Powered by Zapier. Accelerate your deployment with effortless management. You set up the workflow and process you want with best-in-class automation that is fully visualized and not endless and confusing 'If This Then That' logic trees. Move candidates from interest to field with clear steps.",
         icon: ArrowRight,
         meta: "// HR FLOW"
     },
     { 
         title: "Report Studio", 
-        desc: "Real-time visibility. Schedule reports for leadership without SQL knowledge.",
+        desc: "Real-time visibility. Pull or Schedule reports for leadership, finance, etc. in one easy to use place. One beautiful easy to use interface that just gives you the reports you need when you need them.",
         icon: BarChart,
         meta: "// INTELLIGENCE"
     },
     { 
         title: "Automations", 
-        desc: "Embedded workflow engine. Trigger actions based on donations or applications.",
-        icon: Layout,
+        desc: "Powered by Zapier's workflow engine. You are fully in charge to trigger actions based on donations, applications, anything imaginable with Zapier's 8,000+ app integrations.",
+        icon: Zap,
         meta: "// LOGIC"
     },
     {
         title: "Member Care",
-        desc: "Track health and milestones. Sustain your workers with intentional care.",
+        desc: "One dashboard for your MC team to Track care, MC Plans, and milestones. Sustain your workers with intentional care and give your team everything they need stay on top of their care plans. (Note: Not HIPAA compliant yet).",
         icon: Heart,
         meta: "// RETENTION"
     },
     {
         title: "Events & Gatherings",
-        desc: "Centralized registration and logistics. Connect attendees to your CRM instantly.",
+        desc: "Handle events on your own website, fully branded and under your control. One source of truth for centralized registration and logistics. Connect attendees to your CRM instantly without re-entering data.",
         icon: Calendar,
         meta: "// LOGISTICS"
     },
@@ -85,145 +131,462 @@ const MISSION_CONTROL_TILES = [
         desc: "The OS is alive. We are continuously deploying new modules to serve the field.",
         icon: PlusCircle,
         meta: "// FUTURE",
-        highlight: true
+        highlight: true,
+        className: "md:col-span-2 lg:col-span-3"
     }
 ];
 
-function ActivityIcon() {
-    return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-        </svg>
-    );
-}
+const WHY_FOCUS_DATA: readonly FocusPoint[] = [
+    {
+        title: "Sending is not Selling",
+        icon: Target,
+        desc: "Generic CRMs are built for sales pipelines. They don't understand deputation, support raising, or the delicate nature of donor relationships. We build for partnership, not transactions."
+    },
+    {
+        title: "The Fragmentation Tax",
+        icon: Layers,
+        desc: "When you stitch together 15 different SaaS tools, you pay a 'tax' in lost data, broken syncs, and staff burnout. Missions agencies lose millions of dollars annually to this inefficiency."
+    },
+    {
+        title: "Sovereignty Matters",
+        icon: ShieldAlert,
+        desc: "True ownership means you aren't beholden to a vendor's roadmap or pricing. We build architecture where you own the data, the keys, and the code, ensuring you are never locked into a system you can't control."
+    }
+];
 
-const Platform: React.FC = () => {
-  return (
-    <div className="pt-24 min-h-screen bg-black text-white overflow-hidden selection:bg-white selection:text-black">
-      
-      {/* Hero / Value Prop */}
-      <Section className="border-b border-white/5 relative">
+const PROBLEM_OPTIONS: readonly ProblemOption[] = [
+    {
+        id: 'diy',
+        title: "OPTION A: THE DIY TRAP",
+        icon: Layers,
+        subtitle: "The Generic Stack",
+        desc: "Stitching together Salesforce, Mailchimp, QuickBooks, spreadsheets, and standalone website builders.",
+        points: ["DATA SILOS", "BROKEN AUTOMATION LINKS", "HIGH SUBSCRIPTION FEES"]
+    },
+    {
+        id: 'legacy',
+        title: "OPTION B: THE LEGACY MONOLITH",
+        icon: Globe,
+        subtitle: "The Outdated Vendor",
+        desc: "Proprietary software built in the early 2000s. Safe, but stagnant and difficult to modernize.",
+        points: ["VENDOR LOCK-IN", "CLUNKY UX", "SLOW ROADMAPS"]
+    }
+];
+
+// --- Sub-Components ---
+
+const MissionCard = memo(({ tile }: MissionCardProps) => (
+    <div className={cn(
+        "group relative h-full flex flex-col justify-between bg-card border rounded-sm overflow-hidden transition-all duration-300",
+        tile.highlight 
+            ? 'border-primary/40 shadow-[0_0_0_1px_rgba(16,185,129,0.1)]' 
+            : 'border-border hover:border-foreground/20'
+    )}>
+        {/* Header */}
+        <div className="p-8 flex justify-between items-start border-b border-border bg-card">
+            <div className={cn(
+                "flex items-center justify-center w-10 h-10 rounded-sm border transition-colors",
+                tile.highlight 
+                    ? 'bg-primary/10 border-primary/20 text-primary dark:text-primary' 
+                    : 'bg-secondary border-border text-muted-foreground group-hover:text-foreground group-hover:border-foreground/30'
+            )}>
+                <tile.icon size={20} strokeWidth={1.5} />
+            </div>
+            <span className={cn(
+                "font-mono text-[9px] uppercase tracking-widest mt-2",
+                tile.highlight 
+                    ? 'text-emerald-600 dark:text-primary' 
+                    : 'text-muted-foreground group-hover:text-foreground/60 transition-colors'
+            )}>
+                {tile.meta}
+            </span>
+        </div>
+
+        {/* Content */}
+        <div className="p-8 flex-grow relative bg-card">
+             <div className="relative z-10">
+                <h3 className={cn(
+                    "text-xl font-display font-bold mb-4 tracking-tight transition-colors",
+                    tile.highlight 
+                        ? 'text-foreground' 
+                        : 'text-foreground group-hover:text-primary'
+                )}>
+                    {tile.title}
+                </h3>
+                <div className="text-sm text-muted-foreground leading-relaxed font-light text-balance">
+                    {tile.desc}
+                </div>
+            </div>
+        </div>
+
+        {/* Status Bar */}
+        <div className={cn(
+            "px-8 py-4 border-t flex items-center gap-3",
+            tile.highlight 
+                ? 'bg-primary/5 border-primary/20' 
+                : 'bg-background border-border'
+        )}>
+            <div className="relative flex h-1.5 w-1.5">
+                <span className={cn(
+                    "animate-ping absolute inline-flex h-full w-full rounded-full opacity-75",
+                    tile.highlight ? 'bg-primary' : 'bg-success'
+                )} />
+                <span className={cn(
+                    "relative inline-flex rounded-full h-1.5 w-1.5",
+                    tile.highlight ? 'bg-primary' : 'bg-success'
+                )} />
+            </div>
+            <span className={cn(
+                "font-mono text-[9px] uppercase tracking-widest",
+                tile.highlight ? 'text-emerald-600 dark:text-primary' : 'text-muted-foreground'
+            )}>
+                {tile.highlight ? 'Continuous Deployment' : 'System Active'}
+            </span>
+        </div>
+    </div>
+));
+MissionCard.displayName = 'MissionCard';
+
+const FalseChoicePanel = memo(({ option }: FalseChoicePanelProps) => {
+    const isDIY = option.id === 'diy';
+    
+    // Derived values
+    const { label, headline } = useMemo(() => {
+        const [lbl, ...headlineParts] = option.title.split(':');
+        return {
+            label: lbl,
+            headline: headlineParts.join(':').trim()
+        };
+    }, [option.title]);
+
+    // Theme logic - Adapted for light/dark mode contrast
+    const borderColor = isDIY 
+        ? 'group-hover:border-orange-500/50 dark:group-hover:border-orange-500/30' 
+        : 'group-hover:border-blue-500/50 dark:group-hover:border-blue-500/30';
+    
+    const iconColor = isDIY 
+        ? 'text-orange-600 dark:text-orange-500' 
+        : 'text-blue-600 dark:text-blue-500';
+
+    const subtitleColor = isDIY 
+        ? 'text-orange-600 dark:text-orange-400' 
+        : 'text-blue-600 dark:text-blue-400';
+
+    const lineColor = isDIY 
+        ? 'bg-orange-500/50' 
+        : 'bg-blue-500/50';
+
+    return (
+        <div className={cn(
+            "bg-card h-full border border-border transition-colors duration-500 group relative overflow-hidden flex flex-col rounded-sm",
+            borderColor
+        )}>
+            {/* Corner Markers (Standardized) */}
+            <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-border" aria-hidden="true">
+                <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-current" />
+                <div className="absolute top-0 right-0 w-2 h-2 border-r border-t border-current" />
+                <div className="absolute bottom-0 left-0 w-2 h-2 border-l border-bottom border-current" />
+                <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-bottom border-current" />
+            </div>
+
+            <div className="relative z-10 flex flex-col h-full p-8 md:p-10">
+                
+                {/* Header */}
+                <div className="flex justify-between items-start mb-10">
+                    <div className={cn(
+                        "p-3 rounded-sm border bg-secondary border-border transition-colors",
+                        iconColor
+                    )}>
+                        <option.icon size={24} strokeWidth={1.5} />
+                    </div>
+                    <span className="font-mono text-[10px] font-bold text-muted-foreground uppercase tracking-widest bg-secondary px-3 py-1.5 rounded-sm border border-border">
+                        {label}
+                    </span>
+                </div>
+
+                {/* Content */}
+                <div className="mb-8">
+                    <h3 className="text-2xl font-display font-bold text-foreground mb-4 tracking-tight group-hover:text-foreground/90 transition-colors">
+                        {headline}
+                    </h3>
+                    <div className={cn("flex items-center gap-2 font-mono text-[10px] uppercase tracking-widest mb-6", subtitleColor)}>
+                        <div className={cn("h-px w-6", lineColor)} />
+                        {option.subtitle}
+                    </div>
+                    <p className="text-muted-foreground text-sm leading-relaxed border-l border-border pl-6 text-balance">
+                        {option.desc}
+                    </p>
+                </div>
+
+                {/* Footer List */}
+                <div className="mt-auto pt-8 border-t border-border">
+                     <div className="text-[9px] font-mono text-muted-foreground uppercase tracking-widest mb-4">Critical Failures</div>
+                     <ul className="space-y-4">
+                        {option.points.map((point, i) => (
+                            <li key={i} className="text-[11px] font-mono text-muted-foreground flex items-center gap-3 group/list">
+                                <div className="w-1 h-1 bg-destructive rounded-full shadow-[0_0_8px_rgba(239,68,68,0.5)]"></div>
+                                <span className="group-hover/list:text-foreground transition-colors tracking-wider">{point}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    );
+});
+FalseChoicePanel.displayName = 'FalseChoicePanel';
+
+const FocusCard = memo(({ item }: FocusCardProps) => (
+    <SpotlightCard className="h-full bg-card flex flex-col justify-between group rounded-sm border-border hover:border-foreground/20">
+        <div className="p-8 md:p-10 h-full flex flex-col">
+            <div className="mb-8 p-3 bg-secondary w-fit rounded-sm border border-border text-foreground group-hover:text-primary transition-colors">
+                <item.icon size={24} strokeWidth={1.5} />
+            </div>
+            <h3 className="text-2xl font-display font-bold text-foreground mb-4 tracking-tight">{item.title}</h3>
+            <p className="text-muted-foreground leading-relaxed text-sm text-balance border-l border-border pl-6 mt-auto">{item.desc}</p>
+        </div>
+    </SpotlightCard>
+));
+FocusCard.displayName = 'FocusCard';
+
+const DeploymentForm = memo(() => {
+    const handleSubmit = useCallback((e: FormEvent) => {
+        e.preventDefault();
+        // Handle form submission logic
+    }, []);
+
+    return (
+        <form className="space-y-0 relative group" onSubmit={handleSubmit}>
+            <div className="relative bg-card border border-border rounded-sm p-8 md:p-10 space-y-6">
+                <div className="flex items-center gap-2 mb-6 text-muted-foreground">
+                    <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                    <span className="font-mono text-[10px] uppercase tracking-widest">Secure Uplink</span>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                     <Input placeholder="ORG NAME" aria-label="Organization Name" />
+                     <Input placeholder="CONTACT NAME" aria-label="Contact Name" />
+                </div>
+                <Input type="email" placeholder="EMAIL ADDRESS" aria-label="Email Address" />
+                <TextArea 
+                    placeholder="TELL US ABOUT YOUR CURRENT CHALLENGES..." 
+                    className="h-32"
+                    aria-label="Current Challenges"
+                />
+                
+                <div className="pt-2">
+                    <Button className="w-full h-14 font-bold tracking-wide" icon={<ArrowRight size={16} />}>
+                        Start the Conversation
+                    </Button>
+                </div>
+            </div>
+        </form>
+    );
+});
+DeploymentForm.displayName = 'DeploymentForm';
+
+const PlatformHero = memo(() => (
+    <Section className="border-b border-border relative !pb-0 md:!pb-12 bg-background">
         <DitherGrid />
         
         {/* Layer 0: Main Background Globe (Right aligned) */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 opacity-40 pointer-events-none hidden lg:block mix-blend-screen">
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-1/4 opacity-40 pointer-events-none hidden lg:block mix-blend-screen" aria-hidden="true">
             <DitherGlobe scale={1.6} />
         </div>
 
         <Reveal>
-            <div className="inline-flex items-center gap-2 px-3 py-1 border border-white/10 bg-white/5 rounded-full text-[10px] font-mono uppercase tracking-widest text-muted mb-8 backdrop-blur-md">
-                <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse"></span>
-                <ScrambleText text="MISSION OPERATING SYSTEM" delay={200} />
-            </div>
+            <div className="max-w-4xl">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border bg-secondary/50 rounded-full text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-8 backdrop-blur-md">
+                    <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse"></span>
+                    <ScrambleText text="MISSION OPERATING SYSTEM" delay={200} />
+                </div>
 
-            <h1 className="text-6xl md:text-8xl font-display font-bold text-white mb-8 tracking-tighter leading-[0.9]">
-                One Surface.<br /> 
-                <span className="text-muted">Total Clarity.</span>
-            </h1>
-            <p className="text-xl text-gray-400 max-w-2xl font-light leading-relaxed mb-12 text-balance border-l border-white/10 pl-6">
-                Most agencies are running on a patchwork of disconnected tools. Data is siloed. Staff are exhausted. The mission slows down.
-                <br/><br/>
-                Asymmetric.al replaces the chaos of the "DIY stack" with a single, unified operating system designed specifically for the complexities of sending.
-            </p>
-            <div className="flex flex-wrap gap-6">
-                <Link to="/specs"><Button>System Architecture</Button></Link>
-                <Link to="/missions"><Button variant={ButtonVariant.SECONDARY}>Role Views</Button></Link>
+                <h1 className="text-6xl md:text-8xl font-display font-bold text-foreground mb-8 tracking-tighter leading-[0.9]">
+                    One Surface.<br /> 
+                    <span className="text-muted-foreground">Total Clarity.</span>
+                </h1>
+                
+                <div className="pl-6 border-l-2 border-border mb-12">
+                    <p className="text-xl text-muted-foreground max-w-2xl font-light leading-relaxed text-balance">
+                        Most agencies are running on a patchwork of disconnected tools. Data is siloed. Staff are exhausted. The mission slows down.
+                    </p>
+                    <p className="text-lg text-muted-foreground/80 max-w-2xl font-light leading-relaxed text-balance mt-4">
+                        Asymmetric.al replaces the chaos of the "DIY stack" with a single, unified operating system designed specifically for the complexities of sending.
+                    </p>
+                </div>
+
+                <div className="flex flex-wrap gap-4">
+                    <Link to="/specs"><Button>System Architecture</Button></Link>
+                    <Link to="#mission-control"><Button variant={ButtonVariant.SECONDARY}>Role Views</Button></Link>
+                </div>
             </div>
         </Reveal>
-      </Section>
+    </Section>
+));
+PlatformHero.displayName = 'PlatformHero';
 
-      {/* The Problem: Audit View */}
-      <Section className="bg-red-900/[0.02] relative">
-        {/* Secondary Globe Element (Faint, behind audit) */}
-        <div className="absolute left-0 bottom-0 -translate-x-1/2 translate-y-1/2 opacity-10 pointer-events-none grayscale">
+const FalseChoiceSection = memo(() => (
+    <Section className="bg-card relative border-b border-border">
+        <Reveal>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-stretch">
+              <div className="lg:col-span-5 flex flex-col justify-center">
+                  <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight leading-[1.1]">
+                      The "False Choice"<br/>facing agencies today.
+                  </h2>
+                  <p className="text-muted-foreground leading-relaxed text-lg mb-12 text-balance font-light">
+                      For decades, mission leaders have been forced to choose between two failing options. This compromise drains resources and slows deployment.
+                  </p>
+                  
+                  <div className="p-8 border border-destructive/20 bg-destructive/5 rounded-sm">
+                      <div className="flex items-center gap-3 text-destructive mb-4 font-mono text-xs uppercase tracking-widest">
+                          <AlertTriangle size={14} />
+                          System Warning
+                      </div>
+                      <p className="text-destructive/80 text-sm leading-relaxed italic border-l border-destructive/20 pl-4">
+                          "Our ops, mobilization, and finance teams are spending more time managing our tools than we are supporting our missionaries." — Common Agency Feedback
+                      </p>
+                  </div>
+              </div>
+
+              <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                  {PROBLEM_OPTIONS.map((option) => (
+                      <FalseChoicePanel key={option.id} option={option} />
+                  ))}
+              </div>
+          </div>
+        </Reveal>
+    </Section>
+));
+FalseChoiceSection.displayName = 'FalseChoiceSection';
+
+const WhyFocusSection = memo(() => (
+    <Section grid className="bg-background border-b border-border relative overflow-hidden">
+        {/* Subtle Globe Center */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 opacity-10 pointer-events-none" aria-hidden="true">
             <DitherGlobe scale={1.2} />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center relative z-10">
-            <Reveal>
-                <div className="flex items-center gap-2 text-red-500 mb-4">
-                    <ActivityIcon />
-                    <span className="font-mono text-xs uppercase tracking-widest">Legacy Architecture Audit</span>
-                </div>
-                <h3 className="text-white font-display font-bold text-4xl mb-6 tracking-tight">The False Choice: Chaos or Stagnation.</h3>
-                <p className="text-gray-400 leading-relaxed mb-8 text-balance">
-                    Agencies are typically forced to choose between two failing options.
-                    <br/><br/>
-                    <strong>Option A: The Chaos of DIY.</strong> Juggling disconnected tools that degrade data and force staff into endless manual entry.
-                    <br/><br/>
-                    <strong>Option B: The Prison of Legacy.</strong> "Unified" platforms that are proprietary, locked down, and decades out of date. Making simple changes requires expensive contracts, holding your mission velocity hostage to their slow roadmap.
+        <div className="text-center max-w-3xl mx-auto mb-20 relative z-10">
+             <Reveal>
+                <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight">Why we focus here.</h2>
+                <p className="text-xl text-muted-foreground font-light leading-relaxed text-balance">
+                    We aren't trying to build software for everyone. We are hyper-focused on the unique complexities of sending agencies.
                 </p>
-                <div className="space-y-4">
-                    {[
-                        "Fragmented Data Silos (DIY Stack)",
-                        "Proprietary Vendor Lock-in (Legacy Monoliths)",
-                        "Outdated UX & High Technical Debt"
-                    ].map((item, i) => (
-                        <div key={i} className="flex items-center gap-3 text-red-400/80 font-mono text-xs uppercase tracking-wider">
-                             <XCircle size={14} /> {item}
-                        </div>
-                    ))}
-                </div>
-            </Reveal>
-            
-            <Reveal delay={200} className="h-full">
-                <TechPanel title="DIAGNOSTIC: CRITICAL SYSTEM ALERTS" className="h-full bg-black border-red-500/20">
-                    <div className="grid grid-cols-2 gap-px bg-red-900/20 border border-red-900/20 opacity-60">
-                         {DIAGNOSTIC_ITEMS.map((item, i) => (
-                             <div key={i} className="aspect-square flex flex-col items-center justify-center p-4 bg-black/80 hover:bg-red-900/10 transition-colors group">
-                                 <item.icon className="text-red-700 mb-2 group-hover:text-red-500 transition-colors" size={24} strokeWidth={1.5} />
-                                 <span className="text-[10px] font-mono text-red-700 uppercase text-center group-hover:text-red-400 transition-colors">{item.label}</span>
-                             </div>
-                         ))}
+             </Reveal>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 relative z-10">
+            {WHY_FOCUS_DATA.map((item, i) => (
+                <Reveal key={i} delay={i * 100} className="h-full">
+                    <FocusCard item={item} />
+                </Reveal>
+            ))}
+        </div>
+    </Section>
+));
+WhyFocusSection.displayName = 'WhyFocusSection';
+
+const MissionControlSection = memo(() => (
+    <Section id="mission-control" className="bg-background relative overflow-hidden border-b border-border">
+        {/* Decorative Dither Grid */}
+        <div className="absolute inset-0 opacity-[0.05]" 
+             style={{ backgroundImage: 'radial-gradient(var(--foreground) 1px, transparent 1px)', backgroundSize: '30px 30px' }}
+             aria-hidden="true"
+        />
+
+        <div className="relative z-10">
+             {/* Section Header: The Solution Pitch */}
+             <Reveal>
+                <div className="text-center max-w-4xl mx-auto mb-24">
+                    <div className="inline-flex items-center gap-2 mb-6">
+                        <Server size={14} className="text-success" />
+                        <span className="font-mono text-xs text-success uppercase tracking-widest">The Unified Solution</span>
                     </div>
-                </TechPanel>
-            </Reveal>
-        </div>
-      </Section>
+                    
+                    <h2 className="text-5xl md:text-7xl font-display font-bold text-foreground mb-8 tracking-tighter leading-[0.9]">
+                        Mission Control
+                    </h2>
+                    
+                    <div className="h-px w-24 bg-gradient-to-r from-transparent via-foreground/40 to-transparent mx-auto mb-8" />
 
-      {/* Mission Control Grid */}
-      <Section grid className="bg-black relative overflow-hidden">
-        {/* Decorative Grid Globe at bottom right */}
-        <div className="absolute right-0 bottom-0 translate-x-1/2 translate-y-1/2 opacity-[0.05] pointer-events-none rotate-180">
-            <DitherGlobe scale={2} />
-        </div>
-
-        <Reveal>
-            <div className="flex flex-col md:flex-row justify-between items-end mb-20 border-b border-white/10 pb-8 relative z-10">
-                <div>
-                    <h2 className="text-5xl font-display font-bold text-white mb-4 tracking-tighter">Mission Control</h2>
-                    <p className="text-gray-400 max-w-md text-balance">
+                    <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed text-balance mb-8">
                         Replace the clutter with cohesion. Every operational function under one login, sharing one database.
                     </p>
+                    
+                    <p className="text-muted-foreground/80 max-w-2xl mx-auto leading-relaxed text-balance">
+                        No more "integration tax." No more zapping data between five different SaaS tools. 
+                        Just one sovereign operating system designed to run the work of the Great Commission.
+                    </p>
                 </div>
-                <div className="hidden md:flex items-center gap-2 text-success font-mono text-xs uppercase tracking-widest mt-4 md:mt-0">
-                    <CheckCircle size={14} /> Unified Kernel
-                </div>
-            </div>
-        </Reveal>
+             </Reveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10">
-             {MISSION_CONTROL_TILES.map((tile, i) => (
-                 <Reveal key={i} delay={i * 50} className="h-full">
-                    <SpotlightCard className={`p-8 h-full flex flex-col justify-between group ${tile.highlight ? 'border-dashed border-white/20' : ''}`}>
-                        <div>
-                            <div className="flex justify-between items-start mb-8">
-                                <tile.icon className={`${tile.highlight ? 'text-white' : 'text-gray-500'} group-hover:text-primary transition-colors`} size={28} strokeWidth={1} />
-                                <span className="font-mono text-[9px] text-gray-600 uppercase tracking-widest">{tile.meta}</span>
-                            </div>
-                            <h3 className="text-xl font-display font-bold text-white mb-3 tracking-tight">{tile.title}</h3>
-                            <p className="text-sm text-gray-400 leading-relaxed text-balance">{tile.desc}</p>
-                        </div>
-                        {tile.highlight && (
-                            <div className="mt-8 pt-4 border-t border-white/10">
-                                <span className="text-[10px] font-mono text-coral uppercase tracking-widest animate-pulse">In Development</span>
-                            </div>
-                        )}
-                    </SpotlightCard>
-                 </Reveal>
-             ))}
+             {/* The Modules Grid */}
+             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                 {MISSION_CONTROL_TILES.map((tile, i) => (
+                     <Reveal key={i} delay={i * 50} className={`h-full ${tile.className || ''}`}>
+                        <MissionCard tile={tile} />
+                     </Reveal>
+                 ))}
+             </div>
         </div>
-      </Section>
+    </Section>
+));
+MissionControlSection.displayName = 'MissionControlSection';
+
+const DeploymentSection = memo(() => (
+    <Section id="contact" className="relative overflow-hidden bg-card">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 relative z-10 items-center">
+            <Reveal>
+                <div className="flex items-center gap-2 mb-6 text-primary">
+                    <Heart size={16} />
+                    <span className="font-mono text-xs uppercase tracking-widest">Partnership Model</span>
+                </div>
+                <h2 className="text-5xl md:text-6xl font-display font-bold text-foreground mb-8 tracking-tighter leading-[0.9]">
+                    Let's build<br/>the future.
+                </h2>
+                <p className="text-muted-foreground mb-12 leading-relaxed max-w-md text-balance text-lg border-l border-border pl-6">
+                    We are looking for agencies who are tired of the status quo. If you are ready to modernize your operations and steward your data, we want to talk.
+                </p>
+                <ul className="space-y-6 font-mono text-xs text-muted-foreground uppercase tracking-widest">
+                    <li className="flex items-center gap-4 group">
+                        <div className="p-1 border border-border rounded-full group-hover:border-primary/50 transition-colors">
+                            <div className="w-1.5 h-1.5 bg-foreground rounded-full group-hover:bg-primary transition-colors"></div>
+                        </div>
+                        Early Access Program
+                    </li>
+                    <li className="flex items-center gap-4 group">
+                         <div className="p-1 border border-border rounded-full group-hover:border-primary/50 transition-colors">
+                            <div className="w-1.5 h-1.5 bg-foreground rounded-full group-hover:bg-primary transition-colors"></div>
+                        </div>
+                        Data Migration Support
+                    </li>
+                    <li className="flex items-center gap-4 group">
+                         <div className="p-1 border border-border rounded-full group-hover:border-primary/50 transition-colors">
+                            <div className="w-1.5 h-1.5 bg-foreground rounded-full group-hover:bg-primary transition-colors"></div>
+                        </div>
+                        Open Source Contribution
+                    </li>
+                </ul>
+            </Reveal>
+            
+            <Reveal delay={200}>
+                <DeploymentForm />
+            </Reveal>
+        </div>
+    </Section>
+));
+DeploymentSection.displayName = 'DeploymentSection';
+
+// --- Main Component ---
+
+const Platform: React.FC = () => {
+  return (
+    <div className="pt-24 min-h-screen bg-background text-foreground overflow-hidden selection:bg-foreground selection:text-background">
+      <PlatformHero />
+      <FalseChoiceSection />
+      <WhyFocusSection />
+      <MissionControlSection />
+      <DeploymentSection />
     </div>
   );
 };

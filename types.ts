@@ -1,21 +1,21 @@
-import { LucideIcon } from 'lucide-react';
+import type { LucideIcon } from 'lucide-react';
 
 export interface NavItem {
-  label: string;
-  path: string;
+  readonly label: string;
+  readonly path: string;
 }
 
 export interface FeatureCardProps {
-  title: string;
-  description: string;
-  icon?: LucideIcon;
-  delay?: number;
+  readonly title: string;
+  readonly description: string;
+  readonly icon?: LucideIcon;
+  readonly delay?: number;
 }
 
 export interface StatItem {
-  value: string;
-  label: string;
-  description?: string;
+  readonly value: string;
+  readonly label: string;
+  readonly description?: string;
 }
 
 export enum ButtonVariant {
