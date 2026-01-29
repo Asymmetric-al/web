@@ -58,7 +58,7 @@ const STACK_DATA: readonly StackCategory[] = [
             { label: "TypeScript", url: "https://github.com/microsoft/TypeScript" },
             { label: "JavaScript", url: "https://javascript.tm/" },
             { label: "React", url: "https://github.com/facebook/react" },
-            { label: "Next.js", url: "https://github.com/vercel/next.js" },
+            { label: "Next.js", url: "https://nextjs.org/" },
             { label: "Node.js", url: "https://github.com/nodejs" },
             { label: "NestJS", url: "https://github.com/nestjs/nest" },
             { label: "GraphQL", url: "https://graphql.org/" },
@@ -115,7 +115,6 @@ const STACK_DATA: readonly StackCategory[] = [
         description: "Edge delivery and observability.",
         meta: "LAYER 05",
         items: [
-            { label: "Vercel", url: "https://vercel.com/" },
             { label: "AWS", url: "https://aws.amazon.com/" },
             { label: "Docker", url: "https://github.com/docker" },
             { label: "GitHub", url: "https://github.com/" },

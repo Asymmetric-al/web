@@ -295,12 +295,6 @@ const Privacy: React.FC = () => {
                                         link={null} 
                                     />
                                     <ProviderCard 
-                                        name="Vercel" 
-                                        role="Edge Network" 
-                                        icon={Globe} 
-                                        link={null} 
-                                    />
-                                    <ProviderCard 
                                         name="AWS" 
                                         role="Cloud Infrastructure" 
                                         icon={Database} 
