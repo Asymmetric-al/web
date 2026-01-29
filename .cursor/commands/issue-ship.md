@@ -12,7 +12,7 @@ Use this command when the user asks to close/finish/ship an issue or prepare a P
 - Formatting: follow existing file style (no formatter script is configured).
 - PR workflow: Draft -> Ready for Review -> Approved -> Merged.
 - Prefer GitHub MCP for PR/issue operations.
-- If using Nia (MCP) for repo context, scope queries to this repo (see `.cursor/rules/AGENTS.md#nia-mcp-usage-always-repo-scoped`).
+- If using Nia (MCP) for repo context, scope queries to this repo (see `AGENTS.md#nia-mcp-usage-always-repo-scoped`).
 
 ## Workflow
 
@@ -23,12 +23,13 @@ Use this command when the user asks to close/finish/ship an issue or prepare a P
    - Run: `git log -20 --oneline`.
 3. **Verify acceptance criteria:** Use GitHub MCP to fetch issue body and checklist.
 4. **Scan TODO/FIXME:** Check changed files for TODO/FIXME.
-5. **Run relevant checks:** Use `.cursor/rules/testing.md` to decide scope and run the applicable commands.
+5. **Run relevant checks:** Decide scope based on changes and run the applicable commands.
 6. **Run quality gate:** Fix failures and re-run until clean.
 7. **Commit/push:** Use `/issue-commit` for the commit message, then push to the remote.
-8. **Request reviewers (CODEOWNERS):** Read `CODEOWNERS` and collect owner handles.
+8. **Request reviewers (CODEOWNERS, if present):** If a `CODEOWNERS` file exists, collect owner handles.
    - One handle per line; ignore blank lines and comments.
    - Ignore teams (lines starting with `@org/` or containing a slash).
+   - If no `CODEOWNERS` file exists, skip and note in PR summary.
    - If no valid user handles found, skip and note in PR summary.
    - Use GitHub MCP to request reviewers on the PR.
 9. **Update PR:** Add summary/testing/`fixes <issue-key>`, then mark ready.
@@ -43,11 +44,11 @@ Use this command when the user asks to close/finish/ship an issue or prepare a P
 
 ### Final checklist
 
-- [ ] Relevant checks run (per `.cursor/rules/testing.md`)
+- [ ] Relevant checks run
 - [ ] Quality gate passes
 - [ ] Build passes locally
 - [ ] No unintended TODO/FIXME
-- [ ] Reviewers requested from `CODEOWNERS`
+- [ ] Reviewers requested from `CODEOWNERS` (if present)
 - [ ] PR updated and ready for review
 
 ## Minimal examples

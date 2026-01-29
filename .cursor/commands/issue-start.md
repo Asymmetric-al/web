@@ -13,7 +13,7 @@ Use this command when beginning implementation work tied to GitHub issues.
 - Branch format: `issue-123-short-kebab-title` (first issue key is primary, if present).
 - PR title format: `#123: <issue title>` (or plain title if no issue key).
 - PR body must include `fixes <issue-key>` for each issue when applicable.
-- If using Nia (MCP) for repo context, scope queries to this repo (see `.cursor/rules/AGENTS.md#nia-mcp-usage-always-repo-scoped`).
+- If using Nia (MCP) for repo context, scope queries to this repo (see `AGENTS.md#nia-mcp-usage-always-repo-scoped`).
 
 ## Workflow
 

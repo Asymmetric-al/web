@@ -11,7 +11,7 @@ Use this command for one issue at a time.
 - Issue identifier must follow the repo's format if one is required.
 - Use GitHub MCP for issue search/create/update.
 - Do not add GitHub Projects steps unless asked.
-- If using Nia (MCP) for repo context, scope queries to this repo (see `.cursor/rules/AGENTS.md#nia-mcp-usage-always-repo-scoped`).
+- If using Nia (MCP) for repo context, scope queries to this repo (see `AGENTS.md#nia-mcp-usage-always-repo-scoped`).
 
 ## Workflow
 
