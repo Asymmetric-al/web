@@ -41,6 +41,5 @@ export const TECH_STACK = [
   "Keycloak",
   "Headless WordPress",
   "SendGrid",
-  "Vercel",
   "AWS"
 ] as const;

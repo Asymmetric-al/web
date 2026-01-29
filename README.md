@@ -1,20 +1,32 @@
 <div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+<img width="1200" height="475" alt="Asymmetric.al banner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-# Run and deploy your AI Studio app
+# Asymmetric.al
 
-This contains everything you need to run your app locally.
+The public website for Asymmetric.al. This repository contains the source for https://asymmetric.al.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1FprVT8nBiLd-XHi8WFrqqDn0DDKsfV8H
+## Website
 
-## Run Locally
+- https://asymmetric.al
 
-**Prerequisites:**  Node.js
+## Local development
 
+**Prerequisites:** Node.js
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
+2. Run the dev server:
    `npm run dev`
+
+## Public repository
+
+This is the public repository for Asymmetric.al.
+
+## Contact
+
+https://asymmetric.al/contact
+
+## License
+
+All rights reserved.
