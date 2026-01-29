@@ -137,36 +137,28 @@ Answer with citations/paths from the repo and avoid external sources unless just
 
 ---
 
-## Routing Rules (Deterministic)
+### MCP Servers (Cursor)
 
-Load rulebooks before editing files in their domain.
+**Config file:** `.cursor/mcp.toml` (copy from `.cursor/mcp.example.toml`; restart Cursor after changes)
 
-- **General workflow / CI gates / labels:** `.cursor/rules/general.md`
-- **Frontend UI/components/styling/UX:** `.cursor/rules/frontend.md`
-- **Backend/data access/external APIs:** `.cursor/rules/backend.md`
-- **Testing/verification:** `.cursor/rules/testing.md`
-- **shadcn/studio MCP workflows (/cui, /rui, /iui, /ftc):** `.cursor/rules/shadcn-studio-mcp.md` (only when running those workflows)
+**Enabled servers:**
+
+- **github** — GitHub MCP via Copilot API. Env: `GITHUB_TOKEN` (or `GITHUB_PERSONAL_ACCESS_TOKEN` for the docker server).
+- **nia** — repo search/trace. Env: `NIA_API_KEY`, `NIA_API_URL`.
+- **context7** — third-party API docs. Env: none.
 
 ---
 
-## Skill Routing (Deterministic)
+## Command Routing (Deterministic)
 
-Load the skill(s) below when the trigger matches.
+Use the commands below when the trigger matches.
 
-- **React Router (SPA) guidance:** `skills/nextjs-app-router/SKILL.md`
-- **React component design/refactor:** `skills/react-component-dev/SKILL.md`
-- **Motion animations (Framer Motion):** `skills/motion/SKILL.md`
-- **Recharts:** `skills/rechart/SKILL.md`
-- **shadcn/ui system usage (only if present):** `skills/moai-library-shadcn/SKILL.md`
-- **TanStack Table v8 (only if installed):** `skills/tanstack-table/SKILL.md`
-- **GitHub issue/PR workflows (when used):**
-  - Write issue: `skills/write-issue/SKILL.md`
-  - Build issue: `skills/build-issue/SKILL.md`
-  - Start issue: `skills/start-issue/SKILL.md`
-  - Ship issue: `skills/ship-issue/SKILL.md`
-  - Close issue: `skills/close-issue/SKILL.md`
-  - Create issues batch: `skills/create-issues/SKILL.md`
-- **Commit message creation:** `skills/issue-commit/SKILL.md`
+- **Draft an existing issue:** `/issue-draft`
+- **Open a new issue:** `/issue-open`
+- **Start issue work (branch + draft PR):** `/issue-start`
+- **Implement an issue:** `/issue-implement`
+- **Commit staged changes:** `/issue-commit`
+- **Ship/ready a PR:** `/issue-ship`
 
 ---
 
@@ -191,8 +183,7 @@ Load the skill(s) below when the trigger matches.
 
 ### Routing checklist
 
-- [ ] Identified domain(s) and opened the matching rulebook(s)
-- [ ] Applied required skills based on triggers
+- [ ] Applied required commands based on triggers
 - [ ] Used Nia or Context7 when required (or explicitly noted fallback)
 - [ ] Nia tool calls are repo-scoped to this repo
 - [ ] Nia search calls include the "Nia query preamble" built from `docs/ai/working-set.md` + `docs/ai/stack-registry.md`
@@ -205,20 +196,10 @@ Load the skill(s) below when the trigger matches.
 
 ---
 
-## Minimal examples
-
-- **"Where are routes defined?"** -> Update `docs/ai/working-set.md`; use Nia (scoped + preambled) to find router setup; then open `.cursor/rules/frontend.md`.
-- **"Add a new UI card component."** -> Open `.cursor/rules/frontend.md` and `skills/react-component-dev/SKILL.md`. Use Nia to find existing patterns/components in this repo before writing new ones.
-- **"Use /cui for a page."** -> Open `.cursor/rules/shadcn-studio-mcp.md` and follow its workflow exactly.
-
----
-
 ## Common mistakes / pitfalls
 
 - Skipping Nia on multi-file or architecture questions
 - Running unscoped Nia searches outside this repo
 - Calling Nia without first updating `docs/ai/working-set.md`
 - Using vague Nia queries without exact identifiers/keywords
-- Using shadcn/studio tools without `.cursor/rules/shadcn-studio-mcp.md`
-- Mixing rulebooks with conflicting instructions instead of reconciling them
 - Forgetting to update docs after behavior changes

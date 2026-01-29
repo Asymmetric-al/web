@@ -12,7 +12,7 @@ Use this command when the user wants to open a new issue and needs help shaping 
 - Title format: follow repo conventions (use a clear short title if none are specified).
 - Labels: use the repo's existing taxonomy if labels are required; otherwise skip.
 - Prefer GitHub MCP; do not assume `gh` is available.
-- If using Nia (MCP) for repo context, scope queries to this repo (see `.cursor/rules/AGENTS.md#nia-mcp-usage-always-repo-scoped`).
+- If using Nia (MCP) for repo context, scope queries to this repo (see `AGENTS.md#nia-mcp-usage-always-repo-scoped`).
 
 ### Label taxonomy (if defined)
 
