@@ -53,15 +53,15 @@ const TICKER_ITEMS: readonly string[] = [
 
 const PHILOSOPHY_CARDS: readonly PhilosophyItem[] = [
     { 
-        title: "Unified Surface", 
-        desc: "One login for finance, mobilization, and care. No context switching between fragmented tools. Your people stay focused." 
+        title: "Universal Platform", 
+        desc: "One login for finance, mobilization, and care. No context switching between fragmented tools. Eliminate the need to switch between disconnected tools, helping your team stay focused." 
     },
     { 
-        title: "Tenant Sovereignty", 
+        title: "Organisation Complete Control", 
         desc: "You own your data. You own your payment keys. No lock-in. Your domains, your reputation. We are stewards, not owners." 
     },
     { 
-        title: "Open Foundations", 
+        title: "Transparently Built", 
         desc: "Built on proven open-source standards (Next.js, Keycloak, WordPress). Extensible by design. Safe for the long haul." 
     }
 ] as const;
@@ -96,8 +96,8 @@ const HeroSection = memo(() => (
                 {/* H1 - LCP Element - CSS Animation (Immediate + 100ms delay) */}
                 <div className="opacity-0 animate-[slideUp_0.8s_cubic-bezier(0.16,1,0.3,1)_100ms_forwards] max-w-5xl">
                     <h1 className="text-6xl sm:text-7xl md:text-9xl font-display font-semibold tracking-tighter mb-8 text-foreground leading-[0.9] drop-shadow-2xl text-balance">
-                        Run the Work<br/>
-                        In One Place
+                        Connecting Your Entire Ministry<br/>
+                        
                     </h1>
                 </div>
                 
@@ -106,7 +106,7 @@ const HeroSection = memo(() => (
                     {/* Subtle backdrop to ensure text readability over globe */}
                     <div className="absolute inset-0 bg-background/60 blur-3xl -z-10 rounded-full" aria-hidden="true"></div>
                     <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-2xl mx-auto font-light leading-relaxed text-balance">
-                        Less admin. More ministry.
+                        Less admin for more ministry. <br />
                         The unified platform for the modern missions agency.
                     </p>
                 </div>
@@ -173,10 +173,10 @@ const PhilosophySection = memo(() => (
             {/* Left Column: The Concept (Sticky on Desktop) */}
             <div className="lg:col-span-5 relative lg:sticky lg:top-32 self-start">
                 <Reveal>
-                    <h2 className="text-4xl md:text-5xl lg:text-7xl font-display font-bold mb-8 text-foreground text-balance tracking-tighter leading-[0.9]">Why the name?</h2>
+                    <h2 className="text-4xl md:text-5xl lg:text-7xl font-display font-bold mb-8 text-foreground text-balance tracking-tighter leading-[0.9]">Why Asymmetric.ai?</h2>
                     <p className="text-muted-foreground leading-relaxed mb-12 text-lg font-light text-balance border-l border-border pl-6">
-                        Good tools let simple actions create larger outcomes. We believe God multiplies faithfulness. 
-                        If God is in it, little becomes much.
+                        Good tools transform simple actions into powerful outcomes. We believe God multiplies faithfulness. 
+                        When God is in it, little becomes much.
                     </p>
                     
                     {/* The Multiplier Visualization - Engineered for Alignment */}
