@@ -72,8 +72,7 @@ const STACK_DATA: readonly StackCategory[] = [
         description: "Polyglot storage layer.",
         meta: "LAYER 02",
         items: [
-            { label: "PostgreSQL", url: "https://www.postgresql.org/" },
-            { label: "MySQL", url: "https://www.mysql.com/" },
+            { label: "PostgreSQL", url: "https://www.postgresql.org/" },            
             { label: "Redis", url: "https://github.com/redis/redis/" },
             { label: "TanStack DB", url: "https://github.com/TanStack/db" },
             { label: "pgvector", url: "https://github.com/pgvector/pgvector" },
@@ -100,12 +99,11 @@ const STACK_DATA: readonly StackCategory[] = [
         description: "Headless publishing pipeline.",
         meta: "LAYER 04",
         items: [
-            { label: "WordPress (Headless)", url: "https://wordpress.org/" },
-            { label: "Gutenberg", url: "https://github.com/WordPress/gutenberg" },
-            { label: "Faust.js", url: "https://github.com/wpengine/faustjs" },
-            { label: "WPGraphQL", url: "https://github.com/wp-graphql/wp-graphql" },
+            { label: "Payload CMS", url: "https://payloadcms.com/" },
             { label: "Gotenberg", url: "https://github.com/gotenberg/gotenberg" },
-            { label: "Unlayer", url: "https://unlayer.com/" }
+            { label: "Unlayer", url: "https://unlayer.com/" },
+            { label: "React Mail", url: "https://react.email/" }
+
         ]
     },
     {
@@ -115,8 +113,7 @@ const STACK_DATA: readonly StackCategory[] = [
         description: "Edge delivery and observability.",
         meta: "LAYER 05",
         items: [
-            { label: "AWS", url: "https://aws.amazon.com/" },
-            { label: "Docker", url: "https://github.com/docker" },
+            { label: "Supabase", url: "https://supabase.com/" },
             { label: "GitHub", url: "https://github.com/" },
             { label: "Sentry", url: "https://github.com/getsentry/sentry" },
             { label: "OpenTelemetry", url: "https://github.com/open-telemetry" }
@@ -129,9 +126,7 @@ const STACK_DATA: readonly StackCategory[] = [
         description: "Auth, secrets, and keys.",
         meta: "LAYER 06",
         items: [
-            { label: "Keycloak", url: "https://github.com/keycloak/keycloak" },
-            { label: "Unkey", url: "https://github.com/unkeyed/unkey" },
-            { label: "Infisical", url: "https://github.com/Infisical/infisical" }
+            { label: "Supabase Auth", url: "https://supabase.com/docs/guides/auth" }
         ]
     },
     {
@@ -145,7 +140,8 @@ const STACK_DATA: readonly StackCategory[] = [
             { label: "SendGrid", url: "https://sendgrid.com/" },
             { label: "Zapier", url: "https://zapier.com/" },
             { label: "Inngest", url: "https://github.com/inngest/inngest" },
-            { label: "BullMQ", url: "https://github.com/taskforcesh/bullmq" }
+            { label: "BullMQ", url: "https://github.com/taskforcesh/bullmq" },
+            { label: "Svix", url: "https://www.svix.com/" }
         ]
     },
     {
@@ -280,7 +276,7 @@ const SpecsHero = memo(() => (
                 <div className="flex flex-col max-w-5xl">
                     <StatusBadge />
                     <h1 className="text-6xl md:text-8xl lg:text-9xl font-display font-bold text-foreground tracking-tighter leading-[0.9] mb-8">
-                        The<br/>Architecture.
+                        Transparent Architecture.
                     </h1>
                     <p className="text-xl text-muted-foreground font-light max-w-2xl leading-relaxed text-balance border-l border-border pl-6 mb-12">
                         We don't hide our choices. We build on a foundation of best-in-class open source technologies and proven cloud primitives.

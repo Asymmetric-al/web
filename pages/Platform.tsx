@@ -116,7 +116,7 @@ const MISSION_CONTROL_TILES: readonly MissionTile[] = [
     },
     {
         title: "Member Care",
-        desc: "One dashboard for your MC team to track care, plans, and milestones. Support your workers with intentional care and equip your team with the resources they need for effective care plans. (Note: Not HIPAA compliant yet).",
+        desc: "One dashboard for your MC team to track care, plans, and milestones. Support your workers with intentional care and equip your team with the resources they need for effective care plans.",
         icon: Heart,
         meta: "// RETENTION"
     },
@@ -433,9 +433,6 @@ const FalseChoiceSection = memo(() => (
                   <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight leading-[1.1]">
                       Agencies today face limited options.
                   </h2>
-                  <p className="text-muted-foreground leading-relaxed text-lg mb-12 text-balance font-light">
-                      For decades, mission leaders have been forced to choose between two failing options. This compromise drains resources and slows deployment.
-                  </p>
                   
                   <div className="p-8 border border-destructive/20 bg-destructive/5 rounded-sm">
                       <div className="flex items-center gap-3 text-destructive mb-4 font-mono text-xs uppercase tracking-widest">
