@@ -140,7 +140,7 @@ const HeroSection = memo(() => {
                         
                         <div className="border-l-2 border-border pl-8 mb-12">
                             <p className="text-xl text-muted-foreground max-w-2xl font-light leading-relaxed text-balance mb-6">
-                                  Global missions is the most important work on earth; the tools behind it shouldn’t feel like an afterthought. We exist to serve one thing: getting the gospel to people who have never heard the name of Jesus.
+                                  Global missions is the most important work on earth; the tools behind it shouldn’t feel like an afterthought. We exist to serve one thing: getting the Gospel to people who have never heard the name of Jesus.
                             </p>
                             <p className="text-lg text-muted-foreground/80 max-w-2xl font-light leading-relaxed text-balance">
                                 Let's close the gap between the tech industry innovation and the Great Commission.
@@ -281,7 +281,7 @@ const ServeTheServants = memo(() => (
                  </h2>
                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24">
                      <p className="text-lg text-muted-foreground leading-relaxed text-balance font-light">
-                         We believe some of the most important work on earth is happening quietly, through missionaries and local believers taking the gospel where it has never gone.
+                         We believe some of the most important work on earth is happening quietly, through missionaries and local believers taking the Gospel where it has never gone.
                      </p>
                      <p className="text-lg text-foreground leading-relaxed border-l-2 border-border pl-6 text-balance font-light">
                          Our role is not to be the hero of that story. Our role is to lift the burden from their shoulders.
@@ -326,7 +326,7 @@ const WhatFocusChanges = memo(() => (
                          <Target size={32} className="text-foreground mb-6" />
                          <p className="text-foreground font-bold font-display text-lg mb-2">The Goal is Simple.</p>
                          <p className="text-muted-foreground font-light text-sm leading-relaxed">
-                             Fewer hours fighting systems, more hours on people and places still waiting for the gospel news.
+                             Fewer hours fighting systems, more hours on people and places still waiting for the Gospel news.
                          </p>
                      </div>
                 </div>

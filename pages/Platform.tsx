@@ -68,7 +68,7 @@ const MISSION_CONTROL_TILES: readonly MissionTile[] = [
     },
     { 
         title: "Web Studio", 
-        desc: <>The power of <a href="https://nextjs.org/" target="_blank" rel="noreferrer" className="text-foreground hover:text-primary underline decoration-border transition-colors">Next.js</a> with the ease of a visual CMS (A headless Payload CMS). Whether you have a frontend team or just need to update the blog, you are in control. No more change orders for simple button tweaks. Build on open standards, not proprietary cages.</>,
+        desc: <>The power of <a href="https://nextjs.org/" target="_blank" rel="noreferrer" className="text-foreground hover:text-primary underline decoration-border transition-colors">Next.js</a> with the ease of a visual CMS (a headless Payload CMS). Whether you have a frontend team or just need to update the blog, you are in control. No more change orders for simple button tweaks. Build on open standards, not proprietary cages.</>,
         icon: Globe,
         meta: "// CMS"
     },
@@ -80,7 +80,7 @@ const MISSION_CONTROL_TILES: readonly MissionTile[] = [
     },
     {
         title: "Donor Support Hub",
-        desc: <>Integrated <a href="https://github.com/chatwoot/chatwoot" target="_blank" rel="noreferrer" className="text-foreground hover:text-primary underline decoration-border transition-colors"> Donor care is vital to any missions organization. Chatwoot CE</a> to handle all donor issues with easy tracking to make sure no donor question gets dropped or missed. All integrated into your Mission Control Panel.</>,
+        desc: <>Donor care is vital to any missions organization. Integrated <a href="https://github.com/chatwoot/chatwoot" target="_blank" rel="noreferrer" className="text-foreground hover:text-primary underline decoration-border transition-colors">Chatwoot CE</a> to handle all donor issues with easy tracking to make sure no donor question gets dropped or missed. All integrated into your Mission Control Panel.</>,
         icon: MessageCircle,
         meta: "// SUPPORT"
     },
@@ -104,13 +104,13 @@ const MISSION_CONTROL_TILES: readonly MissionTile[] = [
     },
     { 
         title: "Report Studio", 
-        desc: "Pull or schedule reports for leadership, finance, etc in a few simple steps. One beautiful easy-to-use interface that just gives you the reports you need, when you need them, with real-time visibility.",
+        desc: "Pull or schedule reports for leadership, finance, etc in a few simple steps. One beautiful, easy-to-use interface that just gives you the reports you need, when you need them, with real-time visibility.",
         icon: BarChart,
         meta: "// INTELLIGENCE"
     },
     { 
         title: "Simplified Automations", 
-        desc: "You are fully in charge to automatically trigger actions based on donations, new applications, rather than anything imaginable with Zapier's 8,000+ app integrations.",
+        desc: "You are fully in charge to automatically trigger actions based on donations, new applications, and more with Zapier's 8,000+ app integrations.",
         icon: Zap,
         meta: "// LOGIC"
     },
@@ -435,10 +435,6 @@ const FalseChoiceSection = memo(() => (
                   </h2>
                   
                   <div className="p-8 border border-destructive/20 bg-destructive/5 rounded-sm">
-                      <div className="flex items-center gap-3 text-destructive mb-4 font-mono text-xs uppercase tracking-widest">
-                          <AlertTriangle size={14} />
-                          System Warning
-                      </div>
                       <p className="text-destructive/80 text-sm leading-relaxed italic border-l border-destructive/20 pl-4">
                           "Our ops, mobilization, and finance teams are spending more time managing our tools than we are supporting our missionaries." — Common Agency Feedback
                       </p>
