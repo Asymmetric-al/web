@@ -67,12 +67,12 @@ const SystemHeaderCard: React.FC = () => (
         
         <div>
           <h2 className='text-4xl sm:text-5xl md:text-6xl leading-[0.9] font-display font-bold text-foreground mb-6 tracking-tighter drop-shadow-xl'>
-              Infrastructure<br/>
-              <span className="text-muted-foreground/40">as Stewardship.</span>
+              Efficient Infrastructure<br/>
+              <span className="text-muted-foreground/40">to Streamline Your Ministry</span>
           </h2>
           <div className="pl-6 border-l-2 border-primary/50">
               <p className="text-muted-foreground text-lg font-light leading-relaxed text-balance max-w-lg">
-                  We don't look for ways to extract rent from your basic needs. We build the digital rails for high-trust organizations to operate with sovereignty and speed.
+                We aren't here to price gouge you. We are here to increase your impact through inclusive tech that allows you to operate with independence and speed.
               </p>
           </div>
         </div>
@@ -178,7 +178,7 @@ const InfrastructureBento: React.FC = () => {
           title="Sovereign Web Architecture"
           pillText="Next.js / Headless WP"
           icon={Globe}
-          description="Break free from the 'Vendor Trap.' Proprietary site builders lure you in with templates but hold you hostage with expensive change orders. We deploy Headless WordPress coupled with Next.js—industry-standard, portable, and owned entirely by you."
+          description="Take full control of your work. Proprietary site builders lure you in with templates but hold you hostage with expensive change orders. We deploy Headless WordPress coupled with Next.js—industry-standard, portable, and owned entirely by you."
           delay={0.2}
           className="md:col-span-2 lg:col-span-2"
           backgroundElement={
@@ -188,23 +188,23 @@ const InfrastructureBento: React.FC = () => {
 
         {/* --- ROW 2 --- */}
         <StandardCard 
-          title="Native Missionary Dashboards"
+          title="Streamlined Missionary Dashboards"
           subtitle="Real-time / Unified"
           icon={Database}
-          description="Eliminate the 'Fragmentation Tax.' Asymmetric.al provides a unified Mission Control where finance and fundraising live in the same database."
+          description="Bring ease and accuracy to missionary donor dashboards, with seamless backend integration to your organization. Our unified Mission Control  where finance and fundraising live in the same database."
           delay={0.3}
         />
 
         <StandardCard 
-          title="Enterprise Orchestration"
+          title="Connected Platforms, Without Code"
           subtitle="Event-Driven / Zapier"
           icon={Zap}
-          description="Our backend emits high-fidelity events directly to Zapier. Build complex workflows in minutes without writing code."
+          description="Our backend emits high-fidelity data directly to Zapier. Build complex workflows in minutes without writing code."
           delay={0.4}
         />
 
         <StandardCard 
-          title="Fortress Identity"
+          title="Unmatched Security"
           subtitle="Keycloak SSO"
           icon={ShieldCheck}
           description="Security isn't an add-on. We deploy Keycloak—the gold standard in identity management—to protect your people."
@@ -212,7 +212,7 @@ const InfrastructureBento: React.FC = () => {
         />
 
         <StandardCard 
-          title="Zero-Touch Balance"
+          title="Automated Accounting"
           subtitle="Auto-Reconciliation"
           icon={Scale}
           description="Stop wrestling with spreadsheets. Our engine automatically matches Stripe payouts to individual ledger entries."
@@ -229,17 +229,17 @@ const InfrastructureBento: React.FC = () => {
         />
 
         <FeatureCard 
-          title="High-Fidelity Communications"
+          title="Consistent Branding to Build Trust"
           pillText="Unlayer / PDF Generation"
           icon={Mail}
-          description="From password resets to tax statements, we utilize Unlayer to ensure pixel-perfect branding. Deliver modern, responsive emails and beautiful PDF documents that build trust."
+          description="From password resets to tax statements, we utilize Unlayer to ensure your brand is always front and center. Deliver modern, responsive emails and beautiful PDF documents that build trust."
           delay={0.8}
           className="md:col-span-2 lg:col-span-2 md:order-last lg:order-none"
           backgroundElement={<DitherGrid className="opacity-10" />}
         />
 
         <StandardCard 
-          title="Audit-Grade Trust"
+          title="Audit-Ready Records"
           subtitle="Immutable Logs"
           icon={FileCheck}
           description="Integrity is non-negotiable. We maintain a tamper-evident audit log of every critical system action."

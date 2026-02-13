@@ -77,7 +77,7 @@ const SERVANT_ROLES: readonly ServantRole[] = [
     {
         role: "For Missionaries",
         icon: Map,
-        desc: "They should not need a degree in software just to know if they are at support. Our vision is clear dashboards, clear next steps, simple ways to thank donors, and tools that help them stay healthy enough to stay on the field."
+        desc: "They should not need a degree in software just to know if they have met their support needs. Our vision is simple dashboards, clear next steps, seamless ways to thank donors, and tools that help them stay healthy enough to stay on the field."
     },
     {
         role: "For Mobilizers & Member Care",
@@ -130,20 +130,20 @@ const HeroSection = memo(() => {
                     <div className="max-w-4xl">
                         <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border bg-secondary/50 rounded-full text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-8 backdrop-blur-md">
                             <span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse shadow-[0_0_10px_rgba(16,185,129,0.5)]"></span>
-                            <ScrambleText text="THE UNDERSERVED SECTOR" delay={200} />
+                            <ScrambleText text="Missions as the frontier" delay={200} />
                         </div>
 
                         <h1 className="text-6xl md:text-8xl font-display font-bold text-foreground mb-8 leading-[0.9] tracking-tighter text-balance">
-                            The frontier deserves<br/>
+                            The underserved deserves<br/>
                             world-class tools.
                         </h1>
                         
                         <div className="border-l-2 border-border pl-8 mb-12">
                             <p className="text-xl text-muted-foreground max-w-2xl font-light leading-relaxed text-balance mb-6">
-                                Global missions is the most important work on earth. The tools behind it shouldn’t feel like an afterthought. We exist to serve one thing: getting the gospel to people who have never heard the name of Jesus.
+                                  Global missions is the most important work on earth; the tools behind it shouldn’t feel like an afterthought. We exist to serve one thing: getting the gospel to people who have never heard the name of Jesus.
                             </p>
                             <p className="text-lg text-muted-foreground/80 max-w-2xl font-light leading-relaxed text-balance">
-                                Let's close the gap between silicon valley innovation and the Great Commission.
+                                Let's close the gap between the tech industry innovation and the Great Commission.
                             </p>
                         </div>
 
@@ -190,7 +190,7 @@ const WhyMissionsOnly = memo(() => (
                 </div>
                 <div className="lg:col-span-7 space-y-8 text-lg font-light text-muted-foreground leading-relaxed">
                     <p>
-                        You carry a different weight. You are sending people, not shipping products. You are caring for families in hard places, coordinating with churches, donors, and field partners across borders, currencies, and time zones.
+                        Missions organizations carry a different weight. They are sending people, not shipping products. Caring for families in hard places, coordinating with churches, donors, and field partners across borders, currencies, and time zones.
                     </p>
                     <p>
                         The current leadership of Asymmetric.al felt that gap in missions ourselves. We watched faithful staff spend hours wrestling tools that were never built for their calling. 
@@ -232,8 +232,8 @@ const NotGenericSection = memo(() => (
                      <div className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-4">02 // The Reality</div>
                     <h2 className="text-4xl md:text-6xl font-display font-bold text-foreground mb-6 tracking-tight">Sending is different.</h2>
                     <p className="text-xl text-muted-foreground font-light leading-relaxed text-balance">
-                         If you lead a missions agency, you already know this, but most software does not. Because missions is unique, we believe it deserves software that is born from that world, not adapted to it.
-                    </p>
+                         If you lead a missions agency, you already know this, but most software does not. Because missions is unique, we believe it deserves software that is designed by that world, not adapted to fit it.
+                         </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
@@ -284,7 +284,7 @@ const ServeTheServants = memo(() => (
                          We believe some of the most important work on earth is happening quietly, through missionaries and local believers taking the gospel where it has never gone.
                      </p>
                      <p className="text-lg text-foreground leading-relaxed border-l-2 border-border pl-6 text-balance font-light">
-                         Our role is not to be the hero of that story. Our role is to lift the load from their shoulders.
+                         Our role is not to be the hero of that story. Our role is to lift the burden from their shoulders.
                      </p>
                  </div>
              </div>
@@ -326,7 +326,7 @@ const WhatFocusChanges = memo(() => (
                          <Target size={32} className="text-foreground mb-6" />
                          <p className="text-foreground font-bold font-display text-lg mb-2">The Goal is Simple.</p>
                          <p className="text-muted-foreground font-light text-sm leading-relaxed">
-                             Fewer hours fighting systems, more hours on people and places still waiting for the good news.
+                             Fewer hours fighting systems, more hours on people and places still waiting for the gospel news.
                          </p>
                      </div>
                 </div>
@@ -458,7 +458,7 @@ const ContactSection = memo(() => {
                         </h2>
                         <div className="space-y-6 text-lg text-muted-foreground font-light leading-relaxed mb-12">
                             <p>
-                                We are early on purpose. We would rather build this with a small group of sending agencies who care about the field as much as we do, than build in a corner and roll out a finished product that misses real needs.
+                                We are early on purpose. We would rather build this with a small group of sending agencies who care about the field as much as we do, than build in a corner and launch a finished product that misses real needs.
                             </p>
                             <p>
                                 If you lead a missions organization and you feel the weight of broken systems, we would love to hear your story. No hard sell, just a real conversation.

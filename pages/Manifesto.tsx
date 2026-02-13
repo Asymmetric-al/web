@@ -186,7 +186,7 @@ const ChapterThree = memo(() => (
                             We apply an asymmetrical principle to product design: minimizing inputs to maximize outputs. This governs every decision we make, from our architecture to our interface.
                         </ProseParagraph>
                         <ProseParagraph>
-                            Because we are hyper-focused solely on sending agencies, we can build specific workflows that generic software misses. Whether it is a donor updating a card or a mobilizer tracking a candidate, we engineer for the fewest possible actions.
+                            Because we are hyper-focused solely on sending agencies, we can build specific workflows that generic software misses. Whether it is a donor updating a card or an agency tracking a candidate, we engineer to keep your processes streamlined.
                         </ProseParagraph>
                         <ProseParagraph>
                             Your time is the most valuable resource in the Great Commission. By removing administrative friction, we protect your capacity to fund ministry, support missionaries, and advance the Gospel.
@@ -228,7 +228,7 @@ const ChapterFour = memo(() => (
                                 <div>
                                     <h4 className="text-xl font-bold font-display text-foreground mb-2">Governance & Covering</h4>
                                     <p className="text-muted-foreground font-light leading-relaxed text-balance">
-                                        Operating as a project under Global Fellowship Inc. (501c3). We are accountable to a board of directors and strict financial oversight.
+                                        Operating as a project under Global Fellowship Inc. (501c3), we are accountable to a board of directors and strict financial oversight.
                                     </p>
                                 </div>
                             </div>
@@ -258,7 +258,7 @@ const ChapterFive = memo(() => (
                 <div className="max-w-4xl mx-auto text-center">
                     <div className="inline-flex items-center gap-2 px-3 py-1.5 border border-border bg-secondary/50 rounded-sm text-[10px] font-mono uppercase tracking-widest text-muted-foreground mb-8 backdrop-blur-md">
                          <Scale size={12} className="text-success" />
-                        <span>05 // Our Posture</span>
+                        <span>05 // Our Values</span>
                     </div>
                     
                     <h2 className="text-4xl md:text-6xl font-display font-medium text-foreground leading-tight mb-12 text-balance">

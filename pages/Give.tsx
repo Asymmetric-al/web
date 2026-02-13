@@ -227,7 +227,7 @@ const Give: React.FC = () => {
                     </div>
 
                     <h1 className="text-6xl md:text-8xl font-display font-bold text-foreground mb-8 leading-[0.9] tracking-tighter text-balance">
-                        Fuel the tool that<br/>
+                        Build the tool that<br/>
                         serves the servants.
                     </h1>
                     

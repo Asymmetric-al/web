@@ -55,32 +55,32 @@ interface FocusCardProps {
 
 const MISSION_CONTROL_TILES: readonly MissionTile[] = [
     { 
-        title: "Partners CRM", 
+        title: "Specialized CRM", 
         desc: <>Powered by a custom Missions Built <a href="https://github.com/twentyhq/twenty" target="_blank" rel="noreferrer" className="text-foreground hover:text-primary underline decoration-border transition-colors">Twenty CRM</a>, the open-source standard with 40k GitHub Stars. The definitive source of truth for people, churches, and pledges. A living record that updates in real-time, managed with a modern interface designed for speed. A CRM your Advancement team will actually enjoy using.</>,
         icon: Database,
         meta: "// CORE RECORD"
     },
     { 
         title: "Contributions Hub", 
-        desc: "Live transaction feed. Automate reconciliation and eliminate manual entry. Reversals and management in one place all perfectly integrated with Stripe for the best in class payment processing experience.",
+        desc: "Live transaction feed. Automate reconciliation and eliminate manual entry. Reversals and management in one place, all perfectly integrated with Stripe for the best-in-class payment processing experience.",
         icon: DollarSign,
         meta: "// FINANCE"
     },
     { 
         title: "Web Studio", 
-        desc: <>The power of <a href="https://nextjs.org/" target="_blank" rel="noreferrer" className="text-foreground hover:text-primary underline decoration-border transition-colors">Next.js</a> with the ease of a visual CMS (A headless WordPress). Whether you have a frontend team or just need to update the blog, you are in control. No more change orders for simple button tweaks. Build on open standards, not proprietary cages.</>,
+        desc: <>The power of <a href="https://nextjs.org/" target="_blank" rel="noreferrer" className="text-foreground hover:text-primary underline decoration-border transition-colors">Next.js</a> with the ease of a visual CMS (A headless Payload CMS). Whether you have a frontend team or just need to update the blog, you are in control. No more change orders for simple button tweaks. Build on open standards, not proprietary cages.</>,
         icon: Globe,
         meta: "// CMS"
     },
     { 
         title: "Email Studio", 
-        desc: "Every email that comes from your organization needs to represent the work you're doing. No more compromises on what comes from your organization whether it be an appeal campaign, emailed donation receipt, or a simple password-reset email. It all needs to be perfect and fully branded and owned by you.",
+        desc: "Every email that comes from your organization needs to represent the work you're doing. No more compromises on what comes from your organization whether it be an appeal campaign, emailed donation receipt, or a simple password-reset email. It all needs to be fully branded and owned by you.",
         icon: Mail,
         meta: "// COMMS"
     },
     {
         title: "Donor Support Hub",
-        desc: <>Integrated <a href="https://github.com/chatwoot/chatwoot" target="_blank" rel="noreferrer" className="text-foreground hover:text-primary underline decoration-border transition-colors">Chatwoot CE</a> to handle all donor issues with easy tracking to make sure no donor question gets dropped or missed. Donor care is vital to any missions organization. All integrated into your Mission Control Panel.</>,
+        desc: <>Integrated <a href="https://github.com/chatwoot/chatwoot" target="_blank" rel="noreferrer" className="text-foreground hover:text-primary underline decoration-border transition-colors"> Donor care is vital to any missions organization. Chatwoot CE</a> to handle all donor issues with easy tracking to make sure no donor question gets dropped or missed. All integrated into your Mission Control Panel.</>,
         icon: MessageCircle,
         meta: "// SUPPORT"
     },
@@ -97,26 +97,26 @@ const MISSION_CONTROL_TILES: readonly MissionTile[] = [
         meta: "// LEGAL"
     },
     { 
-        title: "Mobilize", 
-        desc: "Powered by Zapier. Accelerate your deployment with effortless management. You set up the workflow and process you want with best-in-class automation that is fully visualized and not endless and confusing 'If This Then That' logic trees. Move candidates from interest to field with clear steps.",
+        title: "Start-to-Finish Mobilization", 
+        desc: "Accelerate your deployment with effortless management. You set up the workflow and process you want with best-in-class automation that is fully visualized instead of endless and confusing logic trees. Move candidates from interest to field with clear steps.",
         icon: ArrowRight,
         meta: "// HR FLOW"
     },
     { 
         title: "Report Studio", 
-        desc: "Real-time visibility. Pull or Schedule reports for leadership, finance, etc. in one easy to use place. One beautiful easy to use interface that just gives you the reports you need when you need them.",
+        desc: "Pull or schedule reports for leadership, finance, etc in a few simple steps. One beautiful easy-to-use interface that just gives you the reports you need, when you need them, with real-time visibility.",
         icon: BarChart,
         meta: "// INTELLIGENCE"
     },
     { 
-        title: "Automations", 
-        desc: "Powered by Zapier's workflow engine. You are fully in charge to trigger actions based on donations, applications, anything imaginable with Zapier's 8,000+ app integrations.",
+        title: "Simplified Automations", 
+        desc: "You are fully in charge to automatically trigger actions based on donations, new applications, rather than anything imaginable with Zapier's 8,000+ app integrations.",
         icon: Zap,
         meta: "// LOGIC"
     },
     {
         title: "Member Care",
-        desc: "One dashboard for your MC team to Track care, MC Plans, and milestones. Sustain your workers with intentional care and give your team everything they need stay on top of their care plans. (Note: Not HIPAA compliant yet).",
+        desc: "One dashboard for your MC team to track care, plans, and milestones. Support your workers with intentional care and equip your team with the resources they need for effective care plans.",
         icon: Heart,
         meta: "// RETENTION"
     },
@@ -148,7 +148,7 @@ const WHY_FOCUS_DATA: readonly FocusPoint[] = [
         desc: "When you stitch together 15 different SaaS tools, you pay a 'tax' in lost data, broken syncs, and staff burnout. Missions agencies lose millions of dollars annually to this inefficiency."
     },
     {
-        title: "Sovereignty Matters",
+        title: "Control Matters",
         icon: ShieldAlert,
         desc: "True ownership means you aren't beholden to a vendor's roadmap or pricing. We build architecture where you own the data, the keys, and the code, ensuring you are never locked into a system you can't control."
     }
@@ -165,9 +165,9 @@ const PROBLEM_OPTIONS: readonly ProblemOption[] = [
     },
     {
         id: 'legacy',
-        title: "OPTION B: THE LEGACY MONOLITH",
+        title: "OPTION B: Legacy Vendors",
         icon: Globe,
-        subtitle: "The Outdated Vendor",
+        subtitle: "Outdated tech",
         desc: "Proprietary software built in the early 2000s. Safe, but stagnant and difficult to modernize.",
         points: ["VENDOR LOCK-IN", "CLUNKY UX", "SLOW ROADMAPS"]
     }
@@ -402,7 +402,7 @@ const PlatformHero = memo(() => (
                 </div>
 
                 <h1 className="text-6xl md:text-8xl font-display font-bold text-foreground mb-8 tracking-tighter leading-[0.9]">
-                    One Surface.<br /> 
+                    One Platform.<br /> 
                     <span className="text-muted-foreground">Total Clarity.</span>
                 </h1>
                 
@@ -411,7 +411,7 @@ const PlatformHero = memo(() => (
                         Most agencies are running on a patchwork of disconnected tools. Data is siloed. Staff are exhausted. The mission slows down.
                     </p>
                     <p className="text-lg text-muted-foreground/80 max-w-2xl font-light leading-relaxed text-balance mt-4">
-                        Asymmetric.al replaces the chaos of the "DIY stack" with a single, unified operating system designed specifically for the complexities of sending.
+                        Asymmetric.al replaces the chaos of the "DIY stack" with a single, unified operating system designed specifically for the complexities of sending Organizations.
                     </p>
                 </div>
 
@@ -431,11 +431,8 @@ const FalseChoiceSection = memo(() => (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 items-stretch">
               <div className="lg:col-span-5 flex flex-col justify-center">
                   <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight leading-[1.1]">
-                      The "False Choice"<br/>facing agencies today.
+                      Agencies today face limited options.
                   </h2>
-                  <p className="text-muted-foreground leading-relaxed text-lg mb-12 text-balance font-light">
-                      For decades, mission leaders have been forced to choose between two failing options. This compromise drains resources and slows deployment.
-                  </p>
                   
                   <div className="p-8 border border-destructive/20 bg-destructive/5 rounded-sm">
                       <div className="flex items-center gap-3 text-destructive mb-4 font-mono text-xs uppercase tracking-widest">
@@ -468,7 +465,7 @@ const WhyFocusSection = memo(() => (
 
         <div className="text-center max-w-3xl mx-auto mb-20 relative z-10">
              <Reveal>
-                <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight">Why we focus here.</h2>
+                <h2 className="text-4xl md:text-5xl font-display font-bold text-foreground mb-6 tracking-tight">You need an option built strategically for missions.</h2>
                 <p className="text-xl text-muted-foreground font-light leading-relaxed text-balance">
                     We aren't trying to build software for everyone. We are hyper-focused on the unique complexities of sending agencies.
                 </p>
@@ -510,12 +507,12 @@ const MissionControlSection = memo(() => (
                     <div className="h-px w-24 bg-gradient-to-r from-transparent via-foreground/40 to-transparent mx-auto mb-8" />
 
                     <p className="text-xl md:text-2xl text-muted-foreground font-light leading-relaxed text-balance mb-8">
-                        Replace the clutter with cohesion. Every operational function under one login, sharing one database.
+                        Replace the clutter with clarity. Every operational function under one login, sharing one database.
                     </p>
                     
                     <p className="text-muted-foreground/80 max-w-2xl mx-auto leading-relaxed text-balance">
-                        No more "integration tax." No more zapping data between five different SaaS tools. 
-                        Just one sovereign operating system designed to run the work of the Great Commission.
+                        Eliminate the hassle of disjointed and disconnected platforms. Stop zapping data between five different SaaS tools. 
+                        Just one unified operating system designed to run the work of the Great Commission.
                     </p>
                 </div>
              </Reveal>
