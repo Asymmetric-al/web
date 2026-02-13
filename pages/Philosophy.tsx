@@ -303,7 +303,7 @@ ChapterFive.displayName = 'ChapterFive';
 
 // --- Main Component ---
 
-const Manifesto: React.FC = () => {
+const Philosophy: React.FC = () => {
     return (
         <div className="min-h-screen bg-background text-foreground selection:bg-foreground selection:text-background font-sans overflow-x-hidden pt-20">
             <GridPattern className="opacity-10 fixed inset-0 z-0" />
@@ -323,4 +323,4 @@ const Manifesto: React.FC = () => {
     );
 };
 
-export default Manifesto;
+export default Philosophy;
