@@ -26,7 +26,7 @@ const FOOTER_SECTIONS: readonly FooterSectionData[] = [
     links: [
       { label: "Mission Control", to: "/product" },
       { label: "System Specs", to: "/specs" },
-      { label: "Philosophy", to: "/manifesto" },
+      { label: "Philosophy", to: "/philosophy" },
       { label: "Statement of Faith", to: "/faith" }
     ]
   },

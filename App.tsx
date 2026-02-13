@@ -11,7 +11,7 @@ import { Button } from './components/UI';
 const Home = lazy(() => import('./pages/Home'));
 const Platform = lazy(() => import('./pages/Platform'));
 const Specs = lazy(() => import('./pages/Specs'));
-const Manifesto = lazy(() => import('./pages/Manifesto'));
+const Philosophy = lazy(() => import('./pages/Philosophy'));
 const Faith = lazy(() => import('./pages/Faith'));
 
 // 2. Engagement & Involvement
@@ -177,7 +177,7 @@ const App: React.FC = () => {
               {/* --- Product & Philosophy --- */}
               <Route path="/product" element={<Platform />} />
               <Route path="/specs" element={<Specs />} />
-              <Route path="/manifesto" element={<Manifesto />} />
+              <Route path="/philosophy" element={<Philosophy />} />
               <Route path="/faith" element={<Faith />} />
               
               {/* --- Engagement --- */}

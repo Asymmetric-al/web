@@ -54,10 +54,10 @@ const TICKER_ITEMS: readonly string[] = [
 const PHILOSOPHY_CARDS: readonly PhilosophyItem[] = [
     { 
         title: "Universal Platform", 
-        desc: "One login for finance, mobilization, and care. No context switching between fragmented tools. Eliminate the need to switch between disconnected tools, helping your team stay focused." 
+        desc: "One login for finance, mobilization, and care. Eliminate the need to switch between disconnected tools, helping your team stay focused." 
     },
     { 
-        title: "Organisation Complete Control", 
+        title: "Organization Complete Control", 
         desc: "You own your data. You own your payment keys. No lock-in. Your domains, your reputation. We are stewards, not owners." 
     },
     { 
@@ -173,7 +173,7 @@ const PhilosophySection = memo(() => (
             {/* Left Column: The Concept (Sticky on Desktop) */}
             <div className="lg:col-span-5 relative lg:sticky lg:top-32 self-start">
                 <Reveal>
-                    <h2 className="text-4xl md:text-5xl lg:text-7xl font-display font-bold mb-8 text-foreground text-balance tracking-tighter leading-[0.9]">Why Asymmetric.ai?</h2>
+                    <h2 className="text-4xl md:text-5xl lg:text-7xl font-display font-bold mb-8 text-foreground text-balance tracking-tighter leading-[0.9]">Why Asymmetric.al?</h2>
                     <p className="text-muted-foreground leading-relaxed mb-12 text-lg font-light text-balance border-l border-border pl-6">
                         Good tools transform simple actions into powerful outcomes. We believe God multiplies faithfulness. 
                         When God is in it, little becomes much.
@@ -208,7 +208,10 @@ const PhilosophySection = memo(() => (
                             </div>
                             
                             {/* "∞" */}
-                            <span className="text-8xl sm:text-9xl md:text-[11rem] lg:text-[12rem] font-display font-bold text-foreground leading-none tracking-tighter select-none drop-shadow-2xl flex-shrink-0 translate-y-2">
+                            <span 
+                                className="text-8xl sm:text-9xl md:text-[11rem] lg:text-[12rem] font-display font-bold text-foreground leading-none tracking-tighter select-none drop-shadow-2xl flex-shrink-0 translate-y-2"
+                                style={{ transform: 'translateY(0.5rem) scaleX(1.15)' }}
+                            >
                                 ∞
                             </span>
                         </div>

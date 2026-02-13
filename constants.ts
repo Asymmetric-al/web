@@ -9,7 +9,7 @@ export const NAV_ITEMS: readonly NavItem[] = [
   { label: 'Platform', path: '/product' },
   { label: 'Missions', path: '/missions' },
   { label: 'Specs', path: '/specs' },
-  { label: 'Manifesto', path: '/manifesto' },
+  { label: 'Philosophy', path: '/philosophy' },
   { label: 'Give', path: '/give' },
 ] as const;
 
